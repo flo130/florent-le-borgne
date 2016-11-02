@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ articleCategory.articleCategory }}{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="column row">
+        <nav aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li>{{ articleCategory.articleCategory }}</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="column row">
+        <div class="large-8 columns">
+            <h1>Articles {{ articleCategory.articleCategory }}</h1>
+            {% for article in articles %}
+                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : article} %}
+                <hr>
+            {% else %}
+                "No data found"
+                <hr>
+            {% endfor %}
+        </div>
+        <div class="large-4 columns">
+            <h1>Categories</h1>
+            <ul class="accordion" data-accordion data-allow-all-closed="true">
+               {% for category in categories %}
+                   <li class="accordion-item" data-accordion-item>
+                       <a href="#" class="accordion-title">{{ category.articleCategory }}</a>
+                       <div class="accordion-content" data-tab-content>
+                           <ul>
+                               {% for subCategory in category.articleSubCategories %}
+                                   <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
+                               {% endfor %}
+                          </ul>
+                       </div>
+                   </li>
+               {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

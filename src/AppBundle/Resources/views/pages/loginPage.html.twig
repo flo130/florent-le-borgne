@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Login page{% endblock %}
+
+{% block body %}
+    <h2>Login</h2>
+    <div class="row">
+        <div class="large-10 large-offset-1 columns{% if error %} animated shake{% endif %}">
+            <div class="callout secondary">
+                {% include 'AppBundle:forms:loginForm.html.twig' with {
+                    'error' : error,
+                    'form' : form
+                } %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

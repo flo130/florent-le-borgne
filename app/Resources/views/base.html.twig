@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.css">
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css">
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/images/favicon.ico') }}" />
+    </head>
+    <body>
+        <div class="off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+                <div class="title-bar" data-responsive-toggle="menu" data-hide-for="medium">
+                    <div class="title-bar-left">
+                        <button class="menu-icon" type="button" data-open="off-canvas-left"></button>
+                        <span class="title-bar-title">Title</span>
+                    </div>
+                </div>
+                <div class="off-canvas position-left" id="off-canvas-left" data-off-canvas>
+                    <ul class="vertical dropdown menu" data-dropdown-menu>
+                        <li class="active"><a href="">Left item 1</a></li>
+                        <li><a href="">Left item 2</a></li>
+                        <li><a href="">Left item 3</a></li>
+                    </ul>
+                </div>
+                <div data-sticky-container>
+                    <div data-sticky data-options="marginTop:0;" style="width:100%">
+                        <nav id="menu" class="top-bar">
+                            <div class="top-bar-left">
+                                <ul class="dropdown menu" data-dropdown-menu>
+                                    <li class="menu-text">Title</li>
+                                    <li class="has-submenu"><a href="#">Item 1</a>
+                                        <ul class="menu submenu vertical" data-submenu>
+                                            <li class="active"><a href="">Left wide 1</a></li>
+                                            <li><a href="">Left wide 2</a></li>
+                                            <li><a href="">Left wide 3</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-submenu"><a href="#">Item 2</a>
+                                        <ul class="menu submenu vertical" data-submenu>
+                                            <li><a href="">Left wide 1</a></li>
+                                            <li><a href="">Left wide 2</a></li>
+                                            <li><a href="">Left wide 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="top-bar-right">
+                                <ul class="menu">
+                                    <li><input type="search" placeholder="Search"></li>
+                                    <li><button class="button">Search</button></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="off-canvas-content" data-off-canvas-content>
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/what-input/2.1.1/what-input.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.js"></script>
+            <!-- Lib Google pour afficher/styliser du code dans une balise pre : <pre class="prettyprint linenums"> -->
+            <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+            <script>$(document).foundation();</script>
+        {% endblock %}
+    </body>
+</html>

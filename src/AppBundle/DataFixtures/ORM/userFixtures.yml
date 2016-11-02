@@ -1,0 +1,7 @@
+AppBundle\Entity\User:
+    user_{1..50}:
+        email: <email()>
+        plainPassword: password
+        roles: <roles()>
+        name: <userName()>
+        avatar: <word()>.jpg

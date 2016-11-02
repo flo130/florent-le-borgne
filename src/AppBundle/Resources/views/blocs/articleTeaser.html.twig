@@ -1,0 +1,11 @@
+<div class="row">
+    <h2><a href="{{ path('article', {'id': article.id }) }}">{{ article.title }}</a></h2>
+    <p>
+        By <a href="#">{{ article.user.name }}</a>
+        <br>
+        <i class="fi-clock"></i> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}
+    </p>
+    <img src="http://placehold.it/900x300" class="thumbnail">
+    <p>{{ article.summary }}</p>
+    <a href="{{ path('article', {'id': article.id }) }}" class="button">Read more</a>
+</div>

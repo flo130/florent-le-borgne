@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="column row">
+        <nav aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li><a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a></li>
+                <li><a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a></li>
+                <li>{{ article.title }}</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="column row">
+        {% include 'AppBundle:blocs:articleDetail.html.twig' with {'article' : article} %}
+        <hr>
+        <div class="callout secondary">
+            Leave a comment
+            {% include 'AppBundle:forms:articleCommentForm.html.twig' with {'form' : commentForm} %}
+        </div>
+        {% for comment in article.articleComments %}
+            {% include 'AppBundle:blocs:articleComment.html.twig' with {'comment' : comment} %}
+        {% endfor %}
+    </div>
+{% endblock %}

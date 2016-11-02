@@ -1,0 +1,10 @@
+<ul class="pagination" role="navigation" aria-label="Pagination">
+    <li><a href="{{ path(pagination.page_name, {'page': 1}) }}"{% if pagination.page <= 1 %} class="disabled"{% endif %} aria-label="First page"><i class="fi-rewind"></i></a></li>
+    <li><a href="{{ path(pagination.page_name, {'page': pagination.page - 1}) }}"{% if pagination.page <= 1 %} class="disabled"{% endif %} aria-label="Previous page"><i class="fi-arrow-left"></i></a></li>
+    {#display p numbers only from p-4 to p+4 but don't go <1 or >pages_count#}
+    {% for page in range(max(pagination.page - 4, 1), min(pagination.page + 4, pagination.pages_count)) %}
+        <li><a{% if page == pagination.page %} class="current"{% endif %} href="{{ path(pagination.page_name, {'page': page}) }}" aria-label="page {{ page }}">{{ page }}</a></li>
+    {% endfor %}
+    <li><a href="{{ path(pagination.page_name, {'page': pagination.page + 1}) }}"{% if pagination.page >= pagination.pages_count %} class="disabled"{% endif %} aria-label="Next page"><i class="fi-arrow-right"></i></a></li>
+    <li><a href="{{ path(pagination.page_name, {'page': pagination.pages_count}) }}"{% if pagination.page >= pagination.pages_count %} class="disabled"{% endif %} aria-label="Last page"><i class="fi-fast-forward"></i></a></li>
+</ul>

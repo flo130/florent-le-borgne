@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Register page{% endblock %}
+
+{% block body %}
+    <h2>Register</h2>
+    {% include 'AppBundle:forms:registerForm.html.twig' with {
+        'form' : form
+    } %}
+{% endblock %}

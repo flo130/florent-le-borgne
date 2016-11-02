@@ -1,0 +1,16 @@
+<div class="orbit" role="region" data-orbit>
+    <ul class="orbit-container">
+        {% for article in articles %}
+            <li class="{% if loop.index0 == 0 %}is-active {% endif %}orbit-slide">
+                <!-- article.image -->
+                <img class="orbit-image" src="http://placehold.it/900x30{{ loop.index0 }}" alt="Space">
+                <figcaption class="orbit-caption">{{ article.title }}</figcaption>
+            </li>
+        {% endfor %}
+    </ul>
+    <nav class="orbit-bullets">
+        {% for article in articles %}
+            <button{% if loop.index0 == 0 %} class="is-active"{% endif %} data-slide="{{ loop.index0 }}"></button>
+        {% endfor %}
+    </nav>
+</div>
