@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     /**
      * @Route("/", defaults={"page"=1}, name="homepage"))
-     * @Route("/{page}", name="homepagepaginate")
+     * @Route("/article-page/{page}", name="homepagepaginate")
      */
     public function indexAction(Request $request, $page=1)
     {
