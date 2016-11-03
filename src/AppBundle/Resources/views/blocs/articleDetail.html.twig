@@ -1,13 +1,9 @@
 <div class="row">
     <h1>{{ article.title }}</h1>
-    <p>
-        By <a href="">{{ article.user.name }}</a>
-        <br>
-        <i class="fi-clock"></i> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}
-    </p>
-    <div class="text-center">
-        <img src="http://placehold.it/900x300" class="thumbnail">{# article.image #}
-    </div>
+    <p class="lead">By <a href="">{{ article.user.name }}</a></p>
+    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}</p>
+    <img class="center-block img-responsive" src="http://placehold.it/900x300">{# article.image #}
+    <hr>
     <p class="lead">{{ article.summary }}</p>
     <p>{{ article.article }}</p>
 </div>

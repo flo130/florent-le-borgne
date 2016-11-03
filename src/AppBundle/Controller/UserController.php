@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\RegistrationForm;
-use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\User;
 
 /**
@@ -21,12 +20,11 @@ class UserController extends Controller
      */
     public function loginAction()
     {
+    	die('ddddddddd');
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        $form = $this->createForm(LoginForm::class, [
-            '_username' => $lastUsername,
-        ]);
+        $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
         return $this->render('AppBundle:pages:loginPage.html.twig', array(
             'form' => $form->createView(),
             'error' => $error,

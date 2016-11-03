@@ -1,11 +1,10 @@
 <div class="row">
-    <h2><a href="{{ path('article', {'id': article.id }) }}">{{ article.title }}</a></h2>
-    <p>
-        By <a href="#">{{ article.user.name }}</a>
-        <br>
-        <i class="fi-clock"></i> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}
-    </p>
-    <img src="http://placehold.it/900x300" class="thumbnail">
-    <p>{{ article.summary }}</p>
-    <a href="{{ path('article', {'id': article.id }) }}" class="button">Read more</a>
+    <div class="col-md-12">
+        <h2><a href="{{ path('article', {'id': article.id }) }}">{{ article.title }}</a></h2>
+        <p class="lead">By <a href="#">{{ article.user.name }}</a></p>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}</p>
+        <img class="img-responsive" src="http://placehold.it/900x300">
+        <p>{{ article.summary }}</p>
+        <a class="btn btn-primary" href="{{ path('article', {'id': article.id }) }}">Read more</a>
+    </div>
 </div>

@@ -3,22 +3,21 @@
 {% block title %}{{ parent() }} - {{ article.title }}{% endblock %}
 
 {% block body %}
-    <br>
-    <div class="column row">
-        <nav aria-label="You are here:" role="navigation">
-            <ul class="breadcrumbs">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
                 <li><a href="{{ path('homepage') }}">Home</a></li>
                 <li><a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a></li>
                 <li><a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a></li>
-                <li>{{ article.title }}</li>
-            </ul>
-        </nav>
+                <li class="active">{{ article.title }}</li>
+            </ol>
+        </div>
     </div>
     <div class="column row">
         {% include 'AppBundle:blocs:articleDetail.html.twig' with {'article' : article} %}
         <hr>
-        <div class="callout secondary">
-            Leave a comment
+        <div class="well">
+            <h4>Leave a comment</h4>
             {% include 'AppBundle:forms:articleCommentForm.html.twig' with {'form' : commentForm} %}
         </div>
         {% for comment in article.articleComments %}

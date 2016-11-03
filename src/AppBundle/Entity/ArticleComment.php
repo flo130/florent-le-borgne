@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Article;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleCommentRepository")
@@ -31,6 +32,7 @@ class ArticleComment
     private $article;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $articleComment;

@@ -3,12 +3,12 @@
 {% block title %}{{ parent() }} - Home{% endblock %}
 
 {% block body %}
-    <div class="expanded row">
-        {% include 'AppBundle:blocs:articleCarousel.html.twig' with {'articles' : lastArticles} %}
+    <div class="row">
+        {# include 'AppBundle:blocs:articleCarousel.html.twig' with {'articles' : lastArticles} #}
     </div>
-    <div class="column row">
-        <div class="large-8 columns">
-            <h1>Articles</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="page-header">Articles</h1>
             {% for article in articles %}
                 {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : article} %}
                 <hr>
@@ -16,26 +16,26 @@
                 "No data found"
                 <hr>
             {% endfor %}
-            <div class="text-center">
+            <nav class="text-center">
                 {% include 'AppBundle:blocs:pagination.html.twig' with {'pagination' : articlesPagination} %}
-            </div>
+            </nav>
         </div>
-        <div class="large-4 columns">
-            <h1>Categories</h1>
-            <ul class="accordion" data-accordion data-allow-all-closed="true">
-               {% for category in categories %}
-                   <li class="accordion-item" data-accordion-item>
-                       <a href="#" class="accordion-title">{{ category.articleCategory }}</a>
-                       <div class="accordion-content" data-tab-content>
-                           <ul>
-                               {% for subCategory in category.articleSubCategories %}
-                                   <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
-                               {% endfor %}
-                          </ul>
-                       </div>
-                   </li>
-               {% endfor %}
-            </ul>
+        <div class="col-md-4">
+            <div class="well">
+                <h4>Blog Search</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="well">
+                <h4>Categories</h4>
+                {% include 'AppBundle:blocs:articleCategories.html.twig' with {'categories' : categories} %}
+            </div>
         </div>
     </div>
 {% endblock %}

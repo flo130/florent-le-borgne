@@ -3,17 +3,16 @@
 {% block title %}{{ parent() }} - {{ articleCategory.articleCategory }}{% endblock %}
 
 {% block body %}
-    <br>
-    <div class="column row">
-        <nav aria-label="You are here:" role="navigation">
-            <ul class="breadcrumbs">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
                 <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li>{{ articleCategory.articleCategory }}</li>
-            </ul>
-        </nav>
+                <li class="active">{{ articleCategory.articleCategory }}</li>
+            </ol>
+        </div>
     </div>
-    <div class="column row">
-        <div class="large-8 columns">
+    <div class="row">
+        <div class="col-md-8">
             <h1>Articles {{ articleCategory.articleCategory }}</h1>
             {% for article in articles %}
                 {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : article} %}
@@ -23,22 +22,11 @@
                 <hr>
             {% endfor %}
         </div>
-        <div class="large-4 columns">
-            <h1>Categories</h1>
-            <ul class="accordion" data-accordion data-allow-all-closed="true">
-               {% for category in categories %}
-                   <li class="accordion-item" data-accordion-item>
-                       <a href="#" class="accordion-title">{{ category.articleCategory }}</a>
-                       <div class="accordion-content" data-tab-content>
-                           <ul>
-                               {% for subCategory in category.articleSubCategories %}
-                                   <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
-                               {% endfor %}
-                          </ul>
-                       </div>
-                   </li>
-               {% endfor %}
-            </ul>
+        <div class="col-md-4">
+            <div class="well">
+                <h4>Categories</h4>
+                {% include 'AppBundle:blocs:articleCategories.html.twig' with {'categories' : categories} %}
+            </div>
         </div>
     </div>
 {% endblock %}
