@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\RegistrationForm;
-use AppBundle\Entity\User;
 
 /**
  * Cette class va servire, entre autre, pour gérer les URLs de login et de logout. 
@@ -20,7 +19,6 @@ class UserController extends Controller
      */
     public function loginAction()
     {
-    	die('ddddddddd');
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
