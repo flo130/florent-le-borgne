@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ articleSubCategory.articleSubCategory }}{% endblock %}
+{% block title %}{{ parent() }} - {{ articleSubCategory.articleSubCategory }}{% endblock %}
 
 {% block body %}
     <br>
