@@ -2,7 +2,7 @@
     <h1>{{ article.title }}</h1>
     <p class="lead">By <a href="">{{ article.user.name }}</a></p>
     <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}</p>
-    <img class="center-block img-responsive" src="http://placehold.it/900x300">{# article.image #}
+    <img class="center-block img-responsive" src="http://placehold.it/900x300" alt="{{ article.title }}">{# article.image #}
     <hr>
     <p class="lead">{{ article.summary }}</p>
     <p>{{ article.article }}</p>

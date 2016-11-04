@@ -3,7 +3,7 @@
         <h2><a href="{{ path('article', {'id': article.id }) }}">{{ article.title }}</a></h2>
         <p class="lead">By <a href="#">{{ article.user.name }}</a></p>
         <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}</p>
-        <img class="img-responsive" src="http://placehold.it/900x300">
+        <img class="img-responsive" src="http://placehold.it/900x300" alt="{{ article.title }}">
         <p>{{ article.summary }}</p>
         <a class="btn btn-primary" href="{{ path('article', {'id': article.id }) }}">Read more</a>
     </div>

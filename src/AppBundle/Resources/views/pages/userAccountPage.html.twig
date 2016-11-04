@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ user.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li class="active">{{ user.name }}</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <h1 class="page-header">{{ user.name }}</h1>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="http://placehold.it/170x180" alt="{{ user.name }}">
+                <div class="caption">
+                    <ul class="nav nav-pills nav-stacked" role="tablist">
+                        <li role="presentation" class="active"><a href="#account" aria-controls=account role="tab" data-toggle="tab">Account</a></li>
+                        <li role="presentation"><a href="#articles" aria-controls=articles role="tab" data-toggle="tab">My articles</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="account">
+                    <h2>Account</h2>
+                    {% include 'AppBundle:forms:userForm.html.twig' with {
+                        'form' : userForm
+                    } %}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="articles">
+                    <h2>Articles</h2>
+                    {% for userArticle in userArticles %}
+                        {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : userArticle} %}
+                        <hr>
+                    {% else %}
+                        "No data found"
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

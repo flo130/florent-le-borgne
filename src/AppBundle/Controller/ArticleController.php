@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\ArticleCommentFormType;
+use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\ArticleCategory;
 use AppBundle\Entity\ArticleSubCategory;
@@ -21,7 +21,7 @@ class ArticleController extends Controller
     public function ArticleAction(Article $article)
     {
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
-            'commentForm' => $form = $this->createForm(ArticleCommentFormType::class)->createView(),
+            'commentForm' => $form = $this->createForm(ArticleCommentForm::class)->createView(),
             'article' => $article,
         ));
     }

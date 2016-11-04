@@ -15,6 +15,24 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/images/favicon.ico') }}" />
     </head>
     <body>
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success alert-dismissible alert-fixed-top" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% for msg in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger alert-dismissible alert-fixed-top" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ msg }}
+            </div>
+        {% endfor %}
+        {% for msg in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning alert-dismissible alert-fixed-top" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ msg }}
+            </div>
+        {% endfor %}
         <nav class="navmenu navmenu-default navmenu-fixed-left offcanvas">
             <a class="navmenu-brand" href="{{ path('homepage') }}">Brand</a>
             <ul class="nav navmenu-nav">
@@ -23,11 +41,27 @@
             </ul>
             <ul class="nav navmenu-nav">
                 {% if is_granted('ROLE_USER') %}
-                    <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}><a href="{{ path('user_account') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account</a></li>
-                    <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
+                    <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
+                        <a href="{{ path('user_account', { id: app.user.id }) }}">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('security_logout') }}">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
+                        </a>
+                    </li>
                 {% else %}
-                    <li{% if app.request.attributes.get('_route') == 'user_register' %} class="active"{% endif %}><a href="{{ path('user_register') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register</a></li>
-                    <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}><a href="{{ path('security_login') }}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
+                    <li{% if app.request.attributes.get('_route') == 'user_register' %} class="active"{% endif %}>
+                        <a href="{{ path('user_register') }}">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register
+                        </a>
+                    </li>
+                    <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}>
+                        <a href="{{ path('security_login') }}">
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </nav>
@@ -59,11 +93,27 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('ROLE_USER') %}
-                            <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}><a href="{{ path('user_account') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account</a></li>
-                            <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
+                            <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
+                                <a href="{{ path('user_account', { id: app.user.id }) }}">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('security_logout') }}">
+                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
+                                </a>
+                            </li>
                         {% else %}
-                            <li{% if app.request.attributes.get('_route') == 'user_register' %} class="active"{% endif %}><a href="{{ path('user_register') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register</a></li>
-                            <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}><a href="{{ path('security_login') }}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
+                            <li{% if app.request.attributes.get('_route') == 'user_register' %} class="active"{% endif %}>
+                                <a href="{{ path('user_register') }}">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register
+                                </a>
+                            </li>
+                            <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}>
+                                <a href="{{ path('security_login') }}">
+                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
+                                </a>
+                            </li>
                         {% endif %}
                     </ul>
                 </div>

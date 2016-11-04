@@ -207,4 +207,17 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param int $idUser
+     * @return Article[]
+     */
+    public function findAllByUser($idUser)
+    {
+        return $this->createQueryBuilder('article')
+            ->andWhere('article.user = :idUser')
+            ->setParameter('idUser', $idUser)
+            ->getQuery()
+            ->execute();
+    }
 }

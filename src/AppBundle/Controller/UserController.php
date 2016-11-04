@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\RegistrationForm;
+use AppBundle\Form\UserForm;
+use AppBundle\Entity\User;
 
 /**
  * Cette class va servire, entre autre, pour gérer les URLs de login et de logout. 
@@ -23,7 +25,7 @@ class UserController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
-        return $this->render('AppBundle:pages:loginPage.html.twig', array(
+        return $this->render('AppBundle:pages:userLoginPage.html.twig', array(
             'form' => $form->createView(),
             'error' => $error,
         ));
@@ -64,7 +66,7 @@ class UserController extends Controller
                 'main'
             );
         }
-        return $this->render('AppBundle:pages:registerPage.html.twig', array(
+        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -74,6 +76,22 @@ class UserController extends Controller
      */
     public function accountAction(Request $request, User $user)
     {
-        die(dump($user));
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(UserForm::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                sprintf('Update successfully')
+            );
+        }
+        return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
+            'user' => $user,
+            'userForm' => $form->createView(),
+            'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUser($user->getId()),
+        ));
     }
 }
