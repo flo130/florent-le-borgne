@@ -5,8 +5,14 @@
                 {{ article.title }}
             </a>
         </h2>
+        {% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
+            <a class="btn btn-default pull-right" href="#" role="button">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit article
+            </a>
+        {% endif %}
         <p class="lead">
-            By <a href="{{ path('user_account', { id: article.user.id }) }}">
+            By 
+            <a href="{{ path('user_account', { id: article.user.id }) }}">
                 {{ article.user.name }}
             </a>
         </p>

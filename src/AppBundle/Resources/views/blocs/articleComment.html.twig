@@ -5,7 +5,9 @@
     </a>
     <div class="media-body">
         <h4 class="media-heading">
-            <a href="{{ path('user_account', { id: comment.user.id }) }}">{{ comment.user.name }}</a>
+            <a href="{{ path('user_account', { id: comment.user.id }) }}">
+                {{ comment.user.name }}
+            </a>
             <small>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</small>
         </h4>
         {{ comment.articleComment }}
