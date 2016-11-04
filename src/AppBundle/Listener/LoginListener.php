@@ -9,7 +9,7 @@ class LoginListener
 {
     /** @var \Symfony\Component\Security\Core\TokenStorage */
     private $tokenStorage;
-    
+
     /** @var \Doctrine\ORM\EntityManager */
     private $em;
 
@@ -35,14 +35,11 @@ class LoginListener
 //         if ($this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
 //             // user has logged in using remember_me cookie
 //         }
-
         $user = $event->getAuthenticationToken()->getUser();
-
         if (!$user->getFirstLogin()) {
             $user->setFirstLogin(new \DateTime());
         }
         $user->setLoginCount($user->getLoginCount() + 1);
-        
         $this->em->persist($user);
         $this->em->flush();
     }
