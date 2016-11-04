@@ -13,15 +13,21 @@
             </ol>
         </div>
     </div>
-    <div class="column row">
-        {% include 'AppBundle:blocs:articleDetail.html.twig' with {'article' : article} %}
-        <hr>
-        <div class="well">
-            <h4>Leave a comment</h4>
-            {% include 'AppBundle:forms:articleCommentForm.html.twig' with {'form' : commentForm} %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'AppBundle:blocs:articleDetail.html.twig' with {'article' : article} %}
         </div>
-        {% for comment in article.articleComments %}
-            {% include 'AppBundle:blocs:articleComment.html.twig' with {'comment' : comment} %}
-        {% endfor %}
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                <h4>Leave a comment</h4>
+                {% include 'AppBundle:forms:articleCommentForm.html.twig' with {'form' : commentForm} %}
+            </div>
+            {% for comment in article.articleComments %}
+                {% include 'AppBundle:blocs:articleComment.html.twig' with {'comment' : comment} %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

@@ -10,8 +10,12 @@
         <div class="col-md-8">
             <h1 class="page-header">Articles</h1>
             {% for article in articles %}
-                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : article} %}
-                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                         {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : article} %}
+                         <hr>
+                     </div>
+                 </div>
             {% else %}
                 "No data found"
                 <hr>

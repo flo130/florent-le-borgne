@@ -1,28 +1,26 @@
-<div class="row">
-    <h1>
-        {{ article.title }}
-    </h1>
-    {% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
-        <a class="btn btn-default pull-right" href="#" role="button">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit article
-        </a>
-    {% endif %}
-    <p class="lead">
-        By 
-        <a href="{{ path('user_account', { id: article.user.id }) }}">
-            {{ article.user.name }}
-        </a>
-    </p>
-    <p>
-        <span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}
-    </p>
-    {# article.image #}
-    <img class="center-block img-responsive" src="http://placehold.it/900x300" alt="{{ article.title }}">
-    <hr>
-    <p class="lead">
-        {{ article.summary }}
-    </p>
-    <p>
-        {{ article.article }}
-    </p>
-</div>
+<h1>
+    {{ article.title }}
+</h1>
+{% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
+    <a class="btn btn-default pull-right" href="#" role="button">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+    </a>
+{% endif %}
+<p class="lead">
+    By 
+    <a href="{{ path('user_account', { id: article.user.id }) }}">
+        {{ article.user.name }}
+    </a>
+</p>
+<p>
+    <span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}
+</p>
+{# article.image #}
+<img class="center-block img-responsive" src="http://placehold.it/900x300" alt="{{ article.title }}">
+<hr>
+<p class="lead">
+    {{ article.summary }}
+</p>
+<p>
+    {{ article.article }}
+</p>
