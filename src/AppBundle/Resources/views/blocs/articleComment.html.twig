@@ -1,11 +1,11 @@
 <div class="media">
     {# comment.user.avatar #}
-    <a class="pull-left" href="#">
+    <a class="pull-left" href="{{ path('user_account', { id: comment.user.id }) }}">
         <img class="media-object" src="http://placehold.it/65x65" alt="{{ comment.user.name }}">
     </a>
     <div class="media-body">
         <h4 class="media-heading">
-            {{ comment.user.name }}
+            <a href="{{ path('user_account', { id: comment.user.id }) }}">{{ comment.user.name }}</a>
             <small>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</small>
         </h4>
         {{ comment.articleComment }}
