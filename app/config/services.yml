@@ -35,3 +35,10 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber }
+
+    # Ecoute un login utilisateur pour faire des choses juste apres
+    app.listener.login_listener:
+        class: AppBundle\Listener\LoginListener
+        arguments: ['@security.token_storage', '@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }

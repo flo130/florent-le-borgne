@@ -5,3 +5,5 @@ AppBundle\Entity\User:
         roles: <roles()>
         name: <userName()>
         avatar: <word()>.jpg
+        loginCount: randomDigitNotNull()
+        firstLogin: <dateTimeBetween('-4 years', 'now')>

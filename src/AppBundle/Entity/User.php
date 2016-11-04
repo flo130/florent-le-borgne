@@ -16,7 +16,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * 
  * Il faudra créer un encoder dans security.yml => encoders: AppBundle\Entity\User: bcrypt
  * 
- * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
+ * @UniqueEntity(fields={"email"}, message="It looks like your already have an account (email)!")
+ * @UniqueEntity(fields={"name"}, message="It looks like your already have an account (name)!")
  * 
  * @ORM\Entity
  * @ORM\Table(name="user")
@@ -81,6 +82,18 @@ class User implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @ORM\Column(type="integer", length=6, options={"default":0})
+     */
+    private $loginCount = 0;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $firstLogin;
+
 
     public function __construct()
     {
@@ -140,6 +153,16 @@ class User implements UserInterface
     public function getArticleComments()
     {
         return $this->articleComments;
+    }
+
+    public function getLoginCount()
+    {
+        return $this->loginCount;
+    }
+
+    public function getFirstLogin()
+    {
+        return $this->firstLogin;
     }
 
     /**
@@ -204,5 +227,15 @@ class User implements UserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+
+    public function setLoginCount($loginCount)
+    {
+        $this->loginCount = $loginCount;
+    }
+
+    public function setFirstLogin($firstLogin)
+    {
+        $this->firstLogin = $firstLogin;
     }
 }
