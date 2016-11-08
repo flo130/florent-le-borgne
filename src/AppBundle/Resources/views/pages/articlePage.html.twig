@@ -27,6 +27,8 @@
             </div>
             {% for comment in article.articleComments %}
                 {% include 'AppBundle:blocs:articleComment.html.twig' with {'comment' : comment} %}
+            {% else %}
+                "No data found"
             {% endfor %}
         </div>
     </div>

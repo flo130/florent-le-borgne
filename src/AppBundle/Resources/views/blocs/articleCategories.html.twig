@@ -11,12 +11,16 @@
             <div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
                 <div class="panel-body">
                     <ul>
-                       {% for subCategory in category.articleSubCategories %}
-                           <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
-                       {% endfor %}
+                        {% for subCategory in category.articleSubCategories %}
+                            <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
+                        {% else %}
+                            "No data found"
+                        {% endfor %}
                    </ul>
                </div>
            </div>
        </div>
-   {% endfor %}
+    {% else %}
+        "No data found"
+    {% endfor %}
 </div>
