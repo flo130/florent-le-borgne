@@ -1,3 +1,4 @@
+{% if pagination.pages_count > 0 %}
 <ul class="pagination">
     <li{% if pagination.page <= 1 %} class="disabled"{% endif %}>
         <a href="{{ path(pagination.page_name, {'page': 1}) }}">
@@ -25,3 +26,4 @@
         </a>
     </li>
 </ul>
+{% endif %}
