@@ -36,6 +36,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    app.doctrine.user_listener:
+        class: AppBundle\Doctrine\UserListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
+
     # Ecoute un login utilisateur pour faire des choses juste apres
     app.listener.login_listener:
         class: AppBundle\Listener\LoginListener

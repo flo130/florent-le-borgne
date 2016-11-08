@@ -28,6 +28,7 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="account">
                     <h2>Account</h2>
+                    Member since {{ user.createdAt|date("d/m/Y") }}
                     {% if is_granted('ROLE_USER') and app.user.id == user.id %}
                         {% include 'AppBundle:forms:userForm.html.twig' with {
                             'form' : userForm

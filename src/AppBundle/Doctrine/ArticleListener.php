@@ -31,7 +31,9 @@ class ArticleListener implements EventSubscriber
         $entity = $args->getEntity();
         //ici on veut écouter seulement les instance de Article
         if ($entity instanceof Article) {
-            $entity->setCreatedAt(new \DateTime());
+            if (!$entity->getCreatedAt()) {
+                $entity->setCreatedAt(new \DateTime());
+            }
             $entity->setUpdatedAt(new \DateTime());
         }
     }

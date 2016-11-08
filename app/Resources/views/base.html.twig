@@ -42,7 +42,7 @@
             <ul class="nav navmenu-nav">
                 {% if is_granted('ROLE_USER') %}
                     <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
-                        <a href="{{ path('user_account', { id: app.user.id }) }}">
+                        <a href="{{ path('user_account', { name: app.user.name }) }}">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                         </a>
                     </li>
@@ -94,7 +94,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('ROLE_USER') %}
                             <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
-                                <a href="{{ path('user_account', { id: app.user.id }) }}">
+                                <a href="{{ path('user_account', { name: app.user.name }) }}">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                                 </a>
                             </li>

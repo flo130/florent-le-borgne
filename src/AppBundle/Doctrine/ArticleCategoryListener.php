@@ -28,7 +28,9 @@ class ArticleCategoryListener implements EventSubscriber
     {
         $entity = $args->getEntity();
         if ($entity instanceof ArticleCategory) {
-            $entity->setCreatedAt(new \DateTime());
+            if (!$entity->getCreatedAt()) {
+                $entity->setCreatedAt(new \DateTime());
+            }
         }
     }
 }

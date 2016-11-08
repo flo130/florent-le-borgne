@@ -72,7 +72,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/{id}/account", name="user_account")
+     * @Route("/user/{name}/account", name="user_account")
      */
     public function accountAction(Request $request, User $user)
     {

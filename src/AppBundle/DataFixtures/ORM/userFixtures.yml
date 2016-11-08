@@ -1,5 +1,5 @@
 AppBundle\Entity\User:
-    user_{1..50}:
+    user_{1..10}:
         email: <email()>
         plainPassword: password
         roles: <roles()>

@@ -8,7 +8,7 @@
 {% endif %}
 <p class="lead">
     By 
-    <a href="{{ path('user_account', { id: article.user.id }) }}">
+    <a href="{{ path('user_account', { name: article.user.name }) }}">
         {{ article.user.name }}
     </a>
 </p>

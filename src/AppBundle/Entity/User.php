@@ -73,7 +73,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", unique=true)
      */
     private $name;
 
@@ -93,6 +93,13 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $firstLogin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
 
     public function __construct()
@@ -188,6 +195,11 @@ class User implements UserInterface
         return $this->avatar;
     }
 
+    public function getCreatedAt() 
+    {
+        return $this->createdAt;
+    }
+
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
@@ -237,5 +249,10 @@ class User implements UserInterface
     public function setFirstLogin($firstLogin)
     {
         $this->firstLogin = $firstLogin;
+    }
+
+    public function setCreatedAt($createdAt) 
+    {
+        $this->createdAt = $createdAt;
     }
 }
