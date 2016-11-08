@@ -3,6 +3,9 @@
 #quitte ce script si une erreur arrive
 set -e
 
+#récupération des sources 
+#git clone https://github.com/flo130/florent-le-borgne
+
 #recuperation de composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
@@ -34,7 +37,3 @@ php bin/console assetic:dump --env=prod --no-debug
 
 #nettoyage du cache
 php bin/console cache:clear --env=prod --no-debug
-
-
-
-php bin/symfony_requirements

@@ -3,6 +3,10 @@
 #quitte ce script si une erreur arrive
 set -e
 
+#update des sources
+git fetch origin master
+git reset --hard origin/master
+
 #recuperation de composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
