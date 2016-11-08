@@ -9,7 +9,7 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
 #installation des dépendances du projet
-php composer.phar install --no-dev --optimize-autoloader
+php composer.phar update
 
 #suppression du fichier Composer
 rm composer.phar
@@ -19,9 +19,6 @@ chmod g+w var/cache var/logs
 
 #vérifie si tout est ok pour faire tourner Symfony
 php bin/symfony_requirements
-
-#création de la base de données
-php bin/console doctrine:database:create
 
 #installation du nouveau schéma
 php bin/console doctrine:migrations:migrate --no-interaction
@@ -34,7 +31,3 @@ php bin/console assetic:dump --env=prod --no-debug
 
 #nettoyage du cache
 php bin/console cache:clear --env=prod --no-debug
-
-
-
-php bin/symfony_requirements
