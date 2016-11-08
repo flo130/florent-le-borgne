@@ -43,7 +43,7 @@
                 {% if is_granted('ROLE_USER') %}
                     <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
                         <a href="{{ path('user_account', { id: app.user.id }) }}">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                         </a>
                     </li>
                     <li>
@@ -95,7 +95,7 @@
                         {% if is_granted('ROLE_USER') %}
                             <li{% if app.request.attributes.get('_route') == 'user_account' %} class="active"{% endif %}>
                                 <a href="{{ path('user_account', { id: app.user.id }) }}">
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                                 </a>
                             </li>
                             <li>
