@@ -19,10 +19,15 @@ php composer.phar update
 rm composer.phar
 
 #changement des droits sur les répertoires de cache et de logs
-chmod g+w var/cache var/logs
+HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
 #vérifie si tout est ok pour faire tourner Symfony
 php bin/symfony_requirements
+
+#vérifie si les basic de la sécurité sont ok
+php bin/console security:check
 
 #installation du nouveau schéma
 php bin/console doctrine:migrations:migrate --no-interaction
