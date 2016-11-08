@@ -28,16 +28,24 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="account">
                     <h2>Account</h2>
-                    {% include 'AppBundle:forms:userForm.html.twig' with {
-                        'form' : userForm
-                    } %}
+                    {% if is_granted('ROLE_USER') and app.user.id == user.id %}
+                        {% include 'AppBundle:forms:userForm.html.twig' with {
+                            'form' : userForm
+                        } %}
+                    {% else %}
+                        {% include 'AppBundle:forms:userForm.html.twig' with {
+                            'user' : user
+                        } %}
+                    {% endif %}
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="articles">
                     <h2>Articles</h2>
                     {% for userArticle in userArticles %}
                         <div class="row">
                             <div class="col-md-12">
-                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {'article' : userArticle} %}
+                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
+                                    'article' : userArticle
+                                } %}
                                 <hr>
                             </div>
                         </div>
