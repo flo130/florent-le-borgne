@@ -1,15 +1,13 @@
 {% extends '::base.html.twig' %}
-
-{% block title %}{{ parent() }} - Register{% endblock %}
-
+{% block title %}
+    {{ parent() }} - Register
+{% endblock %}
 {% block body %}
     <h2>Register</h2>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="well">
-                {% include 'AppBundle:forms:registerForm.html.twig' with {
-                    'form' : form
-                } %}
+                {% include 'AppBundle:forms:registerForm.html.twig' with { 'form' : form } %}
             </div>
         </div>
     </div>

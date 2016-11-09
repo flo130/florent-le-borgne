@@ -1,16 +1,30 @@
-<div class="orbit" role="region" data-orbit>
-    <ul class="orbit-container">
+<div id="article-carousel" class="carousel slide" data-ride="carousel">
+    {# puces #}
+    <ol class="carousel-indicators">
         {% for article in articles %}
-            <li class="{% if loop.index0 == 0 %}is-active {% endif %}orbit-slide">
-                <!-- article.image -->
-                <img class="orbit-image" src="http://placehold.it/900x30{{ loop.index0 }}" alt="Space">
-                <figcaption class="orbit-caption">{{ article.title }}</figcaption>
-            </li>
+            <li data-target="#article-carousel" data-slide-to="{{ loop.index0 }}"{% if loop.index0 == 0 %} class="active"{% endif %}></li>
         {% endfor %}
-    </ul>
-    <nav class="orbit-bullets">
+    </ol>
+    {# contenu du carousel #}
+    <div class="carousel-inner" role="listbox">
         {% for article in articles %}
-            <button{% if loop.index0 == 0 %} class="is-active"{% endif %} data-slide="{{ loop.index0 }}"></button>
+            <div class="item active">
+                {# article.image #}
+                <img class="orbit-image" src="http://placehold.it/900x300" alt="Space">
+                <div class="carousel-caption">
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.summary }}</p>
+                </div>
+            </div>
         {% endfor %}
-    </nav>
+    </div>
+    {# fleches de control #}
+    <a class="left carousel-control" href="#article-carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#article-carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>

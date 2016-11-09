@@ -15,6 +15,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/images/favicon.ico') }}" />
     </head>
     <body>
+        {# messages #}
         {% for msg in app.session.flashBag.get('success') %}
             <div class="alert alert-success alert-dismissible alert-fixed-top" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -33,6 +34,7 @@
                 {{ msg }}
             </div>
         {% endfor %}
+        {# menu canvas #}
         <nav class="navmenu navmenu-default navmenu-fixed-left offcanvas">
             <a class="navmenu-brand" href="{{ path('homepage') }}">Brand</a>
             <ul class="nav navmenu-nav">
@@ -65,6 +67,7 @@
                 {% endif %}
             </ul>
         </nav>
+        {# menu classique #}
         <div class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -119,9 +122,11 @@
                 </div>
             </div>
         </div>
+        {# contenu de la page #}
         <div class="container">
             {% block body %}{% endblock %}
         </div>
+        {# footer #}
         <footer class="container-fluid">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">

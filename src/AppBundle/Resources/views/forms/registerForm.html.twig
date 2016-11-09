@@ -1,11 +1,6 @@
 {{ form_start(form) }}
     {{ form_row(form.email) }}
-    {# pour avoir ces deux champs, il faut utiliser RepeatedType::class lors de la creation du formulaire #}
-    {{ form_row(form.plainPassword.first, {
-        'label': 'Password'
-    }) }}
-    {{ form_row(form.plainPassword.second, {
-        'label': 'Repeat Password'
-    }) }}
+    {{ form_row(form.plainPassword.first, { 'label': 'Password' }) }}
+    {{ form_row(form.plainPassword.second, { 'label': 'Repeat Password' }) }}
     <button class="btn btn-primary" type="submit" formnovalidate>Register</button>
 {{ form_end(form) }}

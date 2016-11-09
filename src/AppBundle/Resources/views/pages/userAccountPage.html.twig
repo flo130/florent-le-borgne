@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
-
-{% block title %}{{ parent() }} - {{ user.name }}{% endblock %}
-
+{% block title %}
+    {{ parent() }} - {{ user.name }}
+{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -30,13 +30,9 @@
                     <h2>Account</h2>
                     Member since {{ user.createdAt|date("d/m/Y") }}
                     {% if is_granted('ROLE_USER') and app.user.id == user.id %}
-                        {% include 'AppBundle:forms:userForm.html.twig' with {
-                            'form' : userForm
-                        } %}
+                        {% include 'AppBundle:forms:userForm.html.twig' with { 'form' : userForm } %}
                     {% else %}
-                        {% include 'AppBundle:blocs:userAccount.html.twig' with {
-                            'user' : user
-                        } %}
+                        {% include 'AppBundle:blocs:userAccount.html.twig' with { 'user' : user } %}
                     {% endif %}
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="articles">
@@ -44,9 +40,7 @@
                     {% for userArticle in userArticles %}
                         <div class="row">
                             <div class="col-md-12">
-                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
-                                    'article' : userArticle
-                                } %}
+                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : userArticle } %}
                                 <hr>
                             </div>
                         </div>

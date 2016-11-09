@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
-
-{% block title %}{{ parent() }} - {{ article.title }}{% endblock %}
-
+{% block title %}
+    {{ parent() }} - {{ article.title }}
+{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -15,9 +15,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            {% include 'AppBundle:forms:articleForm.html.twig' with {
-                'form' : articleForm
-            } %}
+            {% include 'AppBundle:forms:articleForm.html.twig' with { 'form' : articleForm } %}
         </div>
     </div>
 {% endblock %}

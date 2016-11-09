@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
-
-{% block title %}{{ parent() }} - Home{% endblock %}
-
+{% block title %}
+    {{ parent() }} - Home
+{% endblock %}
 {% block body %}
     <div class="row">
-        {# include 'AppBundle:blocs:articleCarousel.html.twig' with {'articles' : lastArticles} #}
+        {% include 'AppBundle:blocs:articleCarousel.html.twig' with { 'articles' : lastArticles } %}
     </div>
     <div class="row">
         <div class="col-md-8">
@@ -12,9 +12,7 @@
             {% for article in articles %}
                 <div class="row">
                     <div class="col-md-12">
-                         {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
-                             'article' : article
-                         } %}
+                         {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : article } %}
                          <hr>
                      </div>
                  </div>
@@ -23,9 +21,7 @@
                 <hr>
             {% endfor %}
             <nav class="text-center">
-                {% include 'AppBundle:blocs:pagination.html.twig' with {
-                    'pagination' : articlesPagination
-                } %}
+                {% include 'AppBundle:blocs:pagination.html.twig' with { 'pagination' : articlesPagination } %}
             </nav>
         </div>
         <div class="col-md-4">
@@ -42,9 +38,7 @@
             </div>
             <div class="well">
                 <h4>Categories</h4>
-                {% include 'AppBundle:blocs:articleCategories.html.twig' with {
-                    'categories' : categories
-                } %}
+                {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
             </div>
         </div>
     </div>

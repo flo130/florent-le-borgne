@@ -1,16 +1,13 @@
 {% extends '::base.html.twig' %}
-
-{% block title %}{{ parent() }} - Login{% endblock %}
-
+{% block title %}
+    {{ parent() }} - Login
+{% endblock %}
 {% block body %}
     <h2>Login</h2>
     <div class="row">
         <div class="col-md-8 col-md-offset-2{% if error %} animated shake{% endif %}">
             <div class="well">
-                {% include 'AppBundle:forms:loginForm.html.twig' with {
-                    'error' : error,
-                    'form' : form
-                } %}
+                {% include 'AppBundle:forms:loginForm.html.twig' with { 'error' : error, 'form' : form } %}
             </div>
         </div>
     </div>
