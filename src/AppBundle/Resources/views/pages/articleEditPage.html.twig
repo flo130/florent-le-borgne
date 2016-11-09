@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ article.title }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li><a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a></li>
+                <li><a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a></li>
+                <li class="active">Edit - {{ article.title }}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'AppBundle:forms:articleForm.html.twig' with {
+                'form' : articleForm
+            } %}
+        </div>
+    </div>
+{% endblock %}

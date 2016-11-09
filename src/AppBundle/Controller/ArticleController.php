@@ -9,6 +9,7 @@ use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\ArticleCategory;
 use AppBundle\Entity\ArticleSubCategory;
+use AppBundle\Form\ArticleForm;
 
 /**
  * @Route("/article")
@@ -61,6 +62,20 @@ class ArticleController extends Controller
      */
     public function ArticleEditAction(Request $request, Article $article)
     {
-        die(dump($article));
+        $form = $this->createForm(ArticleForm::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $em->persist($article);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                sprintf('Update successfully')
+            );
+        }
+        return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
+            'article' => $article,
+            'articleForm' => $form->createView(),
+        ));
     }
 }

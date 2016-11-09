@@ -3,6 +3,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\ArticleCategory;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class ArticleCategoryRepository extends EntityRepository
 {
@@ -15,5 +16,14 @@ class ArticleCategoryRepository extends EntityRepository
             ->orderBy('article_category.createdAt', 'DESC')
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function createAlphabeticalQueryBuilder()
+    {
+        return $this->createQueryBuilder('article_category')
+            ->orderBy('article_category.articleCategory', 'ASC');
     }
 }

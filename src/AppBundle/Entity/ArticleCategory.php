@@ -39,6 +39,15 @@ class ArticleCategory
     	$this->articleSubCategories = new ArrayCollection();
     }
 
+    /**
+     * Permet de récupérer un string dans un form par exemple (cf. ArticleForm.php)
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getArticleCategory();
+    }
+
     public function getId()
     {
         return $this->id;

@@ -16,4 +16,13 @@ class ArticleSubCategoryRepository extends EntityRepository
         ->getQuery()
         ->execute();
     }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function createAlphabeticalQueryBuilder()
+    {
+    	return $this->createQueryBuilder('article_sub_category')
+    	->orderBy('article_sub_category.articleSubCategory', 'ASC');
+    }
 }

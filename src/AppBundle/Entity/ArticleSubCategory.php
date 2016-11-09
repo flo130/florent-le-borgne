@@ -34,6 +34,15 @@ class ArticleSubCategory
     private $createdAt;
 
 
+    /**
+     * Permet de récupérer un string dans un form par exemple (cf. ArticleForm.php)
+     * @return string
+     */
+    public function __toString()
+    {
+    	return $this->getArticleSubCategory();
+    }
+
     public function getId()
     {
         return $this->id;
