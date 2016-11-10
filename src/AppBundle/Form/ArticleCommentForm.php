@@ -9,6 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ArticleCommentForm extends AbstractType
 {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -25,8 +29,6 @@ class ArticleCommentForm extends AbstractType
         // ici on lui donne la class de l'entité associée. 
         // Symfony va s'en servir pour faire le mapping entre les données 
         // postées par le form et les données à rentrer en base
-        $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\ArticleComment'
-        ]);
+        $resolver->setDefaults(array('data_class' => ArticleComment::class));
     }
 }

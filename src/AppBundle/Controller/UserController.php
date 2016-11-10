@@ -66,9 +66,7 @@ class UserController extends Controller
                 'main'
             );
         }
-        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -83,10 +81,7 @@ class UserController extends Controller
             $user = $form->getData();
             $em->persist($user);
             $em->flush();
-            $this->addFlash(
-                'success',
-                sprintf('Update successfully')
-            );
+            $this->addFlash('success', sprintf('Update successfully'));
         }
         return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
             'user' => $user,

@@ -19,7 +19,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            //bundle permettant d'utiliser CKEditor via le form builder Symfony
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            //bundle permettant de gérer l'upload de fichiers
+            new FM\ElfinderBundle\FMElfinderBundle(),
             new AppBundle\AppBundle(),
         ];
 

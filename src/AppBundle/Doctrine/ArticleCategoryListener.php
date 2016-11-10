@@ -1,26 +1,11 @@
 <?php
 namespace AppBundle\Doctrine;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\ArticleCategory;
 
-/**
- * Cette classe est délcarée dans service.yml et tagguée doctrine.event_subscriber
- */
-class ArticleCategoryListener implements EventSubscriber
+class ArticleCategoryListener
 {
-    /**
-     * Event Doctrine que l'ont veut écouter
-     * 
-     * (non-PHPdoc)
-     * @see \Doctrine\Common\EventSubscriber::getSubscribedEvents()
-     */
-    public function getSubscribedEvents()
-    {
-        return ['prePersist'];
-    }
-
     /**
      * @param LifecycleEventArgs $args
      */

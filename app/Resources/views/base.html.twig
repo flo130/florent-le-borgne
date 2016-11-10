@@ -2,11 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Florent Le Borgne{% endblock %}</title>
+        <title>{% block title %}Site{% endblock %}</title>
         {% block stylesheets %}
             {% stylesheets filter='cssrewrite'
                 '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'
                 '//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.css'
+                '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css'
                 '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'
             %}
                 <link rel="stylesheet" href="{{ asset_url }}">
@@ -15,21 +16,27 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/images/favicon.ico') }}" />
     </head>
     <body>
-        {# messages #}
+        {# messages info/success/error/warning #}
+        {% for msg in app.session.flashBag.get('info') %}
+            <div class="alert alert-info alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ msg }}
+            </div>
+        {% endfor %}
         {% for msg in app.session.flashBag.get('success') %}
-            <div class="alert alert-success alert-dismissible alert-fixed-top" role="alert">
+            <div class="alert alert-success alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{ msg }}
             </div>
         {% endfor %}
         {% for msg in app.session.flashBag.get('error') %}
-            <div class="alert alert-danger alert-dismissible alert-fixed-top" role="alert">
+            <div class="alert alert-danger alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{ msg }}
             </div>
         {% endfor %}
         {% for msg in app.session.flashBag.get('warning') %}
-            <div class="alert alert-warning alert-dismissible alert-fixed-top" role="alert">
+            <div class="alert alert-warning alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{ msg }}
             </div>
@@ -140,7 +147,9 @@
                 '//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
                 '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'
                 '//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js'
+                '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js'
                 '//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian'
+                '@js_app'
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}

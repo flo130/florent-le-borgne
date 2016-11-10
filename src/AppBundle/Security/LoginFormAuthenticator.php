@@ -30,14 +30,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @param RouterInterface $router
      * @param UserPasswordEncoder $passwordEncoder
      */
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder) {
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder) 
+    {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function getCredentials(Request $request) {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Guard\GuardAuthenticatorInterface::getCredentials()
+     */
+    public function getCredentials(Request $request) 
+    {
         $isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
         if (!$isLoginSubmit) {
             // skip authentication
@@ -56,14 +62,24 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $data;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider) {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Guard\GuardAuthenticatorInterface::getUser()
+     */
+    public function getUser($credentials, UserProviderInterface $userProvider) 
+    {
         $username = $credentials['_username'];
         //retourne notre utilisateur en utilisant le provider (UserProviderInterface $userProvider)
         //cf. security.yml : providers
         return $this->em->getRepository('AppBundle:User')->findOneBy(['email' => $username]);
     }
 
-    public function checkCredentials($credentials, UserInterface $user) {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Guard\GuardAuthenticatorInterface::checkCredentials()
+     */
+    public function checkCredentials($credentials, UserInterface $user) 
+    {
         $password = $credentials['_password'];
         //ici on vérifie que le mot de passe forunis et le mot passe connu en base sont les même 
         if ($this->passwordEncoder->isPasswordValid($user, $password)) {
@@ -78,14 +94,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * (non-PHPdoc)
      * @see \Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator::getLoginUrl()
      */
-    protected function getLoginUrl() {
+    protected function getLoginUrl() 
+    {
         return $this->router->generate('security_login');
     }
 
     /**
      * Retourne l'URL vers laquelle rediriger l'utilisateur en cas de succès du login
      */
-    protected function getDefaultSuccessRedirectUrl() {
+    protected function getDefaultSuccessRedirectUrl() 
+    {
         return $this->router->generate('homepage');
     }
 }

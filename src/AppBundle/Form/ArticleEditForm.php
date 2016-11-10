@@ -7,20 +7,34 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use AppBundle\Entity\ArticleSubCategory;
 use AppBundle\Entity\ArticleCategory;
 use AppBundle\Repository\ArticleCategoryRepository;
 use AppBundle\Repository\ArticleSubCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ArticleForm extends AbstractType
+class ArticleEditForm extends AbstractType
 {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('article', CKEditorType::class)
+            ->add('image', FileType::class, array(
+                //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
+                'data_class' => null,
+                'required' => false,
+            ))
             ->add('title', TextareaType::class)
             ->add('summary', TextareaType::class)
+            ->add('article', CKEditorType::class, array(
+                //voir dans config.yml la conf de CKEditor nommée "article_config" : c'est config du CKEditor
+                'config_name' => 'article_config',
+            ))
             ->add('articleSubCategory', EntityType::class, array(
                 'placeholder' => 'Choose a sub category',
                 'class' => ArticleSubCategory::class,
@@ -35,6 +49,10 @@ class ArticleForm extends AbstractType
                     return $repo->createAlphabeticalQueryBuilder();
                 }
             ))
+            ->add('status', CheckboxType::class, array(
+                'label' => 'Publish this article',
+                'required' => false,
+            ))
         ;
     }
 
@@ -44,8 +62,11 @@ class ArticleForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Article'
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => Article::class,
+            'validation_groups' => array(
+                'Default',
+            ),
+        ));
     }
 }

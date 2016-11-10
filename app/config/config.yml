@@ -9,6 +9,7 @@ parameters:
     locale: fr
     cache_type: file_system
     appversion: 1.0.0
+    article_main_img_dir: "%kernel.root_dir%/../web/article-main-img/"
 
 framework:
     #esi:             ~
@@ -41,6 +42,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         appversion: %appversion%
+        article_main_img_dir: %article_main_img_dir%
     form_themes:
         - bootstrap_3_layout.html.twig
 
@@ -80,3 +82,47 @@ assetic:
     filters:
         cssrewrite: ~
         jsqueeze:   ~
+    #resources relatives au projet (les autres sont chargées via CDN @todo : voir pour les charger via composer)
+    assets:
+        js_app: 
+            inputs:
+                - "@AppBundle/Resources/public/js/*"
+
+# Ivory CKEditor
+#https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle
+ivory_ck_editor:
+    default_config: article_config
+    configs:
+        article_config:
+            language: %locale%
+            toolbar: full
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters:
+                instance: ckeditor
+    #styles perso pour coller avec Bootstrap
+    styles:
+        my_styles:
+            - { name: "Alerte Success", element: "div",  attributes: { class: "alert alert-success", role: "alert" }}
+            - { name: "Alerte Info", element: "div",  attributes: { class: "alert alert-info", role: "alert" }}
+            - { name: "Alerte Warning", element: "div",  attributes: { class: "alert alert-warning", role: "alert" }}
+            - { name: "Alerte Danger", element: "div",  attributes: { class: "alert alert-danger", role: "alert" }}
+            - { name: "Badge", element: "span",  attributes: { class: "badge" }}
+
+# FMElfinderBundle
+#https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle
+fm_elfinder:
+    instances:
+        ckeditor:
+            locale: %locale%
+            editor: ckeditor
+            fullscreen: false
+            include_assets: true
+            connector:
+                debug: false
+                roots:
+                    uploads:
+                        driver: LocalFileSystem
+                        path: article-img
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+                        upload_deny: ['all']
+                        upload_max_size: 5M

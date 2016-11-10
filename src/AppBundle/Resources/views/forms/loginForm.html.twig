@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {% if error %}
         <div class="alert alert-danger">
-            <p><span class="glyphicon glyphicon-alert"></span> {{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            <p><span class="glyphicon glyphicon-alert"></span> {{ error.messageKey | trans(error.messageData, 'security') }}</p>
         </div>
     {% endif %}
     {{ form_row(form._username) }}

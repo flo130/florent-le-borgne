@@ -70,7 +70,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json_array")
      */
-    private $roles = [];
+    private $roles = array();
 
     /**
      * @ORM\Column(type="string", unique=true)

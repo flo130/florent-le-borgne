@@ -9,8 +9,7 @@
     <div class="carousel-inner" role="listbox">
         {% for article in articles %}
             <div class="item active">
-                {# article.image #}
-                <img class="orbit-image" src="http://placehold.it/900x300" alt="Space">
+                <img class="orbit-image lazy" data-src="{{ asset('article-main-img/' ~ article.image) }}" alt="{{ article.title }}">
                 <div class="carousel-caption">
                     <h3>{{ article.title }}</h3>
                     <p>{{ article.summary }}</p>

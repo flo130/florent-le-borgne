@@ -1,14 +1,14 @@
 <div class="media">
     {# comment.user.avatar #}
     <a class="pull-left" href="{{ path('user_account', { name: comment.user.name }) }}">
-        <img class="media-object" src="http://placehold.it/65x65" alt="{{ comment.user.name }}">
+        <img class="media-object lazy" data-src="http://placehold.it/65x65" alt="{{ comment.user.name }}">
     </a>
     <div class="media-body">
         <h4 class="media-heading">
             <a href="{{ path('user_account', { name: comment.user.name }) }}">
                 {{ comment.user.name }}
             </a>
-            <small>{{ comment.createdAt|date("F jS \\a\\t g:ia") }}</small>
+            <small>{{ comment.createdAt | date("F jS \\a\\t g:ia") }}</small>
         </h4>
         {{ comment.articleComment }}
     </div>

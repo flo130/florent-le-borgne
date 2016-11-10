@@ -7,6 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginForm extends AbstractType
 {
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('_username')

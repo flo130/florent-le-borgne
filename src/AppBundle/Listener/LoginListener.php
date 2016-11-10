@@ -29,12 +29,6 @@ class LoginListener
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-//         if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-//             // user has just logged in
-//         }
-//         if ($this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-//             // user has logged in using remember_me cookie
-//         }
         $user = $event->getAuthenticationToken()->getUser();
         if (!$user->getFirstLogin()) {
             $user->setFirstLogin(new \DateTime());

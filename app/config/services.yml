@@ -15,32 +15,39 @@ services:
         class: AppBundle\Doctrine\HashPasswordListener
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
 
-    # Ecoute une requete doctrine et mets a jour les date de creation et de mise a jour d'un article
+    # Ecoute une requete doctrine et mets a jour certaines données d'un article
     app.doctrine.article_listener:
         class: AppBundle\Doctrine\ArticleListener
+        arguments: ['@app.file_uploader', '%article_main_img_dir%']
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
 
+    # Ecoute une requete doctrine et mets a jour certaines données d'une categorie
     app.doctrine.article_category_listener:
         class: AppBundle\Doctrine\ArticleCategoryListener
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }
 
+    # Ecoute une requete doctrine et mets a jour certaines données d'une sous-categorie
     app.doctrine.article_sub_category_listener:
         class: AppBundle\Doctrine\ArticleSubCategoryListener
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }
 
+    # Ecoute une requete doctrine et mets a jour certaines données d'un utilisateur
     app.doctrine.user_listener:
         class: AppBundle\Doctrine\UserListener
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }
 
     # Ecoute un login utilisateur pour faire des choses juste apres
     app.listener.login_listener:
@@ -48,3 +55,16 @@ services:
         arguments: ['@security.token_storage', '@doctrine']
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
+
+    # Voter Symfony pour les articles (permettant de savoir qui a le droit de faire quoi)
+    app.article_voter:
+        class: AppBundle\Security\ArticleVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Class d'upload de fichiers
+    app.file_uploader:
+        class: AppBundle\Service\FileUploader
+        arguments: ['%article_main_img_dir%']

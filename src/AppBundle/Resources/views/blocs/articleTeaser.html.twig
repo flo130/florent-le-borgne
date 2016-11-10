@@ -1,11 +1,11 @@
-<h2><a href="{{ path('article', {'id': article.id }) }}">{{ article.title }}</a></h2>
+<h2><a href="{{ path('article_show', {'id': article.id }) }}">{{ article.title }}</a></h2>
 {% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
     <a class="btn btn-default pull-right" href="{{ path('article_edit', { id: article.id }) }}" role="button">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
     </a>
 {% endif %}
 <p class="lead">By <a href="{{ path('user_account', { name: article.user.name }) }}">{{ article.user.name }}</a></p>
-<p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt|date("F jS \\a\\t g:ia") }}</p>
-<img class="img-responsive" src="http://placehold.it/900x300" alt="{{ article.title }}">
+<p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt | date("F jS \\a\\t g:ia") }}</p>
+<img class="img-responsive lazy" data-src="{{ asset('article-main-img/' ~ article.image) }}" alt="{{ article.title }}">
 <p>{{ article.summary }}</p>
-<a class="btn btn-primary" href="{{ path('article', {'id': article.id }) }}">Read more</a>
+<a class="btn btn-primary" href="{{ path('article_show', {'id': article.id }) }}">Read more</a>
