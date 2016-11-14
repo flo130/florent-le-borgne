@@ -1,29 +1,31 @@
-<div id="article-carousel" class="carousel slide" data-ride="carousel">
-    {# puces #}
-    <ol class="carousel-indicators">
-        {% for article in articles %}
-            <li data-target="#article-carousel" data-slide-to="{{ loop.index0 }}"{% if loop.index0 == 0 %} class="active"{% endif %}></li>
-        {% endfor %}
-    </ol>
-    {# contenu du carousel #}
-    <div class="carousel-inner" role="listbox">
-        {% for article in articles %}
-            <div class="item active">
-                <img class="orbit-image lazy" data-src="{{ asset('article-main-img/' ~ article.image) }}" alt="{{ article.title }}">
-                <div class="carousel-caption">
-                    <h3>{{ article.title }}</h3>
-                    <p>{{ article.summary }}</p>
+{% if articles | length > 0 %}
+    <div id="article-carousel" class="carousel slide" data-ride="carousel">
+        {# puces #}
+        <ol class="carousel-indicators">
+            {% for article in articles %}
+                <li data-target="#article-carousel" data-slide-to="{{ loop.index0 }}"{% if loop.index0 == 0 %} class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+        {# contenu du carousel #}
+        <div class="carousel-inner" role="listbox">
+            {% for article in articles %}
+                <div class="item active">
+                    <img class="orbit-image lazy" data-src="{{ asset('article-main-img/' ~ article.image) }}" alt="{{ article.title }}">
+                    <div class="carousel-caption">
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.summary }}</p>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        {# fleches de control #}
+        <a class="left carousel-control" href="#article-carousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#article-carousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-    {# fleches de control #}
-    <a class="left carousel-control" href="#article-carousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#article-carousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+{% endif %}
