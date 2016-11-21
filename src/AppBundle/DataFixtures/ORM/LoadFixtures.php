@@ -5,9 +5,6 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Fixtures;
 use AppBundle\Entity\Article;
-use AppBundle\Entity\ArticleCategory;
-use AppBundle\Entity\ArticleSubCategory;
-use AppBundle\Entity\User;
 
 class LoadFixtures implements FixtureInterface
 {

@@ -14,13 +14,15 @@ use Symfony\Component\HttpFoundation\File\File;
 class ArticleListener
 {
     private $uploader;
-    private $targetPath;
 
 
-    public function __construct(FileUploader $uploader, $targetPath)
+    /**
+     * @param FileUploader $uploader
+     * @param string $targetPath
+     */
+    public function __construct(FileUploader $uploader)
     {
         $this->uploader = $uploader;
-        $this->targetPath = $targetPath;
     }
 
     /**
@@ -31,13 +33,15 @@ class ArticleListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $article = $args->getEntity();
-        if ($article instanceof Article) {
-            if (!$article->getCreatedAt()) {
-                $article->setCreatedAt(new \DateTime());
-            }
-            $article->setUpdatedAt(new \DateTime());
-            $this->uploadFile($article);
+        if (! $article instanceof Article) {
+            return;
         }
+
+        if (!$article->getCreatedAt()) {
+            $article->setCreatedAt(new \DateTime());
+        }
+        $article->setUpdatedAt(new \DateTime());
+        $this->uploadFile($article);
     }
 
     /**
@@ -48,28 +52,16 @@ class ArticleListener
     public function preUpdate(LifecycleEventArgs $args)
     {
         $article = $args->getEntity();
-        if ($article instanceof Article) {
-            $article->setUpdatedAt(new \DateTime());
-            $this->uploadFile($article);
-            //obligatoire pour forcer l'update et voir les changement
-            $em = $args->getEntityManager();
-            $meta = $em->getClassMetadata(get_class($article));
-            $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $article);
+        if (! $article instanceof Article) {
+            return;
         }
-    }
 
-    /**
-     * Actions effectuées juste apres le chargement de l'entity
-     * 
-     * @param LifecycleEventArgs $args
-     */
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $article = $args->getEntity();
-        if ($article instanceof Article) {
-            $fileName = $article->getImage();
-            $article->setImage(new File($this->targetPath . $fileName));
-        }
+        $article->setUpdatedAt(new \DateTime());
+        $this->uploadFile($article);
+        //obligatoire pour forcer l'update et voir les changement
+        $em = $args->getEntityManager();
+        $meta = $em->getClassMetadata(get_class($article));
+        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $article);
     }
 
     /**
@@ -79,9 +71,10 @@ class ArticleListener
     {
         $file = $article->getImage();
         //on upload seulement les nouveaux fichiers
-        if (!$file instanceof UploadedFile) {
+        if (! $file instanceof UploadedFile) {
             return;
         }
+
         $fileName = $this->uploader->upload($file);
         $article->setImage($fileName);
     }

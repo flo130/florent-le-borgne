@@ -9,7 +9,7 @@ parameters:
     locale: fr
     cache_type: file_system
     appversion: 1.0.0
-    article_main_img_dir: "%kernel.root_dir%/../web/article-main-img/"
+    uploads_dir: "%kernel.root_dir%/../web/uploads/"
 
 framework:
     #esi:             ~
@@ -42,7 +42,6 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         appversion: %appversion%
-        article_main_img_dir: %article_main_img_dir%
     form_themes:
         - bootstrap_3_layout.html.twig
 
@@ -122,7 +121,7 @@ fm_elfinder:
                 roots:
                     uploads:
                         driver: LocalFileSystem
-                        path: article-img
+                        path: uploads
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 5M

@@ -1,4 +1,19 @@
 {{ form_start(form) }}
+    <div class="fileinput fileinput-new" data-provides="fileinput">
+        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+            {% if form.vars.value.avatar is not empty %}
+                <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.avatar) }}">
+            {% endif %}
+        </div>
+        <div>
+            <span class="btn btn-default btn-file">
+                <span class="fileinput-new">Select image</span>
+                <span class="fileinput-exists">Change</span>
+                {{ form_widget(form.avatar) }}
+            </span>
+            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+        </div>
+    </div>
     {{ form_row(form.email) }}
     {{ form_row(form.name) }}
     {{ form_row(form.plainPassword) }}

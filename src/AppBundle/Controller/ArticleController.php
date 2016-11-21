@@ -12,6 +12,7 @@ use AppBundle\Entity\ArticleSubCategory;
 use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Form\ArticleEditForm;
 use AppBundle\Form\ArticleCreateForm;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/article")
@@ -60,34 +61,54 @@ class ArticleController extends Controller
     }
 
     /**
+     * @todo : trouver un moyen de faire mieux pour ne pas uploader une valeur vide si pas d'image
+     * Au lieu de 
+     *     $image = $article->getImage()
+     *     [...]
+     *     if (!$article->getImage()) {
+     *         $article->setImage($image);
+     *     }
+     * Essayer avec :
+     *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
+     * 
      * @Route("/edit/{id}", name="article_edit"))
      */
     public function EditAction(Request $request, Article $article)
     {
         //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
+        /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('edit', $article);
-        //@todo : trouver un moyen de faire mieux...
-        //$article->setImage(new File($this->getParameter('image_path').'/'.$article->getImage()))
-        $oldImage = $article->getImage();
+        $image = $article->getImage();
         $form = $this->createForm(ArticleEditForm::class, $article);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $article = $form->getData();
-            //@todo : trouver un moyen de faire mieux...
-            //$article->setImage(new File($this->getParameter('image_path').'/'.$article->getImage()))
-            if (!$article->getImage()) {
-                $article->setImage($oldImage->getFilename());
+        if ($form->isSubmitted()) {
+            $isValid = $form->isValid();
+            if ($isValid) {
+                $article = $form->getData();
+                if (!$article->getImage()) {
+                    $article->setImage($image);
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+                if (!$request->isXmlHttpRequest()) {
+                    $this->addFlash('success', 'Updated successfully');
+                }
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($article);
-            $em->flush();
-            //affiche un message
-            $this->addFlash('success', sprintf('Updated successfully'));
         }
-        return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
-            'article' => $article,
-            'articleForm' => $form->createView(),
-        ));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'message' => $isValid ? 'Updated successfully' : '',
+                'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+                    'form' => $form->createView(),
+                )),
+            ), $isValid ? 200 : 400);
+        } else {
+            return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
+                'article' => $article,
+                'articleForm' => $form->createView(),
+            ));
+        }
     }
 
     /**
@@ -98,20 +119,38 @@ class ArticleController extends Controller
     {
         $form = $this->createForm(ArticleCreateForm::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            //binding des données du form
-            $article = $form->getData();
-            //renseigne le user
-            $article->setUser($this->getUser());
-            //upload le fichier et le renseigne dans l'entity
-            $article->setImage($this->get('app.file_uploader')->upload($article->getImage()));
-            //maj de l'article en base
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($article);
-            $em->flush();
-            $this->addFlash('success', sprintf('Article created successfully'));
-            return $this->redirectToRoute('article_edit', array('id' => $article->getId()));
+        if ($form->isSubmitted()) {
+            $isValid = $form->isValid();
+            if ($isValid) {
+                //binding des données du form
+                $article = $form->getData();
+                //renseigne le user
+                $article->setUser($this->getUser());
+                //upload le fichier et le renseigne dans l'entity
+                $article->setImage($this->get('app.file_uploader')->upload($article->getImage()));
+                //maj de l'article en base
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+                if (!$request->isXmlHttpRequest()) {
+                    $this->addFlash('success', 'Created successfully');
+                }
+            }
+//             return $this->redirectToRoute('article_edit', array(
+//                 'id' => $article->getId(),
+//             ));
         }
-        return $this->render('AppBundle:pages:articleCreatePage.html.twig', array('articleForm' => $form->createView()));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'message' => $isValid ? 'Created successfully' : '',
+                'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+                    'form' => $form->createView(),
+                )),
+            ), $isValid ? 200 : 400);
+        } else {
+            return $this->render('AppBundle:pages:articleCreatePage.html.twig', array(
+                'articleForm' => $form->createView(),
+            ));
+        }
     }
 }

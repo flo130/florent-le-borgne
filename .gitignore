@@ -35,8 +35,7 @@
 /web/css/
 /web/js/
 /web/config.php
-/web/article-img/*
-/web/article-main-img/*
+/web/uploads/*
 
 # Assets managed by Bower
 /web/assets/vendor/

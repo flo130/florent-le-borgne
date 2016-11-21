@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class UserForm extends AbstractType
 {
@@ -19,7 +20,14 @@ class UserForm extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('name')
-            ->add('plainPassword', PasswordType::class)
+            ->add('plainPassword', PasswordType::class, array(
+                'required' => false,
+            ))
+            ->add('avatar', FileType::class, array(
+                //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
+                'data_class' => null,
+                'required' => false,
+            ))
         ;
     }
 
@@ -29,6 +37,8 @@ class UserForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => User::class));
+        $resolver->setDefaults(array(
+            'data_class' => User::class,
+        ));
     }
 }

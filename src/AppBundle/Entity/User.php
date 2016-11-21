@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * Mot de passe en clair (crypté lors de l'enregistrement en base)
@@ -32,6 +32,8 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @var number $id
+     * 
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
@@ -54,14 +56,19 @@ class User implements UserInterface
      * Remarque : on a mis une contrainte d'unicité sur ce champs dans les annotations de la classe
      * De cette façon, lors de la création d'un user, si l'email existe deja en base, il y aura une erreur
      *
+     * @var string $email
+     *
      * @Assert\NotBlank()
      * @Assert\Email()
+     * 
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
 
     /**
      * Mot de passe encodé
+     *
+     * @var string $password
      *
      * @ORM\Column(type="string")
      */
@@ -73,29 +80,37 @@ class User implements UserInterface
     private $roles = array();
 
     /**
+     * @var string $name
+     * 
      * @ORM\Column(type="string", unique=true)
      */
     private $name;
 
     /**
+     * @var string
+     * 
      * @ORM\Column(type="string")
+     * 
+     * @Assert\Image()
      */
     private $avatar;
 
     /**
+     * @var int $loginCount
+     * 
      * @ORM\Column(type="integer", length=6, options={"default":0})
      */
     private $loginCount = 0;
     
     /**
-     * @var \DateTime
+     * @var \DateTime $firstLogin
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $firstLogin;
 
     /**
-     * @var \DateTime
+     * @var \DateTime $createdAt
      *
      * @ORM\Column(type="datetime")
      */
@@ -119,16 +134,27 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
+    /**
+     * @return number
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Core\User\UserInterface::getUsername()
+     */
     public function getUsername()
     {
         return $this->email;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
+     */
     public function getRoles()
     {
         $roles = $this->roles;
@@ -144,11 +170,17 @@ class User implements UserInterface
     {
     }
 
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
@@ -162,11 +194,17 @@ class User implements UserInterface
         return $this->articleComments;
     }
 
+    /**
+     * @return number
+     */
     public function getLoginCount()
     {
         return $this->loginCount;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getFirstLogin()
     {
         return $this->firstLogin;
@@ -180,26 +218,42 @@ class User implements UserInterface
         return $this->articles;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Symfony\Component\Security\Core\User\UserInterface::getPassword()
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getAvatar()
     {
         return $this->avatar;
     }
 
-    public function getCreatedAt() 
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param array $roles
+     */
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
@@ -221,11 +275,17 @@ class User implements UserInterface
         $this->password = null;
     }
 
+    /**
+     * @param ArrayCollection $articleComments
+     */
     public function setArticleComments(ArrayCollection $articleComments)
     {
         $this->articleComments = $articleComments;
     }
 
+    /**
+     * @param ArrayCollection $articles
+     */
     public function setArticles(ArrayCollection $articles)
     {
         $this->articles = $articles;
@@ -251,8 +311,48 @@ class User implements UserInterface
         $this->firstLogin = $firstLogin;
     }
 
-    public function setCreatedAt($createdAt) 
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /** 
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->articleComments,
+            $this->articles,
+            $this->email,
+            $this->password,
+            $this->roles,
+            $this->name,
+            $this->avatar,
+            $this->loginCount,
+            $this->firstLogin,
+            $this->createdAt,
+        ));
+    }
+    
+    /** 
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->articleComments,
+            $this->articles,
+            $this->email,
+            $this->password,
+            $this->roles,
+            $this->name,
+            $this->avatar,
+            $this->loginCount,
+            $this->firstLogin,
+            $this->createdAt,
+        ) = unserialize($serialized);
     }
 }

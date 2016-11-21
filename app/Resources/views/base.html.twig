@@ -16,37 +16,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/images/favicon.ico') }}" />
     </head>
     <body>
-        {# messages info/success/error/warning #}
-        {% for msg in app.session.flashBag.get('info') %}
-            <div class="alert alert-info alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ msg }}
-            </div>
-        {% endfor %}
-        {% for msg in app.session.flashBag.get('success') %}
-            <div class="alert alert-success alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ msg }}
-            </div>
-        {% endfor %}
-        {% for msg in app.session.flashBag.get('error') %}
-            <div class="alert alert-danger alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ msg }}
-            </div>
-        {% endfor %}
-        {% for msg in app.session.flashBag.get('warning') %}
-            <div class="alert alert-warning alert-dismissible alert-fixed-bottom animated slideInUp" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ msg }}
-            </div>
-        {% endfor %}
         {# menu canvas #}
         <nav class="navmenu navmenu-default navmenu-fixed-left offcanvas">
             <a class="navmenu-brand" href="{{ path('homepage') }}">Brand</a>
             <ul class="nav navmenu-nav">
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link active</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li{% if app.request.attributes.get('_route') == 'article_create' %} class="active"{% endif %}>
+                        <a href="{{ path('article_create') }}">Create an article</a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="nav navmenu-nav">
                 {% if is_granted('ROLE_USER') %}
@@ -56,7 +34,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('security_logout') }}">
+                        <a href="{{ path('user_logout') }}">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
                         </a>
                     </li>
@@ -66,8 +44,8 @@
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register
                         </a>
                     </li>
-                    <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}>
-                        <a href="{{ path('security_login') }}">
+                    <li{% if app.request.attributes.get('_route') == 'user_login' %} class="active"{% endif %}>
+                        <a href="{{ path('user_login') }}">
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
                         </a>
                     </li>
@@ -88,16 +66,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link active</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li{% if app.request.attributes.get('_route') == 'article_create' %} class="active"{% endif %}>
+                                <a href="{{ path('article_create') }}">Create an article</a>
+                            </li>
+                        {% endif %}
                     </ul>
                     <form class="navbar-form navbar-left">
                     </form>
@@ -109,7 +82,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('security_logout') }}">
+                                <a href="{{ path('user_logout') }}">
                                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
                                 </a>
                             </li>
@@ -119,8 +92,8 @@
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register
                                 </a>
                             </li>
-                            <li{% if app.request.attributes.get('_route') == 'security_login' %} class="active"{% endif %}>
-                                <a href="{{ path('security_login') }}">
+                            <li{% if app.request.attributes.get('_route') == 'user_login' %} class="active"{% endif %}>
+                                <a href="{{ path('user_login') }}">
                                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
                                 </a>
                             </li>
@@ -142,6 +115,15 @@
                 </div>
             </div>
         </footer>
+        {# alertes #}
+        <div class="alert alert-success alert-dismissible alert-fixed-bottom hide">
+            <button type="button" class="close close-alert"><span aria-hidden="true">&times;</span></button>
+            <div class="alert-content"></div>
+        </div>
+        <div class="alert alert-danger alert-dismissible alert-fixed-bottom hide">
+            <button type="button" class="close close-alert"><span aria-hidden="true">&times;</span></button>
+            <div class="alert-content"></div>
+        </div>
         {% block javascripts %}
             {% javascripts
                 '//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
@@ -153,6 +135,13 @@
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            {# messages #}
+            {% for msg in app.session.flashBag.get('success') %}
+                <script type="text/javascript">showSuccessMessage('{{ msg|e('js')  }}');</script>
+            {% endfor %}
+            {% for msg in app.session.flashBag.get('error') %}
+                <script type="text/javascript">showErrorMessage('{{ msg|e('js')  }}');</script>
+            {% endfor %}
         {% endblock %}
     </body>
 </html>

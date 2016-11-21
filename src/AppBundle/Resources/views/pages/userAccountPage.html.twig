@@ -15,7 +15,7 @@
         <h1 class="page-header">{{ user.name }}</h1>
         <div class="col-md-4">
             <div class="thumbnail">
-                <img class="lazy" data-src="http://placehold.it/170x180" alt="{{ user.name }}">
+                <img class="lazy" data-src="{{ asset('uploads/' ~ user.avatar) }}" alt="{{ user.name }}" height="150px">
                 <div class="caption">
                     <ul class="nav nav-pills nav-stacked" role="tablist">
                         <li role="presentation" class="active"><a href="#account" aria-controls=account role="tab" data-toggle="tab">Account</a></li>
@@ -37,6 +37,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="articles">
                     <h2>Articles</h2>
+                    <a  class="btn btn-default" href="{{ path('article_create') }}" role="button">Create</a>
                     {% for userArticle in userArticles %}
                         <div class="row">
                             <div class="col-md-12">

@@ -2,7 +2,7 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     providers:
-        our_users:
+        user:
             entity: { class: AppBundle\Entity\User, property: email }
     encoders:
         AppBundle\Entity\User: bcrypt
@@ -15,11 +15,11 @@ security:
         main:
             switch_user: ~
             form_login:
-                login_path: security_login
-                check_path: security_login
+                login_path: user_login
+                check_path: user_login
                 remember_me: true
             logout:
-                path: security_logout
+                path: user_logout
             guard:
                 authenticators:
                     - app.security.login_form_authenticator

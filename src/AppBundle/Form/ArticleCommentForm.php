@@ -29,6 +29,8 @@ class ArticleCommentForm extends AbstractType
         // ici on lui donne la class de l'entité associée. 
         // Symfony va s'en servir pour faire le mapping entre les données 
         // postées par le form et les données à rentrer en base
-        $resolver->setDefaults(array('data_class' => ArticleComment::class));
+        $resolver->setDefaults(array(
+            'data_class' => ArticleComment::class,
+        ));
     }
 }

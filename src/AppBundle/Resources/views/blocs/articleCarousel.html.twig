@@ -10,7 +10,7 @@
         <div class="carousel-inner" role="listbox">
             {% for article in articles %}
                 <div class="item{% if loop.index0 == 0 %} active{% endif %}">
-                    <img class="orbit-image lazy" data-src="{{ asset('article-main-img/' ~ article.image.filename) }}" alt="{{ article.title }}">
+                    <img class="orbit-image lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}">
                     <div class="carousel-caption">
                         <h3>{{ article.title }}</h3>
                         <p>{{ article.summary }}</p>

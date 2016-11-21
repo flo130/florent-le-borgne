@@ -21,12 +21,11 @@ services:
     # Ecoute une requete doctrine et mets a jour certaines données d'un article
     app.doctrine.article_listener:
         class: AppBundle\Doctrine\ArticleListener
-        arguments: ['@app.file_uploader', '%article_main_img_dir%']
+        arguments: ['@app.file_uploader']
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
-            - { name: doctrine.event_listener, event: postLoad }
 
     # Ecoute une requete doctrine et mets a jour certaines données d'une categorie
     app.doctrine.article_category_listener:
@@ -45,9 +44,11 @@ services:
     # Ecoute une requete doctrine et mets a jour certaines données d'un utilisateur
     app.doctrine.user_listener:
         class: AppBundle\Doctrine\UserListener
+        arguments: ['@app.file_uploader']
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
 
     # Ecoute un login utilisateur pour faire des choses juste apres
     app.listener.login_listener:
@@ -67,4 +68,4 @@ services:
     # Class d'upload de fichiers
     app.file_uploader:
         class: AppBundle\Service\FileUploader
-        arguments: ['%article_main_img_dir%']
+        arguments: ['%uploads_dir%']

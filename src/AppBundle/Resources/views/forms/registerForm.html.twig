@@ -3,4 +3,5 @@
     {{ form_row(form.plainPassword.first, { 'label': 'Password' }) }}
     {{ form_row(form.plainPassword.second, { 'label': 'Repeat Password' }) }}
     <button class="btn btn-primary" type="submit">Register</button>
+    <a href="{{ path('user_login') }}">I already have an account</a>
 {{ form_end(form) }}

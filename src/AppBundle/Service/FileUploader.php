@@ -7,12 +7,12 @@ class FileUploader
     /**
      * @var string
      */
-	private $targetDir;
+	private $uploadsDir;
 
 
-    public function __construct($targetDir)
+    public function __construct($uploadsDir)
     {
-        $this->targetDir = $targetDir;
+        $this->uploadsDir = $uploadsDir;
     }
 
     /**
@@ -24,7 +24,7 @@ class FileUploader
     public function upload(UploadedFile $file)
     {
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        $file->move($this->targetDir, $fileName);
+        $file->move($this->uploadsDir, $fileName);
         return $fileName;
     }
 }

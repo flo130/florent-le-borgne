@@ -13,7 +13,7 @@ AppBundle\Entity\Article:
     article_{1..10}:
         user: '@user_*'
         title: <sentence()>
-        image: <word()>.jpg
+        image: 02b126e6ea583541c6f64f8c3a6347d4.jpeg
         article: <paragraph(400)>
         articleSubCategory: '@articleSubCategory_*'
         articleCategory: '@articleCategory_*'

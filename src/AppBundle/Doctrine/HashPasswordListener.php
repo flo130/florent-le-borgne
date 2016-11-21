@@ -26,25 +26,27 @@ class HashPasswordListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof User) {
+        if (! $entity instanceof User) {
             return;
         }
+
         $this->encodePassword($entity);
     }
 
     /**
      * @param User $entity
      */
-    private function encodePassword(User $entity)
+    private function encodePassword(User $user)
     {
-        if (!$entity->getPlainPassword()) {
+        if (! $user->getPlainPassword()) {
             return;
         }
+
         $encoded = $this->passwordEncoder->encodePassword(
-            $entity,
-            $entity->getPlainPassword()
+            $user,
+            $user->getPlainPassword()
         );
-        $entity->setPassword($encoded);
+        $user->setPassword($encoded);
     }
 
     /**
@@ -52,14 +54,15 @@ class HashPasswordListener
      */
     public function preUpdate(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        if (!$entity instanceof User) {
+        $user = $args->getEntity();
+        if (! $user instanceof User) {
             return;
         }
-        $this->encodePassword($entity);
+
+        $this->encodePassword($user);
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
-        $meta = $em->getClassMetadata(get_class($entity));
-        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
+        $meta = $em->getClassMetadata(get_class($user));
+        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $user);
     }
 }

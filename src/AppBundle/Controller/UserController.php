@@ -13,14 +13,20 @@ use AppBundle\Entity\User;
  * Cette class va servire, entre autre, pour gérer les URLs de login et de logout. 
  * Mais le vrai travail d'authent est fait dans un service à part (AppBundle/Security/LoginFormAuthenticator.php).
  * On configure tout ça dans le fichier de config security.yml
+ * 
+ * @Route("/user")
  */
 class UserController extends Controller
 {
     /**
-     * @Route("/login", name="security_login")
+     * @Route("/login", name="user_login")
      */
     public function loginAction()
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -32,7 +38,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/logout", name="security_logout")
+     * @Route("/logout", name="user_logout")
      * 
      * Voir la définition de la route de logout dans security.yml
      * Il faut quand même créer cette route car sinon Symfony lèvera un 404.
@@ -45,10 +51,14 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/register", name="user_register")
+     * @Route("/register", name="user_register")
      */
     public function registerAction(Request $request)
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -66,22 +76,38 @@ class UserController extends Controller
                 'main'
             );
         }
-        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     /**
-     * @Route("/user/{name}/account", name="user_account")
+     * @todo : trouver un moyen de faire mieux pour ne pas uploader une valeur vide si pas d'image
+     * Au lieu de 
+     *     $image = $article->getImage()
+     *     [...]
+     *     if (!$article->getImage()) {
+     *         $article->setImage($image);
+     *     }
+     * Essayer avec :
+     *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
+     * 
+     * @Route("/{name}/account", name="user_account")
      */
     public function accountAction(Request $request, User $user)
     {
         $em = $this->getDoctrine()->getManager();
+        $image = $user->getAvatar();
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            if (!$user->getAvatar()) {
+                $user->setImage($image);
+            }
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', sprintf('Update successfully'));
+            $this->addFlash('success', 'Update successfully');
         }
         return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
             'user' => $user,

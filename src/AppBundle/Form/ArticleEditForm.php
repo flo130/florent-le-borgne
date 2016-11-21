@@ -38,14 +38,14 @@ class ArticleEditForm extends AbstractType
             ->add('articleSubCategory', EntityType::class, array(
                 'placeholder' => 'Choose a sub category',
                 'class' => ArticleSubCategory::class,
-                'query_builder' => function(ArticleSubCategoryRepository $repo) {
+                'query_builder' => function (ArticleSubCategoryRepository $repo) {
                     return $repo->createAlphabeticalQueryBuilder();
                 }
             ))
             ->add('articleCategory', EntityType::class, array(
                 'placeholder' => 'Choose a category',
                 'class' => ArticleCategory::class,
-                'query_builder' => function(ArticleCategoryRepository $repo) {
+                'query_builder' => function (ArticleCategoryRepository $repo) {
                     return $repo->createAlphabeticalQueryBuilder();
                 }
             ))
@@ -66,6 +66,9 @@ class ArticleEditForm extends AbstractType
             'data_class' => Article::class,
             'validation_groups' => array(
                 'Default',
+            ),
+            'attr' => array(
+                'class' => 'submit-ajax',
             ),
         ));
     }

@@ -1,10 +1,8 @@
 {{ form_start(form) }}
-
-{#
     <div class="fileinput fileinput-new" data-provides="fileinput">
         <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-            {% if form.vars.value.image is not empty %}
-                <img class="lazy" data-src="{{ asset('article-main-img/' ~ form.vars.value.image.filename) }}">
+            {% if form.vars.value is not empty and form.vars.value.image is not empty %}
+                <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.image) }}">
             {% endif %}
         </div>
         <div>
@@ -16,16 +14,11 @@
             <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
         </div>
     </div>
-#}
-
-
-{{ form_row(form.image) }}
-
     {{ form_row(form.title) }}
     {{ form_row(form.summary) }}
     {{ form_row(form.article) }}
     {{ form_row(form.articleCategory) }}
     {{ form_row(form.articleSubCategory) }}
     {{ form_row(form.status) }}
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit" formnovalidate>Submit</button>
 {{ form_end(form) }}

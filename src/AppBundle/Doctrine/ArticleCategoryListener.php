@@ -11,11 +11,13 @@ class ArticleCategoryListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        if ($entity instanceof ArticleCategory) {
-            if (!$entity->getCreatedAt()) {
-                $entity->setCreatedAt(new \DateTime());
-            }
+        $articleCategory = $args->getEntity();
+        if (! $articleCategory instanceof ArticleCategory) {
+            return;
+        }
+
+        if (! $articleCategory->getCreatedAt()) {
+            $articleCategory->setCreatedAt(new \DateTime());
         }
     }
 }
