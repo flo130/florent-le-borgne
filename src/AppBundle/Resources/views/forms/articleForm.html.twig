@@ -1,18 +1,22 @@
 {{ form_start(form) }}
-    <div class="fileinput fileinput-new" data-provides="fileinput">
-        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-            {% if form.vars.value is not empty and form.vars.value.image is not empty %}
-                <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.image) }}">
-            {% endif %}
+    <div class="form-group{% if form_errors(form.image) %} has-error{% endif %}">
+        {{ form_label(form.image) }}
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                {% if form.vars.value is not empty and form.vars.value.image is not empty %}
+                    <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.image) }}">
+                {% endif %}
+            </div>
+            <div>
+                <span class="btn btn-default btn-file">
+                    <span class="fileinput-new">Select</span>
+                    <span class="fileinput-exists">Change</span>
+                    {{ form_widget(form.image) }}
+                </span>
+                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+            </div>
         </div>
-        <div>
-            <span class="btn btn-default btn-file">
-                <span class="fileinput-new">Select image</span>
-                <span class="fileinput-exists">Change</span>
-                {{ form_widget(form.image) }}
-            </span>
-            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-        </div>
+        {{ form_errors(form.image) }}
     </div>
     {{ form_row(form.title) }}
     {{ form_row(form.summary) }}

@@ -71,7 +71,7 @@ class ArticleCreateForm extends AbstractType
                 'Default',
             ),
             'attr' => array(
-                'class' => 'submit-ajax',
+                //'class' => 'submit-ajax',
             ),
         ));
     }

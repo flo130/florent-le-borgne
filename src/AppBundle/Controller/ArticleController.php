@@ -6,13 +6,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\ArticleCategory;
 use AppBundle\Entity\ArticleSubCategory;
 use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Form\ArticleEditForm;
 use AppBundle\Form\ArticleCreateForm;
-use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * @Route("/article")
@@ -134,11 +135,11 @@ class ArticleController extends Controller
                 $em->flush();
                 if (!$request->isXmlHttpRequest()) {
                     $this->addFlash('success', 'Created successfully');
+                    return $this->redirectToRoute('article_edit', array(
+                        'id' => $article->getId(),
+                    ));
                 }
             }
-//             return $this->redirectToRoute('article_edit', array(
-//                 'id' => $article->getId(),
-//             ));
         }
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(

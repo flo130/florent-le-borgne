@@ -73,12 +73,14 @@ function manageAjaxFormSubmit() {
     $('body').on('submit', '.submit-ajax', function (e) {
         e.preventDefault();
         var $this = $(this);
+        //désactive le bouton submit
         $('.btn', $this).attr('disabled', 'disabled');
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
             data: $(this).serialize()
         })
+        //requete ajax a réussie, on affiche le message
         .done(function (data, textStatus, jqXHR) {
             if (typeof data.message !== 'undefined' && typeof data.form !== 'undefined') {
                 showSuccessMessage(data.message);
@@ -86,6 +88,7 @@ function manageAjaxFormSubmit() {
                 showErrorMessage('An error occurred. Please retry.');
             }
         })
+        //la requete ajax a échouée, on affiche le message
         .fail(function (data, textStatus, errorThrown) {
             if (typeof data.responseJSON !== 'undefined') {
                 if (! data.responseJSON.hasOwnProperty('form')) {
@@ -93,9 +96,12 @@ function manageAjaxFormSubmit() {
                 }
                 $('.submit-ajax').addClass('animated shake');
             } else {
-                showErrorMessage('An error occurred : ' + errorThrown + '. Please retry.');
+                showErrorMessage('An error occurred : ' + errorThrown + '.');
             }
-        }).always(function(data, textStatus, errorThrown) {
+        })
+        //dans tous les cas (requete réussie ou échouée), on remplace le form actuel par celui retourné par le serveur
+        //on met une petite annimation et on réactive le bouton submit
+        .always(function(data, textStatus, errorThrown) {
             if (typeof data.form !== 'undefined') {
                 $('.submit-ajax').replaceWith(data.form);
             } else if (data.responseJSON.hasOwnProperty('form')) {
