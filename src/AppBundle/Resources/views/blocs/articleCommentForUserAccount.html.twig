@@ -1,3 +1,12 @@
-<strong>{{ comment.createdAt | date("F jS \\a\\t g:ia") }}</strong> : {{ comment.articleComment }}
-<br>
-<strong>For article</strong> : <a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</a>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ comment.createdAt | date("F jS \\a\\t g:ia") }}
+    </div>
+    <div class="panel-body">
+        {{ comment.articleComment }}
+    </div>
+    <div class="panel-footer">
+        <a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</a>
+    </div>
+</div>
+
