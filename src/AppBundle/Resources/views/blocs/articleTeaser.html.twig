@@ -6,6 +6,6 @@
 {% endif %}
 <p class="lead">By <a href="{{ path('user_account', { name: article.user.name }) }}">{{ article.user.name }}</a></p>
 <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt | date("F jS \\a\\t g:ia") }}</p>
-<img class="img-responsive lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}">
+<img class="img-responsive lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}" width="100%">
 <p>{{ article.summary }}</p>
 <a class="btn btn-primary" href="{{ path('article_show', {'id': article.id }) }}">Read more</a>

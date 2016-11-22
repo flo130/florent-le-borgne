@@ -1,7 +1,7 @@
 <div class="media">
     {# comment.user.avatar #}
     <a class="pull-left" href="{{ path('user_account', { name: comment.user.name }) }}">
-        <img class="media-object lazy" data-src="http://placehold.it/65x65" alt="{{ comment.user.name }}">
+        <img class="media-object lazy" data-src="{{ asset('uploads/' ~ comment.user.avatar) }}" alt="{{ comment.user.name }}" width="80px">
     </a>
     <div class="media-body">
         <h4 class="media-heading">
