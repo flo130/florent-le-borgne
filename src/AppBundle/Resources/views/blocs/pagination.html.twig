@@ -1,27 +1,29 @@
 {% if pagination.pages_count > 0 %}
-    <ul class="pagination">
+    <ul id="pagination" class="pagination">
         <li{% if pagination.page <= 1 %} class="disabled"{% endif %}>
-            <a href="{{ path(pagination.page_name, {'page': 1}) }}">
+            <a href="{{ path(pagination.page_name, {'page': 1}) }}"{% if pagination.ajax_callback == true %} class="pagination-ajax"{% endif %}>
                 <span class="glyphicon glyphicon-backward"></span>
             </a>
         </li>
         <li{% if pagination.page <= 1 %} class="disabled"{% endif %}>
-            <a href="{{ path(pagination.page_name, {'page': pagination.page - 1}) }}">
+            <a href="{{ path(pagination.page_name, {'page': pagination.page - 1}) }}"{% if pagination.ajax_callback == true %} class="pagination-ajax"{% endif %}>
                 <span class="glyphicon glyphicon-menu-left"></span>
             </a>
         </li>
         {% for page in range(max(pagination.page - 4, 1), min(pagination.page + 4, pagination.pages_count)) %}
             <li{% if page == pagination.page %} class="active"{% endif %}>
-                <a href="{{ path(pagination.page_name, {'page': page}) }}">{{ page }}</a>
+                <a href="{{ path(pagination.page_name, {'page': page}) }}"{% if pagination.ajax_callback == true %} class="pagination-ajax"{% endif %}>
+                    {{ page }}
+                </a>
             </li>
         {% endfor %}
         <li{% if pagination.page >= pagination.pages_count %} class="disabled"{% endif %}>
-            <a href="{{ path(pagination.page_name, {'page': pagination.page + 1}) }}">
+            <a href="{{ path(pagination.page_name, {'page': pagination.page + 1}) }}"{% if pagination.ajax_callback == true %} class="pagination-ajax"{% endif %}>
                 <span class="glyphicon glyphicon-menu-right"></span>
             </a>
         </li>
         <li{% if pagination.page >= pagination.pages_count %} class="disabled"{% endif %}>
-            <a href="{{ path(pagination.page_name, {'page': pagination.pages_count}) }}">
+            <a href="{{ path(pagination.page_name, {'page': pagination.pages_count}) }}"{% if pagination.ajax_callback == true %} class="pagination-ajax"{% endif %}>
                 <span class="glyphicon glyphicon-forward"></span>
             </a>
         </li>

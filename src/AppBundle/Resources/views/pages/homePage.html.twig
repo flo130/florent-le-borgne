@@ -4,22 +4,15 @@
 {% endblock %}
 {% block body %}
     <div class="row">
-        {% include 'AppBundle:blocs:articleCarousel.html.twig' with { 'articles' : lastArticles } %}
+        <div class="col-md-12">
+            {% include 'AppBundle:blocs:articleCarousel.html.twig' with { 'articles' : lastArticles } %}
+            <br>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-8">
             <h1 class="page-header">Articles</h1>
-            {% for article in articles %}
-                <div class="row">
-                    <div class="col-md-12">
-                         {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : article } %}
-                         <hr>
-                     </div>
-                 </div>
-            {% else %}
-                "No data found"
-                <hr>
-            {% endfor %}
+            {% include 'AppBundle:blocs:articleTeaserList.html.twig' with { 'articles' : articles } %}
             <nav class="text-center">
                 {% include 'AppBundle:blocs:pagination.html.twig' with { 'pagination' : articlesPagination } %}
             </nav>

@@ -11,9 +11,10 @@ var TIMEOUT_TO_SCROLL_TO = 1000;
 $(window).on('load', function() {
     //ne pas utiliser "$(window).load(function() {" avec jQuery 3...
     manageImageLazyLoad();
-    manageAjaxFormSubmit();
     manageAlertClose();
     manageNavTab();
+    manageAjaxFormSubmit();
+    manageAjaxPagination();
 });
 
 
@@ -28,16 +29,16 @@ $(window).on('load', function() {
  */
 function manageNavTab()
 {
-	if (document.location.toString().match('#')) {
-		$('.nav-hashtag a[href="#' + document.location.toString().split('#')[1] + '"]').tab('show') ;
-	} 
-	$('.nav-hashtag a').on('shown.bs.tab', function (e) {
-		if(history.pushState) {
-			history.pushState(null, null, e.target.hash); 
-		} else {
-			window.location.hash = e.target.hash; 
-		}
-	});
+    if (document.location.toString().match('#')) {
+        $('.nav-hashtag a[href="#' + document.location.toString().split('#')[1] + '"]').tab('show') ;
+    } 
+    $('.nav-hashtag a').on('shown.bs.tab', function (e) {
+        if(history.pushState) {
+            history.pushState(null, null, e.target.hash); 
+        } else {
+            window.location.hash = e.target.hash; 
+        }
+    });
 }
 
 /**
@@ -136,11 +137,11 @@ function scrollTo(target)
 
 /**
  * Gère le submit d'un formulaire en ajax (pour soumettre en ajax, il faut 
- * que le form est la class css "submit-ajax") : 
- * - Si tout est ok : 
+ * que le form ait la class css "submit-ajax") : 
+ * - si tout est ok : 
  *     - soit on affiche un message et on reste sur le form
  *     - soit, on redirige vers une autre page
- * - S'il y a une erreur : 
+ * - s'il y a une erreur : 
  *     - soit on réaffiche le form (s'il est là)
  *     - soit on affiche un message
  * 
@@ -149,22 +150,21 @@ function scrollTo(target)
 function manageAjaxFormSubmit()
 {
     $('body').on('submit', '.submit-ajax', function (e) {
-        e.preventDefault();
         var $this = $(this);
+        //desactive le submit par défaut
+        e.preventDefault();
         //désactive le bouton submit
         $('.btn', $this).attr('disabled', 'disabled');
+        //envoie les données au serveur
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
-            //$(this).serialize() ne gère pas les fileUpload, il faut utiliser l'objet FormData
-            //data: $(this).serialize()
             data: new FormData(this),
             processData: false,
             contentType: false
-        })
-        //requete ajax a réussie, on affiche le message
-        .done(function (data, textStatus, jqXHR) {
-            //s'il y a une partie "redirect", on redirige vers la page. Sinon on affiche le message
+        }).done(function (data, textStatus, jqXHR) {
+            //s'il y a une partie "redirect", on redirige vers la page. 
+            //sinon on affiche un message
             if (typeof data.redirect !== 'undefined') {
                 document.location.href = data.redirect;
             } else {
@@ -174,27 +174,60 @@ function manageAjaxFormSubmit()
                     showErrorMessage('An error occurred. Please retry.');
                 }
             }
-        })
-        //la requete ajax a échouée, on affiche le message
-        .fail(function (data, textStatus, errorThrown) {
+        }).fail(function (data, textStatus, errorThrown) {
             if (typeof data.responseJSON !== 'undefined') {
                 if (! data.responseJSON.hasOwnProperty('form')) {
+                    //le serveur n'a pas retourné de formulaire, on affiche donc une erreur générale
                     showErrorMessage('An error occurred');
+                } else {
+                    //la requete est en erreur mais on a quand même récupéré un formulaire depuis le serveur.
+                    //on lui applique une petite annimation pour montrer l'erreur...
+                    $('.submit-ajax').addClass('animated shake');
                 }
-                $('.submit-ajax').addClass('animated shake');
             } else {
+                //erreur générale
                 showErrorMessage('An error occurred : ' + errorThrown + '.');
             }
-        })
-        //dans tous les cas (requete réussie ou échouée), on remplace le form actuel par celui retourné par le serveur
-        .always(function(data, textStatus, errorThrown) {
+        }).always(function(data, textStatus, errorThrown) {
+            //remplace le form actuel par celui retourné par le serveur
             if (typeof data.form !== 'undefined') {
                 $('.submit-ajax').replaceWith(data.form);
             } else if (typeof data.responseJSON !== 'undefined' && data.responseJSON.hasOwnProperty('form')) {
                 $('.submit-ajax').replaceWith(data.responseJSON.form);
             }
+            //réactive le bouton submit
             $('.btn', $this).removeAttr('disabled');
+            //s'il y a des images, il faut relancer le lazy load
+            manageImageLazyLoad();
+            //scroll vers le haut pour voir les modifications
             scrollTo($('.submit-ajax'));
+        });
+    });
+}
+
+/**
+ * Permet la récupération des éléments d'une liste paginée en ajax (il faut que les 
+ * éléments de pagination aient la class css "pagination-ajax")
+ * 
+ * @return void
+ */
+function manageAjaxPagination() 
+{
+    $('body').on('click', '.pagination-ajax', function (e) {
+        var $this = $(this);
+        //désactive le lien par défaut
+        e.preventDefault();
+        //envoie les données au serveur
+        $.get($this.attr('href'), function(data) {
+            //remplace le contenu et la pagination existante avec les données reçues
+            $('#content').replaceWith(data.content);
+            $('#pagination').replaceWith(data.pagination);
+            //s'il y a des images dans le nouveau contenu, il faut relancer le lazy load
+            manageImageLazyLoad();
+            //scroll vers le haut pour voir les nouvelles données
+            scrollTo($('#content'));
+        }).fail(function () {
+            showErrorMessage('An error occurred');
         });
     });
 }
