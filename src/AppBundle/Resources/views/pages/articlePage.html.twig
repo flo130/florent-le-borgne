@@ -26,7 +26,7 @@
                 {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 'form' : commentForm } %}
             </div>
             {% for comment in article.articleComments %}
-                {% include 'AppBundle:blocs:articleComment.html.twig' with { 'comment' : comment } %}
+                {% include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comment' : comment } %}
             {% else %}
                 "No data found"
             {% endfor %}

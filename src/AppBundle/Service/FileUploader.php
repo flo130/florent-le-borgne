@@ -5,11 +5,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploader
 {
     /**
-     * @var string
+     * @var string $uploadsDir
      */
-	private $uploadsDir;
+    private $uploadsDir;
 
 
+    /**
+     * @param string $uploadsDir
+     */
     public function __construct($uploadsDir)
     {
         $this->uploadsDir = $uploadsDir;
@@ -19,6 +22,7 @@ class FileUploader
      * Upload un fichier 
      * 
      * @param UploadedFile $file
+     * 
      * @return string
      */
     public function upload(UploadedFile $file)

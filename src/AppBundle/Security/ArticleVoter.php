@@ -15,6 +15,9 @@ class ArticleVoter extends Voter
     private $decisionManager;
 
 
+    /**
+     * @param AccessDecisionManagerInterface $decisionManager
+     */
     public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
@@ -32,10 +35,12 @@ class ArticleVoter extends Voter
         if ($attribute != 'edit') {
             return false;
         }
+
         //vérifie que le sujet passé est bien un article
         if (!$subject instanceof Article) {
             return false;
         }
+
         return true;
     }
 
@@ -77,6 +82,7 @@ class ArticleVoter extends Voter
      * 
      * @param Article $article
      * @param User $user
+     * 
      * @return boolean
      */
     private function canEdit(Article $article, User $user)

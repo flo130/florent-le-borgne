@@ -18,7 +18,8 @@ class RegistrationForm extends AbstractType
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) 
+    {
         $builder
             ->add('email', EmailType::class)
             //RepeatedType permet d'avoir un "password confirm"
@@ -32,7 +33,8 @@ class RegistrationForm extends AbstractType
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::configureOptions()
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver) 
+    {
         $resolver->setDefaults(array(
             //ici data_class permet de donner à Symfony l'entity avec laquelle faire le mapping des données du form
             'data_class' => User::class,
@@ -42,6 +44,10 @@ class RegistrationForm extends AbstractType
             'validation_groups' => array(
                 'Default', 
                 'Registration',
+            ),
+            //rajoute une class css pour pouvoir capter la soumission du form (et utiliser l'ajax par exemple
+            'attr' => array(
+                //'class' => 'submit-ajax',
             ),
         ));
     }

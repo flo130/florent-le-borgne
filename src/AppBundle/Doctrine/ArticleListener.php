@@ -26,9 +26,11 @@ class ArticleListener
     }
 
     /**
-     * Action effectuées juste avant l'ajout de l'entity
+     * Action effectuées juste avant l'ajout de l'entity en base
      * 
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function prePersist(LifecycleEventArgs $args)
     {
@@ -45,9 +47,11 @@ class ArticleListener
     }
 
     /**
-     * Action effectuées juste avant l'update de l'entity
+     * Action effectuées juste avant l'update de l'entity en base
      * 
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function preUpdate(LifecycleEventArgs $args)
     {
@@ -65,7 +69,11 @@ class ArticleListener
     }
 
     /**
+     * Permet l'upload d'un fichier
+     * 
      * @param Article $article
+     * 
+     * @return void || null
      */
     private function uploadFile($article)
     {

@@ -17,9 +17,16 @@
             <div class="thumbnail">
                 <img class="lazy" data-src="{{ asset('uploads/' ~ user.avatar) }}" alt="{{ user.name }}" height="150px">
                 <div class="caption">
-                    <ul class="nav nav-pills nav-stacked" role="tablist">
-                        <li role="presentation" class="active"><a href="#account" aria-controls=account role="tab" data-toggle="tab">Account</a></li>
-                        <li role="presentation"><a href="#articles" aria-controls=articles role="tab" data-toggle="tab">Articles <span class="badge">{{ userArticles | length }}</span></a></li>
+                    <ul class="nav nav-pills nav-stacked nav-hashtag" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#account" aria-controls=account role="tab" data-toggle="tab">Account</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#articles" aria-controls=articles role="tab" data-toggle="tab">Articles <span class="badge">{{ userArticles | length }}</span></a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#comments" aria-controls=comments role="tab" data-toggle="tab">Comments <span class="badge">{{ userComments | length }}</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -46,9 +53,26 @@
                             </div>
                         </div>
                     {% else %}
-                        "No data found"
+                        "No article found"
                         <hr>
                     {% endfor %}
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="comments">
+                    <h2>Comments</h2>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="list-group">
+                            {% for userComment in userComments %}
+                                <li class="list-group-item">
+                                    {% include 'AppBundle:blocs:articleCommentForUserAccount.html.twig' with { 'comment' : userComment } %}
+                                </li>
+                            {% else %}
+                                "No comment found"
+                                <hr>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

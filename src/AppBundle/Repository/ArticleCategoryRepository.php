@@ -8,6 +8,8 @@ use Doctrine\ORM\QueryBuilder;
 class ArticleCategoryRepository extends EntityRepository
 {
     /**
+     * Récupère toutes les catégories triés par date de création
+     * 
      * @return ArticleCategory[]
      */
     public function findAllOrderByCreatedDate()
@@ -19,6 +21,8 @@ class ArticleCategoryRepository extends EntityRepository
     }
 
     /**
+     * Récupère toutes les catégories triés par ordre alphabétique
+     * 
      * @return QueryBuilder
      */
     public function createAlphabeticalQueryBuilder()

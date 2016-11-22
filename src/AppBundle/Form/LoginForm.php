@@ -11,7 +11,8 @@ class LoginForm extends AbstractType
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
             ->add('_username')
             ->add('_password', PasswordType::class)

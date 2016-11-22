@@ -7,6 +7,8 @@ use Doctrine\ORM\EntityRepository;
 class ArticleCommentRepository extends EntityRepository
 {
     /**
+     * Récupère tous les commentaires d'article triés par date de création
+     * 
      * @return ArticleComment[]
      */
     public function findAllOrderByCreatedDate()
@@ -18,6 +20,10 @@ class ArticleCommentRepository extends EntityRepository
     }
 
     /**
+     * Récupère tous les commentaires d'article liés à un article
+     * 
+     * @param int $idArticle
+     * 
      * @return ArticleComment[]
      */
     public function findByArticleIdOrderByCreatedDate($idArticle)
@@ -31,6 +37,10 @@ class ArticleCommentRepository extends EntityRepository
     }
 
     /**
+     * Récupère tous les commentaires d'articles liés à un utilisateur
+     * 
+     * @param int $idUser
+     * 
      * @return ArticleComment[]
      */
     public function findByUserIdOrderByCreatedDate($idUser)

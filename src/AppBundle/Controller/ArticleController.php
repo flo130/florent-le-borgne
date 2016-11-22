@@ -13,6 +13,7 @@ use AppBundle\Entity\ArticleSubCategory;
 use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Form\ArticleEditForm;
 use AppBundle\Form\ArticleCreateForm;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 /**
@@ -21,7 +22,11 @@ use AppBundle\Form\ArticleCreateForm;
 class ArticleController extends Controller
 {
     /**
+     * Page détail d'un article
+     * 
      * @Route("/show/{id}", name="article_show"))
+     * 
+     * @param Article $article
      */
     public function ShowAction(Article $article)
     {
@@ -35,6 +40,10 @@ class ArticleController extends Controller
      * Récupère tous les articles appartenants à une catégorie
      * 
      * @Route("/category/{id}", name="article_by_category"))
+     * 
+     * @param ArticleCategory $articleCategory
+     * 
+     * @return Response
      */
     public function ByCategoryAction(ArticleCategory $articleCategory)
     {
@@ -50,6 +59,10 @@ class ArticleController extends Controller
      * Récupère tous les articles appartenants à une sous-catégorie
      *
      * @Route("/sub-category/{id}", name="article_by_sub_category"))
+     * 
+     * @param ArticleSubCategory $articleSubCategory
+     * 
+     * @return Response
      */
     public function BySubCategoryAction(ArticleSubCategory $articleSubCategory)
     {
@@ -62,6 +75,8 @@ class ArticleController extends Controller
     }
 
     /**
+     * Page d'édition d'un article
+     * 
      * @todo : trouver un moyen de faire mieux pour ne pas uploader une valeur vide si pas d'image
      * Au lieu de 
      *     $image = $article->getImage()
@@ -73,6 +88,11 @@ class ArticleController extends Controller
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
      * @Route("/edit/{id}", name="article_edit"))
+     * 
+     * @param Request $request
+     * @param Article $article
+     * 
+     * @return Response || JsonResponse
      */
     public function EditAction(Request $request, Article $article)
     {
@@ -92,11 +112,13 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+                //ajoute un flash message si on est pas en ajax
                 if (!$request->isXmlHttpRequest()) {
                     $this->addFlash('success', 'Updated successfully');
                 }
             }
         }
+        //retourne un JsonResponse si on est en ajax, une Response sinon
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'message' => $isValid ? 'Updated successfully' : '',
@@ -113,8 +135,14 @@ class ArticleController extends Controller
     }
 
     /**
+     * Page de création d'un article
+     * 
      * @Security("is_granted('ROLE_MEMBRE')")
      * @Route("/create", name="article_create"))
+     * 
+     * @param Request $request
+     * 
+     * @return Response || JsonResponse
      */
     public function CreateAction(Request $request)
     {
@@ -133,21 +161,30 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+                //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
+                $this->addFlash('success', 'Created successfully');
+                $redirectUrl = $this->generateUrl('article_edit', array(
+                    'id' => $article->getId(),
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL);
                 if (!$request->isXmlHttpRequest()) {
-                    $this->addFlash('success', 'Created successfully');
-                    return $this->redirectToRoute('article_edit', array(
-                        'id' => $article->getId(),
-                    ));
+                    return $this->redirect($redirectUrl);
                 }
             }
         }
+        //retourne un JsonResponse si on est en ajax, une Response sinon
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'message' => $isValid ? 'Created successfully' : '',
-                'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
-                    'form' => $form->createView(),
-                )),
-            ), $isValid ? 200 : 400);
+            if ($isValid) {
+                return new JsonResponse(array(
+                    'redirect' => $redirectUrl,
+                ), $isValid ? 200 : 400);
+            } else {
+                return new JsonResponse(array(
+                    'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+                        'form' => $form->createView(),
+                    )),
+                ), $isValid ? 200 : 400);
+            }
         } else {
             return $this->render('AppBundle:pages:articleCreatePage.html.twig', array(
                 'articleForm' => $form->createView(),

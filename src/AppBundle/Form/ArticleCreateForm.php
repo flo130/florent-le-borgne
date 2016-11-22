@@ -38,7 +38,7 @@ class ArticleCreateForm extends AbstractType
             ->add('articleSubCategory', EntityType::class, array(
                 'placeholder' => 'Choose a sub category',
                 'class' => ArticleSubCategory::class,
-                //la select sera peuplée avec le retour de cette closure
+                //la select sera peuplée avec le retour de cette closure (les sous-catégories d'article)
                 'query_builder' => function (ArticleSubCategoryRepository $repo) {
                     return $repo->createAlphabeticalQueryBuilder();
                 }
@@ -46,7 +46,7 @@ class ArticleCreateForm extends AbstractType
             ->add('articleCategory', EntityType::class, array(
                 'placeholder' => 'Choose a category',
                 'class' => ArticleCategory::class,
-                //la select sera peuplée avec le retour de cette closure
+                //la select sera peuplée avec le retour de cette closure (les catégories d'article)
                 'query_builder' => function (ArticleCategoryRepository $repo) {
                     return $repo->createAlphabeticalQueryBuilder();
                 }
@@ -71,7 +71,7 @@ class ArticleCreateForm extends AbstractType
                 'Default',
             ),
             'attr' => array(
-                //'class' => 'submit-ajax',
+                'class' => 'submit-ajax',
             ),
         ));
     }

@@ -8,6 +8,8 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ArticleRepository extends EntityRepository
 {
     /**
+     * Retourne le nombre total d'articles
+     * 
      * @return int
      */
     public function countAll() 
@@ -19,6 +21,8 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne le nombre total d'articles qui sont publiés
+     * 
      * @return int
      */
     public function countPublished()
@@ -32,6 +36,8 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne le nombre total d'articles qui sont en brouillons
+     * 
      * @return int
      */
     public function countDraft()
@@ -45,8 +51,24 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles triés par date de création
+     *
+     * @return Article[]
+     */
+    public function findAllOrderByCreatedDate()
+    {
+        return $this->createQueryBuilder('article')
+            ->orderBy('article.createdAt', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Retourne une requete paginée d'articles, triés par date de création
+     * 
      * @param int $page
      * @param int $maxResults
+     * 
      * @return Paginator
      */
     public function findAllWithPaginatorOrderByCreatedDate($page=1, $maxResults=10)
@@ -60,19 +82,11 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
-     * @return Article[]
-     */
-    public function findAllOrderByCreatedDate()
-    {
-        return $this->createQueryBuilder('article')
-            ->orderBy('article.createdAt', 'DESC')
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
+     * Retourne une requete paginée des articles en brouillon, triés par date de creation
+     * 
      * @param int $page
      * @param int $maxResults
+     * 
      * @return Paginator
      */
     public function findAllDraftWithPaginatorOrderByCreatedDate($page=1, $maxResults=10)
@@ -82,17 +96,20 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults($maxResults)
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::DRAFT_STATUS)
-            ->orderBy('article.publishedAt', 'DESC');
+            ->orderBy('article.createdAt', 'DESC');
         $paginator = new Paginator($query);
         return $paginator;
     }
 
     /**
+     * Retourne une requete paginée des articles publiés, triés par date de publication
+     * 
      * @param int $page
      * @param int $maxResults
+     * 
      * @return Paginator
      */
-    public function findAllPublishedWithPaginatorOrderByCreatedDate($page=1, $maxResults=10)
+    public function findAllPublishedWithPaginatorOrderByPublishedDate($page=1, $maxResults=10)
     {
         $query = $this->createQueryBuilder('article')
             ->setFirstResult(($page - 1) * $maxResults)
@@ -105,10 +122,13 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne la liste des articles associés à une sous-catégorie, triés par date de création
+     * 
      * @param int $idSubCategory
+     * 
      * @return Article[]
      */
-    public function findBySubCategoryIdOrderByCreatedDate($idSubCategory)
+    public function findBySubCategoryOrderByCreatedDate($idSubCategory)
     {
         return $this->createQueryBuilder('article')
             ->andWhere('article.articleSubCategory = :idSubCategory')
@@ -119,35 +139,42 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne la liste des articles en brouillon, triés par date de creation
+     * 
      * @return Article[]
      */
-    public function findAllDraftOrderByPublishedDate()
+    public function findAllDraftOrderByCreatedDate()
     {
         return $this->createQueryBuilder('article')
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::DRAFT_STATUS)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.createdAt', 'DESC')
             ->getQuery()
             ->execute();
     }
 
     /**
+     * Retourne X articles en brouillon, triés par date de creation
+     * 
      * @param int $nb
+     * 
      * @return Article[]
      */
-    public function findXDraftOrderByPublishedDate($nb)
+    public function findXDraftOrderByCreatedDate($nb)
     {
         return $this->createQueryBuilder('article')
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::PUBLISHED_STATUS)
             ->setMaxResults($nb)
             ->setFirstResult(0)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.createdAt', 'DESC')
             ->getQuery()
             ->execute();
     }
 
     /**
+     * Retourne tous les articles publiés triés par date de publication
+     * 
      * @return Article[]
      */
     public function findAllPublishedOrderByPublishedDate()
@@ -161,6 +188,8 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne X articles publiés triés par date de publication
+     * 
      * @param int $nb
      * @return Article[]
      */
@@ -177,7 +206,10 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles publiés, liés à une catégorie, triés par date de publication
+     * 
      * @param int $idCategory
+     * 
      * @return Article[]
      */
     public function findPublishedByCategoryOrderByPublishedDate($idCategory)
@@ -193,7 +225,10 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles publiés, liés à une sous-catégorie, triés par date de publication
+     * 
      * @param int $idCategory
+     * 
      * @return Article[]
      */
     public function findPublishedBySubCategoryOrderByPublishedDate($idSubCategory)
@@ -209,7 +244,10 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles liés à un utilisateur
+     * 
      * @param int $idUser
+     * 
      * @return Article[]
      */
     public function findAllByUser($idUser)

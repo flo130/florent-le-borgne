@@ -8,6 +8,7 @@ use AppBundle\Form\LoginForm;
 use AppBundle\Form\RegistrationForm;
 use AppBundle\Form\UserForm;
 use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Cette class va servire, entre autre, pour gérer les URLs de login et de logout. 
@@ -20,9 +21,14 @@ class UserController extends Controller
 {
     /**
      * @Route("/login", name="user_login")
+     * 
+     * @param Request $request
+     * 
+     * @return Response || JsonResponse
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
+        //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('homepage');
         }
@@ -31,19 +37,31 @@ class UserController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
-        return $this->render('AppBundle:pages:userLoginPage.html.twig', array(
-            'form' => $form->createView(),
-            'error' => $error,
-        ));
+
+        //retourne un JsonResponse si on est en ajax, une Response sinon
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'form' => $form->createView(),
+            ), $error ? 200 : 400);
+        } else {
+            return $this->render('AppBundle:pages:userLoginPage.html.twig', array(
+                'form' => $form->createView(),
+                'error' => $error,
+            ));
+        }
     }
 
     /**
-     * @Route("/logout", name="user_logout")
-     * 
      * Voir la définition de la route de logout dans security.yml
      * Il faut quand même créer cette route car sinon Symfony lèvera un 404.
      * Mais de toutes façon il ne viendra pas ici, il interceptera cette requete avant.
      * C'est Symfony qui se charge de délogger l'utilisateur.
+     * 
+     * @Route("/logout", name="user_logout")
+     * 
+     * @param Request $request
+     * 
+     * @return Response
      */
     public function logoutAction()
     {
@@ -51,14 +69,20 @@ class UserController extends Controller
     }
 
     /**
+     * Partie creation d'un compte utilisateur
+     * 
      * @Route("/register", name="user_register")
+     * 
+     * @param Request $request
+     * 
+     * @return Response
      */
     public function registerAction(Request $request)
     {
+        //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('homepage');
         }
-
         $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -82,6 +106,8 @@ class UserController extends Controller
     }
 
     /**
+     * Page d'un compte utilisateur
+     * 
      * @todo : trouver un moyen de faire mieux pour ne pas uploader une valeur vide si pas d'image
      * Au lieu de 
      *     $image = $article->getImage()
@@ -93,6 +119,11 @@ class UserController extends Controller
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
      * @Route("/{name}/account", name="user_account")
+     * 
+     * @param Request $request
+     * @param User $user
+     * 
+     * @return Response
      */
     public function accountAction(Request $request, User $user)
     {
@@ -101,6 +132,7 @@ class UserController extends Controller
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
             $user = $form->getData();
             if (!$user->getAvatar()) {
                 $user->setImage($image);
@@ -113,6 +145,7 @@ class UserController extends Controller
             'user' => $user,
             'userForm' => $form->createView(),
             'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUser($user->getId()),
+            'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
         ));
     }
 }

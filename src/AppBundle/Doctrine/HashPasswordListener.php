@@ -13,6 +13,9 @@ class HashPasswordListener
     private $passwordEncoder;
 
 
+    /**
+     * @param UserPasswordEncoder $passwordEncoder
+     */
     public function __construct(UserPasswordEncoder $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -22,6 +25,8 @@ class HashPasswordListener
      * prePersist est un évenement déclanché par Doctrine juste avant de persister une requete SQL en base
      * 
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function prePersist(LifecycleEventArgs $args)
     {
@@ -34,7 +39,11 @@ class HashPasswordListener
     }
 
     /**
+     * Permet l'encodage d'un mot de passe
+     * 
      * @param User $entity
+     * 
+     * @return void || null
      */
     private function encodePassword(User $user)
     {
@@ -50,7 +59,11 @@ class HashPasswordListener
     }
 
     /**
+     * prePersist est un évenement déclanché par Doctrine juste avant d'updater une entity en base
+     * 
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function preUpdate(LifecycleEventArgs $args)
     {

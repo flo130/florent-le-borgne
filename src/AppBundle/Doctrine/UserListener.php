@@ -23,7 +23,11 @@ class UserListener
     }
 
     /**
+     * Ajoute des infos à l'entity juste avant l'enregistrement en base
+     * 
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function prePersist(LifecycleEventArgs $args)
     {
@@ -42,6 +46,8 @@ class UserListener
      * Action effectuées juste avant l'update de l'entity
      *
      * @param LifecycleEventArgs $args
+     * 
+     * @return void || null
      */
     public function preUpdate(LifecycleEventArgs $args)
     {
@@ -59,7 +65,11 @@ class UserListener
     }
 
     /**
+     * Permet l'upload d'un fichier
+     * 
      * @param User $user
+     * 
+     * @return void || null
      */
     private function uploadFile($user)
     {

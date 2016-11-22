@@ -18,9 +18,24 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
  */
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
+    /**
+     * @var FormFactoryInterface $formFactory
+     */
     private $formFactory;
+
+    /**
+     * @var EntityManager $em
+     */
     private $em;
+
+    /**
+     * @var RouterInterface $router
+     */
     private $router;
+
+    /**
+     * @var UserPasswordEncoder $passwordEncoder
+     */
     private $passwordEncoder;
 
 
