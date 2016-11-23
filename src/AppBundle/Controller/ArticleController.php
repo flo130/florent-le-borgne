@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,8 @@ use AppBundle\Form\ArticleCreateForm;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
+ * Cette class sert à gérer les articles du site (pas en mode admin)
+ * 
  * @Route("/article")
  */
 class ArticleController extends Controller
@@ -24,6 +27,8 @@ class ArticleController extends Controller
      * Page détail d'un article
      * 
      * @Route("/show/{id}", name="article_show"))
+     * 
+     * @Method({"GET"})
      * 
      * @param Article $article
      */
@@ -39,6 +44,8 @@ class ArticleController extends Controller
      * Récupère tous les articles appartenants à une catégorie
      * 
      * @Route("/category/{id}", name="article_by_category"))
+     * 
+     * @Method({"GET"})
      * 
      * @param ArticleCategory $articleCategory
      * 
@@ -59,6 +66,8 @@ class ArticleController extends Controller
      * Récupère tous les articles appartenants à une sous-catégorie
      *
      * @Route("/sub-category/{id}", name="article_by_sub_category"))
+     * 
+     * @Method({"GET"})
      * 
      * @param ArticleSubCategory $articleSubCategory
      * 
@@ -89,6 +98,8 @@ class ArticleController extends Controller
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
      * @Route("/edit/{id}", name="article_edit"))
+     * 
+     * @Method({"GET", "POST"})
      * 
      * @param Request $request
      * @param Article $article
@@ -139,7 +150,10 @@ class ArticleController extends Controller
      * Page de création d'un article
      * 
      * @Security("is_granted('ROLE_MEMBRE')")
+     * 
      * @Route("/create", name="article_create"))
+     * 
+     * @Method({"GET", "POST"})
      * 
      * @param Request $request
      * 
@@ -197,6 +211,8 @@ class ArticleController extends Controller
      * Page de suppression d'un article
      *
      * @Route("/delete/{id}", name="article_delete"))
+     * 
+     * @Method({"GET"})
      *
      * @param Request $request
      * @param Article $article

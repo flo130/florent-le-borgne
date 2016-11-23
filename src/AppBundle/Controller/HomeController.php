@@ -3,12 +3,16 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Form\SearchForm;
 
+/**
+ * Cette class sert à afficher la page d'accueil du site
+ */
 class HomeController extends Controller
 {
     const MAX_ARTICLES_PER_PAGE = 6;
@@ -21,6 +25,8 @@ class HomeController extends Controller
      * @Route("/", defaults={"page"=1}, name="homepage"))
      * @Route("/article-page/{page}", name="homepagepaginate")
      * 
+     * @Method({"GET"})
+     * 
      * @param Request $request
      * @param int $page
      * 
@@ -28,6 +34,14 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request, $page=1)
     {
+    	dump($request->getLocale());
+    	
+
+    	
+    	
+    	
+    	
+    	
         $em = $this->getDoctrine()->getManager();
 
         $pagination = array(

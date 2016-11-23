@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Form\SearchForm;
 
 /**
+ * Cette class gère la partie recherche du site
+ * 
  * @Route("/search")
  */
 class SearchController extends Controller
@@ -18,6 +21,8 @@ class SearchController extends Controller
 	 * Permet d'afficher la page de recherche
 	 *
 	 * @Route("/", name="search"))
+	 *
+	 * @Method({"GET", "POST"})
 	 *
 	 * @param Request $request
 	 * @param string $term

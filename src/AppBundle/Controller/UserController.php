@@ -1,9 +1,10 @@
 <?php
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\RegistrationForm;
 use AppBundle\Form\UserForm;
@@ -11,7 +12,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Cette class va servire, entre autre, pour gérer les URLs de login et de logout. 
+ * Cette class va servir, entre autre, pour gérer les URLs de login et de logout. 
  * Mais le vrai travail d'authent est fait dans un service à part (AppBundle/Security/LoginFormAuthenticator.php).
  * On configure tout ça dans le fichier de config security.yml
  * 
@@ -21,6 +22,8 @@ class UserController extends Controller
 {
     /**
      * @Route("/login", name="user_login")
+     * 
+     * @Method({"GET", "POST"})
      * 
      * @param Request $request
      * 
@@ -59,6 +62,8 @@ class UserController extends Controller
      * 
      * @Route("/logout", name="user_logout")
      * 
+     * @Method({"GET"})
+     * 
      * @param Request $request
      * 
      * @return Response
@@ -72,6 +77,8 @@ class UserController extends Controller
      * Partie creation d'un compte utilisateur
      * 
      * @Route("/register", name="user_register")
+     * 
+     * @Method({"GET", "POST"})
      * 
      * @param Request $request
      * 
@@ -119,6 +126,8 @@ class UserController extends Controller
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
      * @Route("/{name}/account", name="user_account")
+     * 
+     * @Method({"GET", "POST"})
      * 
      * @param Request $request
      * @param User $user

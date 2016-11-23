@@ -15,6 +15,7 @@ $(window).on('load', function() {
     manageNavTab();
     manageAjaxFormSubmit();
     manageAjaxPagination();
+    manageChangeLocale();
 });
 
 
@@ -42,6 +43,26 @@ function manageNavTab()
 }
 
 /**
+ * Permet la gestion du changement de la locale en ajax
+ * 
+ * @return void
+ */
+function manageChangeLocale() 
+{
+    $('.change-locale').on('click', function(e) {
+        var $this = $(this);
+        //désactive le lien par défaut
+        e.preventDefault();
+        //envoie les données au serveur
+        $.get($this.attr('href'), function(data) {
+            location.reload(true);
+        }).fail(function () {
+            showErrorMessage('An error occurred');
+        });
+    });
+}
+
+/**
  * Gère le lazy loading des images.
  * Remplace créé un attribut "src" avec les données de l'attibut "data-src" au load 
  * de la page
@@ -64,7 +85,7 @@ function manageImageLazyLoad()
  */
 function manageAlertClose()
 {
-    $('.close-alert').on('click', function() {
+    $('.close-alert').on('click', function(e) {
         hideMessage();
     });
 }

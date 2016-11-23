@@ -50,12 +50,19 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    # Ecoute un login utilisateur pour faire des choses juste apres
+    # Ecoute un login utilisateur pour faire des choses juste apres (va chercher a appeler la method "onSecurityInteractiveLogin" dans le listener)
     app.listener.login_listener:
         class: AppBundle\Listener\LoginListener
         arguments: ['@security.token_storage', '@doctrine']
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
+
+    # Ecoute la reception d'une requete pour setter la locale d'un utilisateur (va chercher a appeler la method "onKernelRequest" dans le listener)
+    app.listener.kernel_request_listener:
+        class: AppBundle\Listener\LanguageListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
 
     # Voter Symfony pour les articles (permettant de savoir qui a le droit de faire quoi)
     app.article_voter:
