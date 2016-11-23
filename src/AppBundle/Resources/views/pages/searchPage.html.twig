@@ -1,0 +1,30 @@
+{#
+    params : 
+        - searchForm : SearchForm object
+        - searchResults : array of Articles object
+#}
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - search
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li class="active">Search</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
+            {% if searchResults|length > 0 %}{{ searchResults|length }} result{% if searchResults|length > 1 %}s{% endif %}{% endif %}
+        </div>
+    </div>
+    {% include 'AppBundle:blocs:articleTeaserList.html.twig' with { 
+        'articles' : searchResults,
+        'printArticleImage' : false,
+        'printDeleteButton' : false
+    } %}
+{% endblock %}

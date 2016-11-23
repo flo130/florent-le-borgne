@@ -258,4 +258,26 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * Recherche tous les articles en fonction d'un terme
+     *
+     * @param string $term
+     *
+     * @return Article[]
+     */
+    public function searchPublished($term)
+    {
+        return $this->createQueryBuilder('article')
+            //cherche via des like dans le titre, le résumer et l'article
+            ->orwhere('article.title LIKE :term')
+            ->orWhere('article.summary LIKE :term')
+            ->orWhere('article.article LIKE :term')
+            //il faut que l'article soit publié...
+            ->andWhere('article.status = :published')
+            ->setParameter('term', '%' . $term . '%')
+            ->setParameter('published', Article::PUBLISHED_STATUS)
+            ->getQuery()
+            ->execute();
+    }
 }

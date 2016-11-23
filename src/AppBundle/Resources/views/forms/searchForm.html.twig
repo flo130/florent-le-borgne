@@ -1,0 +1,16 @@
+{#
+    params : 
+        - form : SearchForm object
+#}
+{{ form_start(form, { 
+    'attr': { 
+        'class':'form-inline',
+        'role':'form' 
+    },
+    'action': path('search')
+}) }}
+    {{ form_widget(form.search) }}
+    <button type="submit" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span>
+    </button>
+{{ form_end(form) }}

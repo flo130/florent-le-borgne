@@ -1,3 +1,10 @@
+{#
+    params : 
+        - user : User object
+        - userForm : UserForms object
+        - userArticles : array of Article
+        - userComments : array of UserComment
+#}
 {% extends '::base.html.twig' %}
 {% block title %}
     {{ parent() }} - {{ user.name }}
@@ -48,8 +55,12 @@
                     {% for userArticle in userArticles %}
                         <div class="row">
                             <div class="col-md-12">
-                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : userArticle } %}
-                                <hr>
+                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
+                                    'article' : userArticle,
+                                    'printArticleImage' : true,
+                                    'printDeleteButton' : true
+                                } %}
+                                {% if not loop.last %}<hr>{% endif %}
                             </div>
                         </div>
                     {% else %}

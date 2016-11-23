@@ -1,3 +1,8 @@
+{#
+    params : 
+        - articles : Article object
+        - commentForm : CommentForm object
+#}
 {% extends '::base.html.twig' %}
 {% block title %}
     {{ parent() }} - {{ article.title }}

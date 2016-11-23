@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Form\SearchForm;
 
 class HomeController extends Controller
 {
@@ -40,6 +41,8 @@ class HomeController extends Controller
             return new JsonResponse(array(
                 'content' => $this->renderView('AppBundle:blocs:articleTeaserList.html.twig', array(
                     'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByPublishedDate($page, self::MAX_ARTICLES_PER_PAGE),
+                    'printArticleImage' => true,
+                    'printDeleteButton' => false
                 )),
                 'pagination' => $this->renderView('AppBundle:blocs:pagination.html.twig', array(
                     'pagination' => $pagination,
@@ -51,6 +54,7 @@ class HomeController extends Controller
                 'articlesPagination' => $pagination,
                 'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
                 'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDate(self::NB_LAST_ARTICLE),
+                'searchForm' => $this->createForm(SearchForm::class)->createView(),
             ));
         }
 

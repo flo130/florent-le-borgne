@@ -1,3 +1,7 @@
+{#
+    params : 
+        - comment : ArticleComment object
+#}
 <div class="panel panel-default">
     <div class="panel-heading">
         {{ comment.createdAt | date("F jS \\a\\t g:ia") }}
@@ -6,7 +10,7 @@
         {{ comment.articleComment }}
     </div>
     <div class="panel-footer">
-        <a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</a>
+        Article : <a href="{{ path('article_show', { id: comment.article.id }) }}">{{ comment.article.title }}</a>
     </div>
 </div>
 

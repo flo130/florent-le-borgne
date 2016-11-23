@@ -32,12 +32,12 @@ class ArticleVoter extends Voter
     protected function supports($attribute, $subject)
     {
         //vérifie que l'attribut passé est bien l'un de ceux qu'un veut vérifier
-        if ($attribute != 'edit') {
+        if ($attribute != 'edit' && $attribute != 'delete') {
             return false;
         }
 
         //vérifie que le sujet passé est bien un article
-        if (!$subject instanceof Article) {
+        if (! $subject instanceof Article) {
             return false;
         }
 

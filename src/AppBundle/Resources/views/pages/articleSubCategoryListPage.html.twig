@@ -1,3 +1,9 @@
+{#
+    params : 
+        - articleSubCategory : ArticleSubCategory object (sous catégorie en cours)
+        - articles : array of Articles object
+        - categories : array of ArticleCategory object (toutes les catégories)
+#}
 {% extends '::base.html.twig' %}
 {% block title %}
     {{ parent() }} - {{ articleSubCategory.articleSubCategory }}
@@ -18,8 +24,12 @@
             {% for article in articles %}
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : article } %}
-                        <hr>
+                        {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
+                            'article' : article,
+                            'printArticleImage' : true,
+                            'printDeleteButton' : false
+                        } %}
+                        {% if not loop.last %}<hr>{% endif %}
                     </div>
                 </div>
             {% else %}

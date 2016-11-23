@@ -1,3 +1,7 @@
+{#
+    params : 
+        - form : UserForm object
+#}
 {{ form_start(form) }}
     <div class="form-group{% if form_errors(form.avatar) %} has-error{% endif %}">
         {{ form_label(form.avatar) }}

@@ -15,7 +15,6 @@ use AppBundle\Form\ArticleEditForm;
 use AppBundle\Form\ArticleCreateForm;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-
 /**
  * @Route("/article")
  */
@@ -31,7 +30,7 @@ class ArticleController extends Controller
     public function ShowAction(Article $article)
     {
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
-            'commentForm' => $form = $this->createForm(ArticleCommentForm::class)->createView(),
+            'commentForm' => $this->createForm(ArticleCommentForm::class)->createView(),
             'article' => $article,
         ));
     }
@@ -50,7 +49,8 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
             'articleCategory' => $articleCategory,
-            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoryOrderByPublishedDate($articleCategory->getId()),
+            'articles' => $em->getRepository('AppBundle:Article')
+                ->findPublishedByCategoryOrderByPublishedDate($articleCategory->getId()),
             'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
         ));
     }
@@ -69,7 +69,8 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages:articleSubCategoryListPage.html.twig', array(
             'articleSubCategory' => $articleSubCategory,
-            'articles' => $em->getRepository('AppBundle:Article')->findPublishedBySubCategoryOrderByPublishedDate($articleSubCategory->getId()),
+            'articles' => $em->getRepository('AppBundle:Article')
+                ->findPublishedBySubCategoryOrderByPublishedDate($articleSubCategory->getId()),
             'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
         ));
     }
@@ -190,5 +191,27 @@ class ArticleController extends Controller
                 'articleForm' => $form->createView(),
             ));
         }
+    }
+
+    /**
+     * Page de suppression d'un article
+     *
+     * @Route("/delete/{id}", name="article_delete"))
+     *
+     * @param Request $request
+     * @param Article $article
+     *
+     * @return Response
+     */
+    public function DeleteAction(Request $request, Article $article)
+    {
+        //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
+        /** @see AppBundle\Security\ArticleVoter */
+        $this->denyAccessUnlessGranted('delete', $article);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+        $this->addFlash('success', 'Deleted successfully');
+        return $this->redirect($this->generateUrl('homepage'));
     }
 }

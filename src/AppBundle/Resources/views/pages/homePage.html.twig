@@ -1,3 +1,15 @@
+{#
+    params : 
+        - lastArticles : array of Articles object (x derniers articles pour le carousel)
+        - articles : array of Articles object
+        - articlesPagination : array of :
+            - page : int
+            - pages_count : int
+            - page_name : string (nom de la route à générer)
+            - ajax_callback : boolean (doit-on utiliser la pagination en ajax ?)
+        - searchForm : SearchForm object
+        - categories : array of ArticleCategories
+#}
 {% extends '::base.html.twig' %}
 {% block title %}
     {{ parent() }} - Home
@@ -12,7 +24,11 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="page-header">Articles</h1>
-            {% include 'AppBundle:blocs:articleTeaserList.html.twig' with { 'articles' : articles } %}
+            {% include 'AppBundle:blocs:articleTeaserList.html.twig' with {
+                'articles' : articles,
+                'printArticleImage' : true,
+                'printDeleteButton' : false
+            } %}
             <nav class="text-center">
                 {% include 'AppBundle:blocs:pagination.html.twig' with { 'pagination' : articlesPagination } %}
             </nav>
@@ -20,14 +36,7 @@
         <div class="col-md-4">
             <div class="well">
                 <h4>Blog Search</h4>
-                <div class="input-group">
-                    <input type="text" class="form-control">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </div>
+                {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
             </div>
             <div class="well">
                 <h4>Categories</h4>

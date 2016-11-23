@@ -1,10 +1,20 @@
+{#
+    params : 
+        - articles : array of Article object
+        - printArticleImage : boolean (affiche ou non l'image de l'article)
+        - printDeleteButton : boolean (affiche ou non le bouton supprimer un article)
+#}
 <div id="content" class="row">
     <div class="col-md-12">
         {% for article in articles %}
             <div class="row">
                 <div class="col-md-12">
-                     {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 'article' : article } %}
-                     <hr>
+                     {% include 'AppBundle:blocs:articleTeaser.html.twig' with { 
+                         'article' : article,
+                         'printArticleImage' : printArticleImage,
+                         'printDeleteButton' : printDeleteButton
+                     } %}
+                     {% if not loop.last %}<hr>{% endif %}
                  </div>
              </div>
         {% else %}

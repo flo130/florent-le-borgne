@@ -1,3 +1,11 @@
+{#
+    params : 
+        - pagination : array of :
+            - page : int
+            - pages_count : int
+            - page_name : string (nom de la route à générer)
+            - ajax_callback : boolean (doit-on utiliser la pagination en ajax ?)
+#}
 {% if pagination.pages_count > 0 %}
     <ul id="pagination" class="pagination">
         <li{% if pagination.page <= 1 %} class="disabled"{% endif %}>

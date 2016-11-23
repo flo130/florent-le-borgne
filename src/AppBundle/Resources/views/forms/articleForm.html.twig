@@ -1,3 +1,7 @@
+{#
+    params : 
+        - form : ArticleForm object
+#}
 {{ form_start(form) }}
     <div class="form-group{% if form_errors(form.image) %} has-error{% endif %}">
         {{ form_label(form.image) }}
