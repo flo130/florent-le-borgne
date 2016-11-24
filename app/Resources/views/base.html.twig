@@ -56,11 +56,11 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ absolute_url(path('locale_change', { 'locale':'fr' })) }}" class="change-locale">Français</a>
+                        <li{% if app.request.getLocale() == 'fr' %} class="active"{% endif %}>
+                            <a{% if app.request.getLocale() != 'fr' %} href="{{ absolute_url(path('locale_change', { 'locale':'fr' })) }}" class="change-locale"{% endif %}>Français</a>
                         </li>
-                        <li>
-                            <a href="{{ absolute_url(path('locale_change', { 'locale':'en' })) }}" class="change-locale">English</a>
+                        <li{% if app.request.getLocale() == 'en' %} class="active"{% endif %}>
+                            <a{% if app.request.getLocale() != 'en' %} href="{{ absolute_url(path('locale_change', { 'locale':'en' })) }}" class="change-locale"{% endif %}>English</a>
                         </li>
                     </ul>
                 </li>
@@ -118,11 +118,11 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li{% if app.getSession().getLocale() == 'fr' %} class="active"{% endif %}>
-                                    <a{% if app.getSession().getLocale() == 'fr' %} href="{{ absolute_url(path('locale_change', { 'locale':'fr' })) }}" class="change-locale"{% endif %}>Français</a>
+                                <li{% if app.request.getLocale() == 'fr' %} class="active"{% endif %}>
+                                    <a{% if app.request.getLocale() != 'fr' %} href="{{ absolute_url(path('locale_change', { 'locale':'fr' })) }}" class="change-locale"{% endif %}>Français</a>
                                 </li>
-                                <li{% if app.getSession().getLocale() == 'en' %} class="active"{% endif %}>
-                                    <a{% if app.getSession().getLocale() == 'en' %} href="{{ absolute_url(path('locale_change', { 'locale':'en' })) }}" class="change-locale"{% endif %}>English</a>
+                                <li{% if app.request.getLocale() == 'en' %} class="active"{% endif %}>
+                                    <a{% if app.request.getLocale() != 'en' %} href="{{ absolute_url(path('locale_change', { 'locale':'en' })) }}" class="change-locale"{% endif %}>English</a>
                                 </li>
                             </ul>
                         </li>
