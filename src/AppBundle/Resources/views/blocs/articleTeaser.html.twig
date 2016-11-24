@@ -4,24 +4,24 @@
         - printArticleImage : boolean
 #}
 <h2>
-    <a href="{{ path('article_show', {'id': article.id }) }}">
+    <a href="{{ path('article_show', { 'id' : article.id }) }}">
         {{ article.title }}
     </a>
 </h2>
 {% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
     <div class="pull-right">
-        <a class="btn btn-default" href="{{ path('article_edit', { id: article.id }) }}" role="button">
+        <a class="btn btn-default" href="{{ path('article_edit', { 'id' : article.id }) }}" role="button">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </a>
         {% if printDeleteButton %}
-            &nbsp;<a class="btn btn-danger" href="{{ path('article_delete', { id: article.id }) }}" role="button">
+            &nbsp;<a class="btn btn-danger" href="{{ path('article_delete', { 'id' : article.id }) }}" role="button">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             </a>
         {% endif %}
     </div>
 {% endif %}
 <p class="lead">
-    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> By <a href="{{ path('user_account', { name: article.user.name }) }}">{{ article.user.name }}</a>
+    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> By <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
 </p>
 <p>
     <span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
@@ -34,6 +34,6 @@
 <p>
     {{ article.summary }}
 </p>
-<a class="btn btn-primary" href="{{ path('article_show', {'id': article.id }) }}">
+<a class="btn btn-primary" href="{{ path('article_show', { 'id' : article.id }) }}">
     Read more
 </a>

@@ -55,7 +55,7 @@
                 {% endif %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu navmenu-nav">
                         <li{% if app.request.getLocale() == 'fr' %} class="active"{% endif %}>
                             <a{% if app.request.getLocale() != 'fr' %} href="{{ absolute_url(path('locale_change', { 'locale':'fr' })) }}" class="change-locale"{% endif %}>Français</a>
                         </li>
