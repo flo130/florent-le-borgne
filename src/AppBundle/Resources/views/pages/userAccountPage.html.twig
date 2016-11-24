@@ -13,8 +13,12 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li class="active">{{ user.name }}</a></li>
+                <li>
+                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                </li>
+                <li class="active">
+                    {{ user.name }}</a>
+                </li>
             </ol>
         </div>
     </div>
@@ -26,13 +30,13 @@
                 <div class="caption">
                     <ul class="nav nav-pills nav-stacked nav-hashtag" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#account" aria-controls=account role="tab" data-toggle="tab">Account</a>
+                            <a href="#account" aria-controls=account role="tab" data-toggle="tab">{{ 'app.global.account' | trans }}</a>
                         </li>
                         <li role="presentation">
-                            <a href="#articles" aria-controls=articles role="tab" data-toggle="tab">Articles <span class="badge">{{ userArticles | length }}</span></a>
+                            <a href="#articles" aria-controls=articles role="tab" data-toggle="tab">{{ 'app.global.articles' | trans }} <span class="badge">{{ userArticles | length }}</span></a>
                         </li>
                         <li role="presentation">
-                            <a href="#comments" aria-controls=comments role="tab" data-toggle="tab">Comments <span class="badge">{{ userComments | length }}</span></a>
+                            <a href="#comments" aria-controls=comments role="tab" data-toggle="tab">{{ 'app.global.comments' | trans }} <span class="badge">{{ userComments | length }}</span></a>
                         </li>
                     </ul>
                 </div>
@@ -41,8 +45,8 @@
         <div class="col-md-8">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="account">
-                    <h2>Account</h2>
-                    Member since {{ user.createdAt | date("d/m/Y") }}
+                    <h2>{{ 'app.global.account' | trans }}</h2>
+                    {{ 'app.global.member_since' | trans }} {{ user.createdAt | date("d/m/Y") }}
                     {% if is_granted('ROLE_USER') and app.user.id == user.id %}
                         {% include 'AppBundle:forms:userForm.html.twig' with { 'form' : userForm } %}
                     {% else %}
@@ -50,7 +54,7 @@
                     {% endif %}
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="articles">
-                    <h2>Articles</h2>
+                    <h2>{{ 'app.global.articles' | trans }}</h2>
                     <a  class="btn btn-default" href="{{ path('article_create') }}" role="button">Create</a>
                     {% for userArticle in userArticles %}
                         <div class="row">
@@ -64,18 +68,18 @@
                             </div>
                         </div>
                     {% else %}
-                        "No article found"
+                        {{ 'app.global.no_data.article' | trans }}
                         <hr>
                     {% endfor %}
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="comments">
-                    <h2>Comments</h2>
+                    <h2>{{ 'app.global.comments' | trans }}</h2>
                     <div class="row">
                         <div class="col-md-12">
                             {% for userComment in userComments %}
                                 {% include 'AppBundle:blocs:articleCommentForUserAccount.html.twig' with { 'comment' : userComment } %}
                             {% else %}
-                                "No comment found"
+                                {{ 'app.global.no_data.comment' | trans }}
                             {% endfor %}
                         </div>
                     </div>

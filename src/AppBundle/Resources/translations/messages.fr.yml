@@ -1,0 +1,37 @@
+# pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
+
+app: 
+    global:
+        article: article
+        articles: articles
+        categories: categories
+        comment: commentaire
+        comments: commentaires
+        search: rechercher
+        account: mon compte
+        by: par
+        member_since: membre depuis
+        leave_a: laisser un
+        posted_on: posté le
+        last_edit_on: dernière modification le
+        read_more: lire
+        create_article: créer un article
+        update_article: modifier un article
+        name: nom
+        email: email
+        no_account: je n'est pas encore de compte
+        already_have_account: j'ai déjà un compte
+        no_data:
+            category: aucune categorie trouvée
+            article: aucun article trouvé
+            comment: aucun commentaire trouvé
+        previous: précédent
+        next: suivant
+        submit: valider
+        select: sélectionner
+        change: changer
+        remove: supprimer
+        edit: éditer
+        register: créer un compte
+        login: se connecter
+        home: accueil

@@ -1,6 +1,19 @@
+#permet la redirection du / vers le /%locale%
+root: 
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%/
+        permanent: true
+
+#les routes du bundles "app" seront indiquées via des annotations et comporteront toutes la locale utilisée
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|fr
 
+#router du bundle FMElfinderBundle
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yml"

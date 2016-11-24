@@ -1,0 +1,12 @@
+# pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
+
+app: 
+    global:
+        create_article: create an article
+        search_article: search article
+        register: register
+        login: login
+        logout: logout
+        languages: languages
+        french: french
+        english: english

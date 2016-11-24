@@ -15,7 +15,6 @@ $(window).on('load', function() {
     manageNavTab();
     manageAjaxFormSubmit();
     manageAjaxPagination();
-    manageChangeLocale();
 });
 
 
@@ -39,26 +38,6 @@ function manageNavTab()
         } else {
             window.location.hash = e.target.hash; 
         }
-    });
-}
-
-/**
- * Permet la gestion du changement de la locale en ajax
- * 
- * @return void
- */
-function manageChangeLocale() 
-{
-    $('.change-locale').on('click', function(e) {
-        var $this = $(this);
-        //désactive le lien par défaut
-        e.preventDefault();
-        //envoie les données au serveur
-        $.get($this.attr('href'), function(data) {
-            location.reload(true);
-        }).fail(function () {
-            showErrorMessage('An error occurred');
-        });
     });
 }
 

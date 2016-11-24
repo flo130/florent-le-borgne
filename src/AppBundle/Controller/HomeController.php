@@ -34,14 +34,6 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request, $page=1)
     {
-    	dump($request->getLocale());
-    	
-
-    	
-    	
-    	
-    	
-    	
         $em = $this->getDoctrine()->getManager();
 
         $pagination = array(

@@ -4,18 +4,22 @@
 #}
 {% extends '::base.html.twig' %}
 {% block title %}
-    {{ parent() }} - Add article
+    {{ parent() }} - {{ 'app.global.create_article' | trans }}
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li class="active">Add article</li>
+                <li>
+                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.global.create_article' | trans }}
+                </li>
             </ol>
         </div>
     </div>
-    <h1>Article creation</h1>
+    <h1>{{ 'app.global.create_article' | trans }}</h1>
     <div class="row">
         <div class="col-md-12">
             {% include 'AppBundle:forms:articleForm.html.twig' with { 'form' : articleForm } %}

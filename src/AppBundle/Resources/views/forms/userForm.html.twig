@@ -13,11 +13,11 @@
             </div>
             <div>
                 <span class="btn btn-default btn-file">
-                    <span class="fileinput-new">Select</span>
-                    <span class="fileinput-exists">Change</span>
+                    <span class="fileinput-new">{{ 'app.global.select' | trans }}</span>
+                    <span class="fileinput-exists">{{ 'app.global.change' | trans }}</span>
                     {{ form_widget(form.avatar) }}
                 </span>
-                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">{{ 'app.global.remove' | trans }}</a>
             </div>
         </div>
         {{ form_errors(form.avatar) }}
@@ -25,7 +25,7 @@
     {{ form_row(form.email) }}
     {{ form_row(form.name) }}
     {{ form_row(form.plainPassword) }}
-    <button class="btn btn-primary" type="submit" formnovalidate>Submit</button>
+    <button class="btn btn-primary" type="submit" formnovalidate>{{ 'app.global.submit' | trans }}</button>
 {{ form_end(form) }}
 
 

@@ -21,12 +21,12 @@
     </div>
 {% endif %}
 <p class="lead">
-    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> By <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
+    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ 'app.global.by' | trans }} <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
 </p>
 <p>
-    <span class="glyphicon glyphicon-time"></span> Posted on {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
+    <span class="glyphicon glyphicon-time"></span> {{ 'app.global.posted_on' | trans }} {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
     <br>
-    <span class="glyphicon glyphicon-edit"></span> Last edit on {{ article.updatedAt | date("F jS \\a\\t g:ia") }}
+    <span class="glyphicon glyphicon-edit"></span> {{ 'app.global.last_edit_on' | trans }} {{ article.updatedAt | date("F jS \\a\\t g:ia") }}
 </p>
 {% if printArticleImage == true %}
     <img class="img-responsive lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}" width="100%">
@@ -35,5 +35,5 @@
     {{ article.summary }}
 </p>
 <a class="btn btn-primary" href="{{ path('article_show', { 'id' : article.id }) }}">
-    Read more
+    {{ 'app.global.read_more' | trans }}
 </a>

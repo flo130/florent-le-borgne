@@ -10,6 +10,6 @@
     {% endif %}
     {{ form_row(form._username) }}
     {{ form_row(form._password) }}
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <a href="{{ path('user_register') }}">I do not have an account yet</a>
+    <button class="btn btn-primary" type="submit">{{ 'app.global.submit' | trans }}</button>
+    <a href="{{ path('user_register') }}">{{ 'app.global.no_account' | trans }}</a>
 {{ form_end(form) }}

@@ -11,8 +11,12 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li class="active">{{ articleCategory.articleCategory }}</li>
+                <li>
+                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                </li>
+                <li class="active">
+                    {{ articleCategory.articleCategory }}
+                </li>
             </ol>
         </div>
     </div>
@@ -31,13 +35,13 @@
                     </div>
                 </div>
             {% else %}
-                "No data found"
+                {{ 'app.global.no_data.article' | trans }}
                 <hr>
             {% endfor %}
         </div>
         <div class="col-md-4">
             <div class="well">
-                <h4>Categories</h4>
+                <h4>{{ 'app.global.categories' | trans }}</h4>
                 {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
             </div>
         </div>

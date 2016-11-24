@@ -11,10 +11,18 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a href="{{ path('homepage') }}">Home</a></li>
-                <li><a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a></li>
-                <li><a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a></li>
-                <li class="active">{{ article.title }}</li>
+                <li>
+                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a>
+                </li>
+                <li class="active">
+                    {{ article.title }}
+                </li>
             </ol>
         </div>
     </div>
@@ -27,13 +35,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well">
-                <h4>Leave a comment</h4>
+                <h4>{{ 'app.global.leave_a' | trans }} {{ 'app.global.comment' | trans }}</h4>
                 {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 'form' : commentForm } %}
             </div>
             {% for comment in article.articleComments %}
                 {% include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comment' : comment } %}
             {% else %}
-                "No data found"
+                {{ 'app.global.no_data.comment' | trans }}
             {% endfor %}
         </div>
     </div>
