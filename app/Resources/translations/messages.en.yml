@@ -3,7 +3,7 @@
 app: 
     global:
         create_article: create an article
-        search_article: search article
+        search_article: search an article
         register: register
         login: login
         logout: logout

@@ -1,5 +1,23 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
+#messages venant de Symfony (bundles et/ou form)
+Username: username
+Password: password
+Comment: comment
+Avatar: avatar
+Email: email
+Name: name
+Plain password: password
+Image: image
+Title: title
+Summary: summary
+Article: article
+Article category: article category
+Choose a category: choose a category
+Article sub category: article sub category
+Choose a sub category: choose a sub category
+Publish this article: Publish this article
+
 app: 
     global:
         article: article
