@@ -16,5 +16,5 @@ app:
         admin: 
             admin: admin
             search:
-                article: search article
-                user: search user
+                article: search an article
+                user: search a user
