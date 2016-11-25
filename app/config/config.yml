@@ -13,7 +13,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -34,14 +34,14 @@ framework:
     fragments:       ~
     http_method_override: true
     assets:
-        version: %appversion%
+        version: "%appversion%"
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        appversion: %appversion%
+        appversion: "%appversion%"
     form_themes:
         - bootstrap_3_layout.html.twig
 
@@ -93,7 +93,7 @@ ivory_ck_editor:
     default_config: article_config
     configs:
         article_config:
-            language: %locale%
+            language: "%locale%"
             toolbar: full
             filebrowserBrowseRoute: elfinder
             filebrowserBrowseRouteParameters:
@@ -112,7 +112,7 @@ ivory_ck_editor:
 fm_elfinder:
     instances:
         ckeditor:
-            locale: %locale%
+            locale: "%locale%"
             editor: ckeditor
             fullscreen: false
             include_assets: true
