@@ -18,39 +18,48 @@ Article sub category: article sous-catégorie
 Choose a sub category: choisir une sous-catégorie
 Publish this article: publier cet article
 
-app: 
-    global:
-        article: article
-        articles: articles
-        categories: categories
-        comment: commentaire
-        comments: commentaires
-        search: rechercher
-        by: par
-        leave_a: laisser un
-        posted_on: posté le
-        last_edit_on: dernière modification le
-        read_more: lire
-        create_article: créer un article
-        update_article: modifier un article
-        name: nom
-        email: email
-        no_data:
-            category: aucune categorie trouvée
-            article: aucun article trouvé
-            comment: aucun commentaire trouvé
-        previous: précédent
-        next: suivant
-        submit: valider
-        select: sélectionner
-        change: changer
-        remove: supprimer
-        edit: éditer
-        user:
-            register: créer un compte
-            login: se connecter
-            account: mon compte
-            no_account: je n'est pas encore de compte
-            already_have_account: j'ai déjà un compte
-            member_since: membre depuis
-        home: accueil
+app:
+    action: action
+    title: titre
+    status: status
+    article: article
+    articles: articles
+    categories: categories
+    comment: commentaire
+    comments: commentaires
+    search: rechercher
+    by: par
+    leave_a: laisser un
+    posted_on: posté le
+    last_edit_on: dernière modification le
+    read_more: lire
+    create_article: créer un article
+    update_article: modifier un article
+    name: nom
+    email: email
+    no_data:
+        category: aucune categorie trouvée
+        article: aucun article trouvé
+        comment: aucun commentaire trouvé
+    previous: précédent
+    next: suivant
+    submit: valider
+    select: sélectionner
+    change: changer
+    remove: supprimer
+    edit: éditer
+    see: voir
+    delete: supprimer
+    user:
+        register: créer un compte
+        login: se connecter
+        account: mon compte
+        no_account: je n'est pas encore de compte
+        already_have_account: j'ai déjà un compte
+        member_since: membre depuis
+    home: accueil
+    admin: 
+        admin: admin
+        search:
+            article: rechercher article
+            user: rechercher utilisateur

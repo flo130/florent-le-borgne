@@ -1,20 +1,19 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app: 
-    global:
-        article:
-            create: create an article
-            search: search an article
-        user:
-            register: register
-            login: login
-            logout: logout
-        language:
-            languages: languages
-            french: french
-            english: english
-        admin: 
-            admin: admin
-            search:
-                article: search an article
-                user: search a user
+    article:
+        create: create an article
+        search: search an article
+    user:
+        register: register
+        login: login
+        logout: logout
+    language:
+        languages: languages
+        french: french
+        english: english
+    admin: 
+        admin: admin
+        search:
+            article: search an article
+            user: search a user

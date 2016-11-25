@@ -6,6 +6,6 @@
     {{ form_row(form.email) }}
     {{ form_row(form.plainPassword.first, { 'label': 'Password' }) }}
     {{ form_row(form.plainPassword.second, { 'label': 'Repeat Password' }) }}
-    <button class="btn btn-primary" type="submit">{{ 'app.global.user.register' | trans }}</button>
-    <a href="{{ path('user_login') }}">{{ 'app.global.user.already_have_account' | trans }}</a>
+    <button class="btn btn-primary" type="submit">{{ 'app.user.register' | trans }}</button>
+    <a href="{{ path('user_login') }}">{{ 'app.user.already_have_account' | trans }}</a>
 {{ form_end(form) }}

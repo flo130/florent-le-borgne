@@ -5,17 +5,17 @@
 #}
 {% extends '::base.html.twig' %}
 {% block title %}
-    {{ parent() }} - {{ 'app.global.search' | trans }}
+    {{ parent() }} - {{ 'app.search' | trans }}
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans }}</a>
                 </li>
                 <li class="active">
-                    {{ 'app.global.search' | trans }}
+                    {{ 'app.search' | trans }}
                 </li>
             </ol>
         </div>

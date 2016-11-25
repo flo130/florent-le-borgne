@@ -13,11 +13,11 @@
             </div>
             <div>
                 <span class="btn btn-default btn-file">
-                    <span class="fileinput-new">{{ 'app.global.select' | trans }}</span>
-                    <span class="fileinput-exists">{{ 'app.global.change' | trans }}</span>
+                    <span class="fileinput-new">{{ 'app.select' | trans }}</span>
+                    <span class="fileinput-exists">{{ 'app.change' | trans }}</span>
                     {{ form_widget(form.image) }}
                 </span>
-                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">{{ 'app.global.remove' | trans }}</a>
+                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">{{ 'app.remove' | trans }}</a>
             </div>
         </div>
         {{ form_errors(form.image) }}
@@ -28,5 +28,5 @@
     {{ form_row(form.articleCategory) }}
     {{ form_row(form.articleSubCategory) }}
     {{ form_row(form.status) }}
-    <button class="btn btn-primary" type="submit" formnovalidate>{{ 'app.global.submit' | trans }}</button>
+    <button class="btn btn-primary" type="submit" formnovalidate>{{ 'app.submit' | trans }}</button>
 {{ form_end(form) }}

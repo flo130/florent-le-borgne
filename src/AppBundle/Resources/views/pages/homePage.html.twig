@@ -12,7 +12,7 @@
 #}
 {% extends '::base.html.twig' %}
 {% block title %}
-    {{ parent() }} - {{ 'app.global.home' | trans }}
+    {{ parent() }} - {{ 'app.home' | trans }}
 {% endblock %}
 {% block body %}
     <div class="row">
@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <section class="col-md-8">
-            <h1 class="page-header">{{ 'app.global.articles' | trans }}</h1>
+            <h1 class="page-header">{{ 'app.articles' | trans }}</h1>
             {% include 'AppBundle:blocs:articleTeaserList.html.twig' with {
                 'articles' : articles,
                 'printArticleImage' : true,
@@ -35,11 +35,11 @@
         </section>
         <div class="col-md-4">
             <section class="well">
-                <h4>{{ 'app.global.search' | trans }}</h4>
+                <h4>{{ 'app.search' | trans }}</h4>
                 {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
             </section>
             <section class="well">
-                <h4>{{ 'app.global.categories' | trans }}</h4>
+                <h4>{{ 'app.categories' | trans }}</h4>
                 {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
             </section>
         </div>

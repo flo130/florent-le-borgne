@@ -1,0 +1,62 @@
+{#
+    params : 
+        - articles : array of Article object
+#}
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.search.article' | trans }}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin') }}">{{ 'app.admin.admin' | trans }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.admin.search.article' | trans }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <h1>{{ 'app.admin.search.article' | trans }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'app.title' | trans }}</th>
+                        <th>{{ 'app.status' | trans }}</th>
+                        <th>{{ 'app.by' | trans }}</th>
+                        <th>{{ 'app.action' | trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td>{{ article.id }}</td>
+                            <td>{{ article.title }}</td>
+                            <td>
+                                {% if article.status == 1 %}
+                                    <div class="text-center">
+                                        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>{{ article.user.name }}</td>
+                            <td>
+                                <a href="{{ path('admin_article_edit', { 'id' : article.id }) }}">{{ 'app.edit' | trans }}</a>&nbsp;
+                                <a href="{{ path('article_show', { 'id' : article.id }) }}">{{ 'app.see' | trans }}</a>&nbsp;
+                                <a href="#">{{ 'app.delete' | trans }}</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        {{ 'app.no_data.article' | trans }}
+                        <hr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

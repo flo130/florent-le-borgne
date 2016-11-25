@@ -7,23 +7,23 @@
     <ul class="nav navmenu-nav">
         {% if is_granted('ROLE_ADMIN') %}
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.global.admin.admin' | trans }} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.admin.admin' | trans }} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li{% if route == 'admin_user_search' %} class="active"{% endif %}>
-                        <a href="{{ path('admin_user_search') }}">{{ 'app.global.admin.search.user' | trans }}</a>
+                        <a href="{{ path('admin_user_search') }}">{{ 'app.admin.search.user' | trans }}</a>
                     </li>
                     <li{% if route == 'admin_article_search' %} class="active"{% endif %}>
-                        <a href="{{ path('admin_article_search') }}">{{ 'app.global.admin.search.article' | trans }}</a>
+                        <a href="{{ path('admin_article_search') }}">{{ 'app.admin.search.article' | trans }}</a>
                     </li>
                 </ul>
             </li>
         {% endif %}
         <li{% if route == 'search' %} class="active"{% endif %}>
-            <a href="{{ path('search') }}">{{ 'app.global.article.search' | trans }}</a>
+            <a href="{{ path('search') }}">{{ 'app.article.search' | trans }}</a>
         </li>
         {% if is_granted('ROLE_USER') %}
             <li{% if route == 'article_create' %} class="active"{% endif %}>
-                <a href="{{ path('article_create') }}">{{ 'app.global.article.create' | trans }}</a>
+                <a href="{{ path('article_create') }}">{{ 'app.article.create' | trans }}</a>
             </li>
         {% endif %}
     </ul>
@@ -36,29 +36,29 @@
             </li>
             <li>
                 <a href="{{ path('user_logout') }}">
-                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> {{ 'app.global.user.logout' | trans }}
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> {{ 'app.user.logout' | trans }}
                 </a>
             </li>
         {% else %}
             <li{% if route == 'user_register' %} class="active"{% endif %}>
                 <a href="{{ path('user_register') }}">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ 'app.global.user.register' | trans }}
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ 'app.user.register' | trans }}
                 </a>
             </li>
             <li{% if route == 'user_login' %} class="active"{% endif %}>
                 <a href="{{ path('user_login') }}">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> {{ 'app.global.user.login' | trans }}
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> {{ 'app.user.login' | trans }}
                 </a>
             </li>
         {% endif %}
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.global.language.languages' | trans }} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.language.languages' | trans }} <span class="caret"></span></a>
             <ul class="dropdown-menu navmenu-nav">
                 <li{% if locale == 'fr' %} class="active"{% endif %}>
-                    <a{% if locale != 'fr' %} href="{{ path(route, params | merge({ _locale : 'fr' })) }}"{% endif %}>{{ 'app.global.language.french' | trans }}</a>
+                    <a{% if locale != 'fr' %} href="{{ path(route, params | merge({ _locale : 'fr' })) }}"{% endif %}>{{ 'app.language.french' | trans }}</a>
                 </li>
                 <li{% if locale == 'en' %} class="active"{% endif %}>
-                    <a{% if locale != 'en' %} href="{{ path(route, params | merge({ _locale : 'en' })) }}"{% endif %}>{{ 'app.global.language.english' | trans }}</a>
+                    <a{% if locale != 'en' %} href="{{ path(route, params | merge({ _locale : 'en' })) }}"{% endif %}>{{ 'app.language.english' | trans }}</a>
                 </li>
             </ul>
         </li>

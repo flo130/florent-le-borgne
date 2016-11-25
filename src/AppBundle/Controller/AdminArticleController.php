@@ -29,7 +29,10 @@ class AdminArticleController extends Controller
      */
     public function SearchAction(Request $request)
     {
-        die('admin_article_search');
+        $em = $this->getDoctrine()->getManager();
+        return $this->render('AppBundle:pages/admin:searchArticlePage.html.twig', array(
+            'articles' => $em->getRepository('AppBundle:Article')->findAll(),
+        ));
     }
 
     /**

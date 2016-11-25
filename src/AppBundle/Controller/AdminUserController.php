@@ -29,7 +29,7 @@ class AdminUserController extends Controller
      */
     public function SearchAction(Request $request)
     {
-        die('admin_user_search');
+    	return $this->render('AppBundle:pages/admin:searchUserPage.html.twig');
     }
 
     /**

@@ -12,7 +12,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('homepage') }}">{{ 'app.global.home' | trans }}</a>
+                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans }}</a>
                 </li>
                 <li class="active">
                     {{ articleCategory.articleCategory }}
@@ -35,13 +35,13 @@
                     </div>
                 </div>
             {% else %}
-                {{ 'app.global.no_data.article' | trans }}
+                {{ 'app.no_data.article' | trans }}
                 <hr>
             {% endfor %}
         </div>
         <section class="col-md-4">
             <div class="well">
-                <h4>{{ 'app.global.categories' | trans }}</h4>
+                <h4>{{ 'app.categories' | trans }}</h4>
                 {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
             </div>
         </div>
