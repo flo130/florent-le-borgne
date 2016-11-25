@@ -2,11 +2,19 @@
 
 app: 
     global:
-        create_article: create an article
-        search_article: search an article
-        register: register
-        login: login
-        logout: logout
-        languages: languages
-        french: french
-        english: english
+        article:
+            create: create an article
+            search: search an article
+        user:
+            register: register
+            login: login
+            logout: logout
+        language:
+            languages: languages
+            french: french
+            english: english
+        admin: 
+            admin: admin
+            search:
+                article: search article
+                user: search user

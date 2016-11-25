@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <section class="col-md-8">
             <h1 class="page-header">{{ 'app.global.articles' | trans }}</h1>
             {% include 'AppBundle:blocs:articleTeaserList.html.twig' with {
                 'articles' : articles,
@@ -32,16 +32,16 @@
             <nav class="text-center">
                 {% include 'AppBundle:blocs:pagination.html.twig' with { 'pagination' : articlesPagination } %}
             </nav>
-        </div>
+        </section>
         <div class="col-md-4">
-            <div class="well">
+            <section class="well">
                 <h4>{{ 'app.global.search' | trans }}</h4>
                 {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
-            </div>
-            <div class="well">
+            </section>
+            <section class="well">
                 <h4>{{ 'app.global.categories' | trans }}</h4>
                 {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
-            </div>
+            </section>
         </div>
     </div>
 {% endblock %}

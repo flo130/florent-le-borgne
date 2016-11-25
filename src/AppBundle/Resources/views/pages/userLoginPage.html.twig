@@ -4,11 +4,11 @@
 {% endblock %}
 {% block body %}
     <h2>{{ 'app.global.login' | trans }}</h2>
-    <div class="row">
+    <section class="row">
         <div class="col-md-8 col-md-offset-2{% if error %} animated shake{% endif %}">
             <div class="well">
                 {% include 'AppBundle:forms:loginForm.html.twig' with { 'error' : error, 'form' : form } %}
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

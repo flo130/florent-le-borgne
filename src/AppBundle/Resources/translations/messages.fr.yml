@@ -26,9 +26,7 @@ app:
         comment: commentaire
         comments: commentaires
         search: rechercher
-        account: mon compte
         by: par
-        member_since: membre depuis
         leave_a: laisser un
         posted_on: posté le
         last_edit_on: dernière modification le
@@ -37,8 +35,6 @@ app:
         update_article: modifier un article
         name: nom
         email: email
-        no_account: je n'est pas encore de compte
-        already_have_account: j'ai déjà un compte
         no_data:
             category: aucune categorie trouvée
             article: aucun article trouvé
@@ -50,6 +46,11 @@ app:
         change: changer
         remove: supprimer
         edit: éditer
-        register: créer un compte
-        login: se connecter
+        user:
+            register: créer un compte
+            login: se connecter
+            account: mon compte
+            no_account: je n'est pas encore de compte
+            already_have_account: j'ai déjà un compte
+            member_since: membre depuis
         home: accueil

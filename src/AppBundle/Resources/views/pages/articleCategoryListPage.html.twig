@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <section class="col-md-8">
             <h1>Articles {{ articleCategory.articleCategory }}</h1>
             {% for article in articles %}
                 <div class="row">
@@ -39,7 +39,7 @@
                 <hr>
             {% endfor %}
         </div>
-        <div class="col-md-4">
+        <section class="col-md-4">
             <div class="well">
                 <h4>{{ 'app.global.categories' | trans }}</h4>
                 {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}

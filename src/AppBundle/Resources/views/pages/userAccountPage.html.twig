@@ -30,7 +30,7 @@
                 <div class="caption">
                     <ul class="nav nav-pills nav-stacked nav-hashtag" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#account" aria-controls=account role="tab" data-toggle="tab">{{ 'app.global.account' | trans }}</a>
+                            <a href="#account" aria-controls=account role="tab" data-toggle="tab">{{ 'app.global.user.account' | trans }}</a>
                         </li>
                         <li role="presentation">
                             <a href="#articles" aria-controls=articles role="tab" data-toggle="tab">{{ 'app.global.articles' | trans }} <span class="badge">{{ userArticles | length }}</span></a>
@@ -45,8 +45,8 @@
         <div class="col-md-8">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="account">
-                    <h2>{{ 'app.global.account' | trans }}</h2>
-                    {{ 'app.global.member_since' | trans }} {{ user.createdAt | date("d/m/Y") }}
+                    <h2>{{ 'app.global.user.account' | trans }}</h2>
+                    {{ 'app.global.user.member_since' | trans }} {{ user.createdAt | date("d/m/Y") }}
                     {% if is_granted('ROLE_USER') and app.user.id == user.id %}
                         {% include 'AppBundle:forms:userForm.html.twig' with { 'form' : userForm } %}
                     {% else %}
