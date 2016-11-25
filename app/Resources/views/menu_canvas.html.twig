@@ -3,7 +3,7 @@
 {% set params = route_params|merge(app.request.query.all) %}
 {% set locale = app.request.getLocale() %}
 <nav class="navmenu navmenu-default navmenu-fixed-left offcanvas">
-    <a class="navmenu-brand" href="{{ path('homepage') }}">Brand</a>
+    <a class="navmenu-brand" href="{{ path('homepage') }}">{{ appname }}</a>
     <ul class="nav navmenu-nav">
         <li{% if route == 'search' %} class="active"{% endif %}>
             <a href="{{ path('search') }}">{{ 'app.global.search_article' | trans }}</a>
