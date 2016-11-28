@@ -26,7 +26,11 @@
         <h1 class="page-header">{{ user.name }}</h1>
         <div class="col-md-4">
             <div class="thumbnail">
-                <img class="lazy" data-src="{{ asset('uploads/' ~ user.avatar) }}" alt="{{ user.name }}" width="300px">
+                {% if user.avatar %}
+                    <img class="lazy" data-src="{{ asset('uploads/' ~ user.avatar) }}" alt="{{ user.name }}" width="300px">
+                {% else %}
+                    <img class="lazy" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ user.name }}" width="300px">
+                {% endif %}
                 <div class="caption">
                     <ul class="nav nav-pills nav-stacked nav-hashtag" role="tablist">
                         <li role="presentation" class="active">
@@ -68,6 +72,7 @@
                             </div>
                         </div>
                     {% else %}
+                        <br>
                         {{ 'app.no_data.article' | trans }}
                         <hr>
                     {% endfor %}
@@ -79,6 +84,7 @@
                             {% for userComment in userComments %}
                                 {% include 'AppBundle:blocs:articleCommentForUserAccount.html.twig' with { 'comment' : userComment } %}
                             {% else %}
+                                <br>
                                 {{ 'app.no_data.comment' | trans }}
                             {% endfor %}
                         </div>

@@ -23,7 +23,7 @@ class UserListener
     }
 
     /**
-     * Ajoute des infos à l'entity juste avant l'enregistrement en base
+     * Ajoute des infos à l'entity juste avant l'enregistrement en base (creation)
      * 
      * @param LifecycleEventArgs $args
      * 
@@ -36,10 +36,12 @@ class UserListener
             return;
         }
 
-        if (!$user->getCreatedAt()) {
-            $user->setCreatedAt(new \DateTime());
-        }
-        $this->uploadFile($user);
+        //renseigne la date de création
+        $user->setCreatedAt(new \DateTime());
+        //par défaut, on prend comme nom d'utilisateur le début de l'email
+        $user->setName(strstr($user->getEmail(), '@', true));
+        //renseigne le role par défaut
+        $user->setRoles(array('ROLE_MEMBRE'));
     }
 
     /**

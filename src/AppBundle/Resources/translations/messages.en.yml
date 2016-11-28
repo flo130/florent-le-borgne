@@ -16,7 +16,8 @@ Article category: article category
 Choose a category: choose a category
 Article sub category: article sub category
 Choose a sub category: choose a sub category
-Publish this article: Publish this article
+Publish this article: publish this article
+Repeat Password: repeat password
 
 app:
     action: action
