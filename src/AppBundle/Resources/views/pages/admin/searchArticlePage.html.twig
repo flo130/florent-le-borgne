@@ -22,7 +22,13 @@
     <h1>{{ 'app.admin.search.article' | trans }}</h1>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-condensed table-hover table-bordered">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                    <input type="text" class="form-control table-search" data-table-search="articles" id="table-search" placeholder="{{ 'app.admin.search.article' | trans }}">
+                </div>
+            </div>
+            <table class="table table-condensed table-hover table-bordered" id="articles">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -48,7 +54,7 @@
                             <td>
                                 <a href="{{ path('admin_article_edit', { 'id' : article.id }) }}">{{ 'app.edit' | trans }}</a>&nbsp;
                                 <a href="{{ path('article_show', { 'id' : article.id }) }}">{{ 'app.see' | trans }}</a>&nbsp;
-                                <a href="#">{{ 'app.delete' | trans }}</a>
+                                <a href="{{ path('admin_article_delete', { 'id' : article.id }) }}">{{ 'app.delete' | trans }}</a>
                             </td>
                         </tr>
                     {% else %}

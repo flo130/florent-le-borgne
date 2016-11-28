@@ -15,12 +15,38 @@ $(window).on('load', function() {
     manageNavTab();
     manageAjaxFormSubmit();
     manageAjaxPagination();
+    manageTableSearch();
 });
 
 
 //////////////////////
 // Fonctions utiles //
 //////////////////////
+/**
+ * Gère la recherche coté client : un champ texte <=> un tableau
+ * 
+ * @return void
+ */
+function manageTableSearch() {
+	$('.table-search').on('onkeyup', function (e) {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById($(this).attr('id'));
+		filter = input.value.toUpperCase();
+		table = document.getElementById($(this).data('table-search'));
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	});
+}
+
 /**
  * Permet d'arriver directement sur un onglet bootstrap (ayant la class "nav-hashtag") 
  * en mettant comme hash dans l'URL, son id

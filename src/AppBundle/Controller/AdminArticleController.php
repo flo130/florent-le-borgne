@@ -36,7 +36,7 @@ class AdminArticleController extends Controller
     }
 
     /**
-     * Page détail d'un article
+     * Page d'édition d'un article
      *
      * @Route("/edit/{id}", name="admin_article_edit"))
      *
@@ -47,5 +47,19 @@ class AdminArticleController extends Controller
     public function EditAction(Request $request, Article $article)
     {
         die('admin_article_edit');
+    }
+
+    /**
+     * Page de suppression d'un article
+     *
+     * @Route("/delete/{id}", name="admin_article_delete"))
+     *
+     * @Method({"GET"})
+     *
+     * @param Article $article
+     */
+    public function DeleteAction(Request $request, Article $article)
+    {
+        die('admin_article_delete');
     }
 }
