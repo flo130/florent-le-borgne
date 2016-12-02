@@ -20,6 +20,9 @@ Publish this article: publish this article
 Repeat Password: repeat password
 
 app:
+    update_success: updated successfully
+    create_success: created successfully
+    delete_success: deleted successfully
     welcome: welcome
     action: action
     title: title

@@ -20,6 +20,9 @@ Publish this article: publier cet article
 Repeat Password: répéter le mot de passe
 
 app:
+    update_success: mise à jour ok
+    create_success: création ok
+    delete_success: suppression ok
     welcome: bienvenue
     action: action
     title: titre
