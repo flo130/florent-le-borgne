@@ -87,7 +87,7 @@ assetic:
     assets:
         js_app: 
             inputs:
-                - "@AppBundle/Resources/public/js/*"
+                - "@AppBundle/Resources/public/js/app.js"
 
 # Ivory CKEditor
 #https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle

@@ -36,19 +36,40 @@
         <div class="col-md-12">
             <h4>{{ 'app.comment' | trans }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
             <div id="comments">
-                {% for comment in article.articleComments %}
-                    {% include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comment' : comment } %}
-                {% else %}
+                {% if article.articleComments|length < 1 %}
                     {{ 'app.no_data.comment' | trans }}
-                {% endfor %}
+                {% endif %}
+                {# Pas besoin de charger le bloc des commentaires ici, car il sera chargé en ajax via le script react inclus plus bas #}
+                {# include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comments' : article.articleComments } #}
             </div>
-            <div class="well">
-                <h4>{{ 'app.leave_a' | trans }} {{ 'app.comment' | trans }}</h4>
-                {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
-                    'form' : commentForm,
-                    'article' : article
-                } %}
-            </div>
+            {% if is_granted('ROLE_USER') %}
+                <div class="well">
+                    <h4>{{ 'app.leave_a' | trans }} {{ 'app.comment' | trans }}</h4>
+                    {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
+                        'form' : commentForm,
+                        'article' : article
+                    } %}
+                </div>
+            {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js'
+        '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js'
+        '//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/babel" src="{{ asset('/bundles/app/js/articleComment.react.js') }}"></script>
+    <script type="text/babel">
+        var commentUrl = '{{ path('get_article_comment', { 'id' : article.id }) }}';
+        ReactDOM.render(
+            <CommentSection url={commentUrl} />,
+            document.getElementById('comments')
+        );
+    </script>
 {% endblock %}

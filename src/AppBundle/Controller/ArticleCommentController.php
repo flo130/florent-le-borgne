@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Form\ArticleCommentForm;
+use AppBundle\Entity\ArticleComment;
+use AppBundle\Entity\Article;
 
 /**
  * Cette class gere les commentaires d'article
@@ -19,7 +21,43 @@ use AppBundle\Form\ArticleCommentForm;
 class ArticleCommentController extends Controller
 {
     /**
-     * Page d'accueil de l'admin
+     * Récupération des commentaires d'un article
+     * Remarque : l'id passé est celui de l'article, on récupère donc l'article
+     *            qui va ensuite nous permettre d'accèder aux commentaires
+     *
+     * @Route("/get/{id}", name="get_article_comment"))
+     *
+     * @Method({"GET"})
+     */
+    public function GetAction(Request $request, Article $article)
+    {
+        $comments = [];
+        foreach ($article->getArticleComments() as $comment) {
+            $user = $comment->getUser();
+            $avatar = $user->getAvatar();
+            if (! $avatar) {
+                $avatar = '/bundles/app/images/defaultAvatar.png';
+            }
+            $comments[] = [
+                'id' => $comment->getId(),
+                'user' => [
+                    'name' => $user->getName(),
+                    'avatar' => $avatar,
+                    'url' => $this->generateUrl('user_account', array(
+                        'name' => $user->getName(),
+                    )),
+                ],
+                'createdAt' => $comment->getCreatedAt()->format("F jS \\a\\t g:ia"),
+                'articleComment' => $comment->getArticleComment(),
+            ];
+        }
+        return new JsonResponse([
+            'comments' => $comments,
+        ]);
+    }
+
+    /**
+     * Ajout d'un commentaire
      *
      * @Security("is_granted('ROLE_MEMBRE')")
      *
@@ -40,7 +78,7 @@ class ArticleCommentController extends Controller
             $em->flush();
             $response = new JsonResponse(array(
                 'comment' => $this->renderView('AppBundle:blocs:articleCommentForArticle.html.twig', array(
-                    'comment' => $articleComment
+                    'comments' => array($articleComment),
                 )),
             ), 200);
         } else {

@@ -81,12 +81,7 @@
                     <h2>{{ 'app.comments' | trans }}</h2>
                     <div class="row">
                         <div class="col-md-12">
-                            {% for userComment in userComments %}
-                                {% include 'AppBundle:blocs:articleCommentForUserAccount.html.twig' with { 'comment' : userComment } %}
-                            {% else %}
-                                <br>
-                                {{ 'app.no_data.comment' | trans }}
-                            {% endfor %}
+                            {% include 'AppBundle:blocs:articleCommentForUserAccount.html.twig' with { 'comments' : userComments } %}
                         </div>
                     </div>
                 </div>
