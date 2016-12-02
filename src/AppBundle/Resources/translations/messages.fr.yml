@@ -33,6 +33,7 @@ app:
     comment: commentaire
     comments: commentaires
     search: rechercher
+    result: résultat
     by: par
     leave_a: laisser un
     posted_on: posté le

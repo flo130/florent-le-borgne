@@ -23,7 +23,7 @@
     <section class="row">
         <div class="col-md-12">
             {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
-            {% if searchResults|length > 0 %}{{ searchResults|length }} result{% if searchResults|length > 1 %}s{% endif %}{% endif %}
+            {% if searchResults|length > 0 %}{{ searchResults|length }} {{ 'app.result' | trans }}{% if searchResults|length > 1 %}s{% endif %}{% endif %}
         </div>
     </section>
     {% include 'AppBundle:blocs:articleTeaserList.html.twig' with { 
