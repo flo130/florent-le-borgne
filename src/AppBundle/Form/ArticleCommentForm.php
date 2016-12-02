@@ -6,9 +6,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use AppBundle\Form\DataTransformer\IdToArticleTransformer;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class ArticleCommentForm extends AbstractType
 {
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+
+    /**
+     * @param Doctrine $doctrine
+     */
+    public function __construct(Doctrine $doctrine)
+    {
+        $this->em = $doctrine->getManager();
+    }
+
     /**
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::buildForm()
@@ -16,7 +33,13 @@ class ArticleCommentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('comment', TextareaType::class)
+            ->add('articleComment', TextareaType::class)
+            ->add('article', HiddenType::class)
+        ;
+
+        $builder
+            ->get('article')
+            ->addModelTransformer(new IdToArticleTransformer($this->em))
         ;
     }
 

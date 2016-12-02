@@ -34,15 +34,21 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
+            <h4>{{ 'app.comment' | trans }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
+            <div id="comments">
+                {% for comment in article.articleComments %}
+                    {% include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comment' : comment } %}
+                {% else %}
+                    {{ 'app.no_data.comment' | trans }}
+                {% endfor %}
+            </div>
             <div class="well">
                 <h4>{{ 'app.leave_a' | trans }} {{ 'app.comment' | trans }}</h4>
-                {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 'form' : commentForm } %}
+                {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
+                    'form' : commentForm,
+                    'article' : article
+                } %}
             </div>
-            {% for comment in article.articleComments %}
-                {% include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comment' : comment } %}
-            {% else %}
-                {{ 'app.no_data.comment' | trans }}
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

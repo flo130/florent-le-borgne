@@ -5,15 +5,16 @@ var TIMEOUT_TO_CLOSE_MSG = 5000;
 var TIMEOUT_TO_SCROLL_TO = 1000;
 
 
-////////////////////////////////
-// Exécuté au load de la page //
-////////////////////////////////
+////////////////////////////////////////////////////
+// Ecouteurs/actions exécutées au load de la page //
+////////////////////////////////////////////////////
 $(window).on('load', function() {
     //ne pas utiliser "$(window).load(function() {" avec jQuery 3...
     manageImageLazyLoad();
     manageAlertClose();
     manageNavTab();
     manageAjaxFormSubmit();
+    manageArticleCommentAjaxFormSubmit();
     manageAjaxPagination();
     manageTableSearch();
 });
@@ -254,6 +255,48 @@ function manageAjaxPagination()
             scrollTo($('#content'));
         }).fail(function () {
             showErrorMessage('An error occurred');
+        });
+    });
+}
+
+/**
+ * Gère le submit du formulaire d'ajout de commentaires
+ * cf. manageAjaxFormSubmit() => un peu pareil
+ * 
+ * @return void
+ */
+function manageArticleCommentAjaxFormSubmit()
+{
+    $('body').on('submit', '#article_comment_form', function (e) {
+        var $this = $(this);
+        e.preventDefault();
+        $('.btn', $this).attr('disabled', 'disabled');
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: new FormData(this),
+            processData: false,
+            contentType: false
+        }).done(function (data, textStatus, jqXHR) {
+            if (typeof data.comment !== 'undefined') {
+                $("#comments").append(data.comment).show(200);
+            } else {
+                showErrorMessage('An error occurred.');
+            }
+        }).fail(function (data, textStatus, errorThrown) {
+            if (typeof data.responseJSON !== 'undefined') {
+                if (! data.responseJSON.hasOwnProperty('form')) {
+                    showErrorMessage('An error occurred');
+                } else {
+                    $('#article_comment_form').replaceWith(data.form);
+                    $('#article_comment_form').addClass('animated shake');
+                }
+            } else {
+                showErrorMessage('An error occurred : ' + errorThrown + '.');
+            }
+        }).always(function(data, textStatus, errorThrown) {
+            $('.btn', $this).removeAttr('disabled');
+            manageImageLazyLoad();
         });
     });
 }

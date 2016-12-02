@@ -2,7 +2,14 @@
     params : 
         - form : ArticleCommentForm object
 #}
-{{ form_start(form) }}
-    {{ form_row(form.comment) }}
+{{ form_start(form, { 
+    'attr': {
+        'role' : 'form',
+        'id' : 'article_comment_form'
+    },
+    'action' : path('create_article_comment')
+}) }}
+    {{ form_row(form.articleComment) }}
+    {{ form_row(form.article, { 'value' : article.id }) }}
     <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans }}</button>
 {{ form_end(form) }}

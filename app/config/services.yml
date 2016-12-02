@@ -69,3 +69,10 @@ services:
     app.file_uploader:
         class: AppBundle\Service\FileUploader
         arguments: ['%uploads_dir%']
+
+    # Ici on déclare ce formulaire en particulier car il faut lui passer doctrine. Les autres se gerent tout seul
+    app.form.article_comment:
+        class: AppBundle\Form\ArticleCommentForm
+        arguments: ['@doctrine']
+        tags:
+            - { name: form.type }

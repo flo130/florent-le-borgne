@@ -33,6 +33,7 @@ class ArticleComment
 
     /**
      * @Assert\NotBlank()
+     * 
      * @ORM\Column(type="text")
      */
     private $articleComment;
