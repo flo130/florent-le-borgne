@@ -30,13 +30,9 @@
         {% endblock %}
     </head>
     <body>
-        {# menu canvas #}
-        {% block menu_canvas %}
+        {# header de la page (menu) #}
+        {% block header %}
             {% include '::menu_canvas.html.twig' %}
-        {% endblock %}
-
-        {# menu full screen #}
-        {% block menu %}
             {% include '::menu.html.twig' %}
         {% endblock %}
 
@@ -45,12 +41,12 @@
             {% block body %}{% endblock %}
         </div>
 
-        {# footer #}
+        {# footer de la page #}
         {% block footer %}
             {% include '::footer.html.twig' %}
         {% endblock %}
 
-        {# messages #}
+        {# templates des messages (erreur/succes/...) #}
         {% block messages %}
             {% include '::alerts.html.twig' %}
         {% endblock %}
@@ -67,6 +63,7 @@
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            {# affichage des messages #}
             {% for msg in app.session.flashBag.get('success') %}
                 <script type="text/javascript">showSuccessMessage('{{ msg|e('js')  }}');</script>
             {% endfor %}
