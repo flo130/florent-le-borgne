@@ -20,6 +20,7 @@ Publish this article: publish this article
 Repeat Password: repeat password
 
 app:
+    welcome: welcome
     action: action
     title: title
     status: status

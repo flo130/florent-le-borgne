@@ -5,7 +5,7 @@ app:
         create: créer un article
         search: rechercher un article
     user:
-        register: register
+        register: créer un compte
         login: se connecter
         logout: se déconnecter
     language:

@@ -98,7 +98,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', 'Welcome '.$user->getEmail());
+            $this->addFlash('success', $this->get('translator')->trans('welcome') . ' ' . $user->getEmail());
             return $this->get('security.authentication.guard_handler')->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
