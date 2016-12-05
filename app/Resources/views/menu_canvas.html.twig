@@ -2,7 +2,7 @@
 {% set route_params = app.request.attributes.get('_route_params') %}
 {% set params = route_params|merge(app.request.query.all) %}
 {% set locale = app.request.getLocale() %}
-<nav class="navmenu navmenu-default navmenu-fixed-left offcanvas">
+<nav class="navmenu navbar-default navmenu-fixed-left offcanvas">
     <a class="navmenu-brand" href="{{ path('homepage') }}">{{ appname }}</a>
     <ul class="nav navmenu-nav">
         {% if is_granted('ROLE_ADMIN') %}

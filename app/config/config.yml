@@ -85,9 +85,12 @@ assetic:
         jsqueeze:   ~
     #resources relatives au projet (les autres sont chargées via CDN @todo : voir pour les charger via composer)
     assets:
-        js_app: 
+        js_app:
             inputs:
                 - "@AppBundle/Resources/public/js/app.js"
+        css_app:
+            inputs:
+                - "@AppBundle/Resources/public/styles/app.css"
 
 # Ivory CKEditor
 #https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle

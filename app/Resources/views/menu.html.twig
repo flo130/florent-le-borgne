@@ -2,8 +2,8 @@
 {% set route_params = app.request.attributes.get('_route_params') %}
 {% set params = route_params|merge(app.request.query.all) %}
 {% set locale = app.request.getLocale() %}
-<div class="navbar navbar-default navbar-static-top">
-    <div class="container-fluid">
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle pull-left visible-xs-block" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
                 <span class="sr-only">Toggle navigation</span>
