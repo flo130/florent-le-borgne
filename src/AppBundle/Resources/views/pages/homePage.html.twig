@@ -11,16 +11,21 @@
         - categories : array of ArticleCategories
 #}
 {% extends '::base.html.twig' %}
+
 {% block title %}
     {{ parent() }} - {{ 'app.home' | trans }}
 {% endblock %}
-{% block body %}
+
+{% block banner %}
     <div class="row">
         <div class="col-md-12">
             {% include 'AppBundle:blocs:articleCarousel.html.twig' with { 'articles' : lastArticles } %}
             <br>
         </div>
     </div>
+{% endblock %}
+
+{% block body %}
     <div class="row">
         <section class="col-md-8">
             <h1 class="page-header">{{ 'app.articles' | trans }}</h1>

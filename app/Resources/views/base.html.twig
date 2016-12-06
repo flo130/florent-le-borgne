@@ -38,6 +38,11 @@
         {% endblock %}
 
         {# contenu de la page #}
+        <div class="container-fluid">
+            {% block banner %}{% endblock %}
+        </div>
+
+        {# contenu de la page #}
         <div class="container">
             {% block body %}{% endblock %}
         </div>

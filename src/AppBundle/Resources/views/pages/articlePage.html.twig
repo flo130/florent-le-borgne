@@ -4,9 +4,11 @@
         - commentForm : CommentForm object
 #}
 {% extends '::base.html.twig' %}
+
 {% block title %}
     {{ parent() }} - {{ article.title }}
 {% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">

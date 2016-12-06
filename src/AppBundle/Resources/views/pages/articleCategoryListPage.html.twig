@@ -4,9 +4,11 @@
         - categories : array of ArticleCategory object (toutes les catégories)
 #}
 {% extends '::base.html.twig' %}
+
 {% block title %}
     {{ parent() }} - {{ articleCategory.articleCategory }}
 {% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">
