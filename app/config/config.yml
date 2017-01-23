@@ -113,7 +113,7 @@ ivory_ck_editor:
             - { name: "Badge", element: "span",  attributes: { class: "badge" }}
 
 # FMElfinderBundle
-#https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle
+#https://github.com/helios-ag/FMElfinderBundle
 fm_elfinder:
     instances:
         ckeditor:

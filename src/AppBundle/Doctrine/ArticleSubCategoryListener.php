@@ -22,7 +22,7 @@ class ArticleSubCategoryListener
         }
 
         if (! $articleSubCategory->getCreatedAt()) {
-        	$articleSubCategory->setCreatedAt(new \DateTime());
+            $articleSubCategory->setCreatedAt(new \DateTime());
         }
     }
 }

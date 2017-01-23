@@ -37,7 +37,7 @@
             {% include '::menu.html.twig' %}
         {% endblock %}
 
-        {# contenu de la page #}
+        {# contenu qui prend toute la largeur de la page : carousel, banniere de pub, ... #}
         <div class="container-fluid">
             {% block banner %}{% endblock %}
         </div>
@@ -52,7 +52,7 @@
             {% include '::footer.html.twig' %}
         {% endblock %}
 
-        {# templates des messages (erreur/succes/...) #}
+        {# templates des messages (alertes type : erreur/succes/...) #}
         {% block messages %}
             {% include '::alerts.html.twig' %}
         {% endblock %}

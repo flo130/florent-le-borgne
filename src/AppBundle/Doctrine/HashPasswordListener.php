@@ -73,6 +73,7 @@ class HashPasswordListener
         }
 
         $this->encodePassword($user);
+
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($user));

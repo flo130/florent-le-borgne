@@ -1,7 +1,14 @@
+/* utile car la navbar est en position fixed : elle ne bouge pas */
 body {
 	padding-top:58px;
 }
 
+/* permet juste de rajouter un petit liseret en dessous du menu */
 .navbar {
 	box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+}
+
+/* permet d'avoir toujours la même taille de carousel (tronque les images...) */
+.carousel-inner {
+	max-height: 400px;
 }

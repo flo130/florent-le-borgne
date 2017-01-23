@@ -62,6 +62,7 @@ class ArticleListener
 
         $article->setUpdatedAt(new \DateTime());
         $this->uploadFile($article);
+
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($article));

@@ -8,6 +8,10 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 use AppBundle\Entity\Article;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Transforme un id d'article en objet article.
+ * Symfony le fait tout seul pour une route, mais c'est utile pour les formulaire, lorsqu'on soumet un champ caché contenant l'id de l'article.
+ */
 class IdToArticleTransformer implements DataTransformerInterface
 {
     /**

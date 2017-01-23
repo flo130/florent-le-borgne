@@ -7,6 +7,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
+/**
+ * L'exemple, ici, est de savoir si un utilisateur a le droit d'éditer un article. 
+ * Un admin peut éditer tous les articles. Un utilisateur ne peut éditer que ses propres articles.
+ */
 class ArticleVoter extends Voter
 {
     /**
@@ -62,7 +66,7 @@ class ArticleVoter extends Voter
             //l'utilisateur doit etre loggé, sinon on retourne false (-> access deny)
             return false;
         }
-        //si l'utilisateur est admin, il peut éditer n'importe quel article
+        //si l'utilisateur est admin, il peut éditer n'importe quel article on retourne true (-> access ok)
         if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
             return true;
         }
