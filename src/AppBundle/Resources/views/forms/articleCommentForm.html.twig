@@ -11,5 +11,5 @@
 }) }}
     {{ form_row(form.articleComment) }}
     {{ form_row(form.article, { 'value' : article.id }) }}
-    <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans }}</button>
+    <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
 {{ form_end(form) }}

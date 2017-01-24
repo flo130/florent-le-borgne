@@ -6,7 +6,7 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - {{ 'app.search' | trans }}
+    {{ parent() }} - {{ 'app.search' | trans | capitalize }}
 {% endblock %}
 
 {% block body %}
@@ -14,10 +14,10 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans }}</a>
+                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
                 <li class="active">
-                    {{ 'app.search' | trans }}
+                    {{ 'app.search' | trans | capitalize }}
                 </li>
             </ol>
         </div>

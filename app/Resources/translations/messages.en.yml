@@ -1,9 +1,6 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
-    update_success: updated successfully
-    create_success: created successfully
-    delete_success: deleted successfully
     article:
         create: create an article
         search: search an article

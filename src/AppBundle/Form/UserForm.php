@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserForm extends AbstractType
 {
@@ -18,12 +19,18 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('name')
+            ->add('email', EmailType::class, array(
+                'label' => 'app.form.email',
+            ))
+            ->add('name', TextType::class, array(
+                'label' => 'app.form.name',
+            ))
             ->add('plainPassword', PasswordType::class, array(
+                'label' => 'app.form.plain_password',
                 'required' => false,
             ))
             ->add('avatar', FileType::class, array(
+                'label' => 'app.form.avatar',
                 //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
                 'data_class' => null,
                 'required' => false,

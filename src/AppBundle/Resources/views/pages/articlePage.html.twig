@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans }}</a>
+                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
                 <li>
                     <a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a>
@@ -36,17 +36,17 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
-            <h4>{{ 'app.comment' | trans }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
+            <h4>{{ 'app.comment' | trans | capitalize }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
             <div id="comments">
                 {% if article.articleComments|length < 1 %}
-                    {{ 'app.no_data.comment' | trans }}
+                    {{ 'app.no_data.comment' | trans | capitalize }}
                 {% endif %}
                 {# Pas besoin de charger le bloc des commentaires ici, car il sera chargé en ajax via le script react inclus plus bas #}
                 {# include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comments' : article.articleComments } #}
             </div>
             {% if is_granted('ROLE_USER') %}
                 <div class="well">
-                    <h4>{{ 'app.leave_a' | trans }} {{ 'app.comment' | trans }}</h4>
+                    <h4>{{ 'app.leave_a' | trans | capitalize }} {{ 'app.comment' | trans | capitalize }}</h4>
                     {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
                         'form' : commentForm,
                         'article' : article

@@ -4,38 +4,38 @@
 #}
 {% extends '::base.html.twig' %}
 {% block title %}
-    {{ parent() }} - {{ 'app.admin.search.article' | trans }}
+    {{ parent() }} - {{ 'app.admin.search.article' | trans | capitalize }}
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('admin') }}">{{ 'app.admin.admin' | trans }}</a>
+                    <a href="{{ path('admin') }}">{{ 'app.admin.admin' | trans | capitalize }}</a>
                 </li>
                 <li class="active">
-                    {{ 'app.admin.search.article' | trans }}
+                    {{ 'app.admin.search.article' | trans | capitalize }}
                 </li>
             </ol>
         </div>
     </div>
-    <h1>{{ 'app.admin.search.article' | trans }}</h1>
+    <h1>{{ 'app.admin.search.article' | trans | capitalize }}</h1>
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
-                    <input type="text" class="form-control table-search" data-table-search="articles" id="table-search" placeholder="{{ 'app.admin.search.article' | trans }}">
+                    <input type="text" class="form-control table-search" data-table-search="articles" id="table-search" placeholder="{{ 'app.admin.search.article' | trans | capitalize }}">
                 </div>
             </div>
             <table class="table table-condensed table-hover table-bordered" id="articles">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ 'app.title' | trans }}</th>
-                        <th>{{ 'app.status' | trans }}</th>
-                        <th>{{ 'app.by' | trans }}</th>
-                        <th>{{ 'app.action' | trans }}</th>
+                        <th>{{ 'app.title' | trans | capitalize }}</th>
+                        <th>{{ 'app.status' | trans | capitalize }}</th>
+                        <th>{{ 'app.by' | trans | capitalize }}</th>
+                        <th>{{ 'app.action' | trans | capitalize }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,13 +52,13 @@
                             </td>
                             <td>{{ article.user.name }}</td>
                             <td>
-                                <a href="{{ path('admin_article_edit', { 'id' : article.id }) }}">{{ 'app.edit' | trans }}</a>&nbsp;
-                                <a href="{{ path('article_show', { 'id' : article.id }) }}">{{ 'app.see' | trans }}</a>&nbsp;
-                                <a href="{{ path('admin_article_delete', { 'id' : article.id }) }}">{{ 'app.delete' | trans }}</a>
+                                <a href="{{ path('admin_article_edit', { 'id' : article.id }) }}">{{ 'app.edit' | trans | capitalize }}</a>&nbsp;
+                                <a href="{{ path('article_show', { 'id' : article.id }) }}">{{ 'app.see' | trans | capitalize }}</a>&nbsp;
+                                <a href="{{ path('admin_article_delete', { 'id' : article.id }) }}">{{ 'app.delete' | trans | capitalize }}</a>
                             </td>
                         </tr>
                     {% else %}
-                        {{ 'app.no_data.article' | trans }}
+                        {{ 'app.no_data.article' | trans | capitalize }}
                         <hr>
                     {% endfor %}
                 </tbody>

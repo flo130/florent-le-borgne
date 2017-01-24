@@ -28,15 +28,22 @@ class ArticleCreateForm extends AbstractType
                 //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
                 'data_class' => null,
                 'required' => false,
+                'label' => 'app.form.image',
             ))
-            ->add('title', TextareaType::class)
-            ->add('summary', TextareaType::class)
+            ->add('title', TextareaType::class, array(
+                'label' => 'app.form.title',
+            ))
+            ->add('summary', TextareaType::class, array(
+                'label' => 'app.form.summary',
+            ))
             ->add('article', CKEditorType::class, array(
                 //voir dans config.yml la conf de CKEditor nommée "article_config" : c'est config du CKEditor
                 'config_name' => 'article_config',
+                'label' => 'app.form.article',
             ))
             ->add('articleSubCategory', EntityType::class, array(
-                'placeholder' => 'Choose a sub category',
+                'label' => 'app.form.article_subcategory',
+                'placeholder' => 'app.form.choose_subcategory',
                 'class' => ArticleSubCategory::class,
                 //la select sera peuplée avec le retour de cette closure (les sous-catégories d'article)
                 'query_builder' => function (ArticleSubCategoryRepository $repo) {
@@ -44,7 +51,8 @@ class ArticleCreateForm extends AbstractType
                 }
             ))
             ->add('articleCategory', EntityType::class, array(
-                'placeholder' => 'Choose a category',
+                'label' => 'app.form.article_category',
+                'placeholder' => 'app.form.choose_category',
                 'class' => ArticleCategory::class,
                 //la select sera peuplée avec le retour de cette closure (les catégories d'article)
                 'query_builder' => function (ArticleCategoryRepository $repo) {
@@ -52,7 +60,7 @@ class ArticleCreateForm extends AbstractType
                 }
             ))
             ->add('status', CheckboxType::class, array(
-                'label' => 'Publish this article',
+                'label' => 'app.form.publish_article',
                 'required' => false,
             ))
         ;

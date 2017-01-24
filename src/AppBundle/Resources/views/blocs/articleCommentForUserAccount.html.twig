@@ -11,10 +11,10 @@
             {{ comment.articleComment }}
         </div>
         <div class="panel-footer">
-            {{ 'app.article' | trans }} : <a href="{{ path('article_show', { 'id' : comment.article.id }) }}">{{ comment.article.title }}</a>
+            {{ 'app.article' | trans | capitalize }} : <a href="{{ path('article_show', { 'id' : comment.article.id }) }}">{{ comment.article.title }}</a>
         </div>
     </div>
 {% else %}
     <br>
-    {{ 'app.no_data.comment' | trans }}
+    {{ 'app.no_data.comment' | trans | capitalize }}
 {% endfor %}

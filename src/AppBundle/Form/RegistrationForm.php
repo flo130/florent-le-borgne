@@ -21,10 +21,18 @@ class RegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) 
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, array(
+                'label' => 'app.form.email',
+            ))
             //RepeatedType permet d'avoir un "password confirm"
             ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class
+                'first_options'  => array(
+                    'label' => 'app.form.plain_password',
+                ),
+                'second_options' => array(
+                    'label' => 'app.form.plain_password_repeate',
+                ),
+                'type' => PasswordType::class,
             ))
         ;
     }

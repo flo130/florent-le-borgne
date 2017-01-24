@@ -11,6 +11,7 @@ use AppBundle\Form\UserForm;
 use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Form\ArticleCreateForm;
 
 /**
  * Cette class va servir, entre autre, pour gérer les URLs de login et de logout. 

@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             //bundle permettant de gérer l'upload de fichiers
             new FM\ElfinderBundle\FMElfinderBundle(),
+            //bundle permettant de gérer l'affichage de dates "5 months ago"
+            new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new AppBundle\AppBundle(),
         ];
 

@@ -1,29 +1,6 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
-#messages venant de Symfony (bundles et/ou form)
-Username: username
-Password: password
-Comment: comment
-Avatar: avatar
-Email: email
-Name: name
-Plain password: password
-Image: image
-Title: title
-Summary: summary
-Article: article
-Article category: article category
-Choose a category: choose a category
-Article sub category: article sub category
-Choose a sub category: choose a sub category
-Publish this article: publish this article
-Repeat Password: repeat password
-
 app:
-    update_success: updated successfully
-    create_success: created successfully
-    delete_success: deleted successfully
-    welcome: welcome
     action: action
     title: title
     status: status
@@ -32,12 +9,15 @@ app:
     categories: categories
     comment: comment
     comments: comments
+    choose_subcategory: choose a sub category
+    choose_category: choose a categorie
+    publish_article: publish this article
     search: search
     result: result
     by: by
     leave_a: leave a
-    posted_on: posted on
-    last_edit_on: last edit on
+    posted_on: posted
+    last_edit_on: last edit
     read_more: read more
     create_article: create an article
     update_article: update an article
@@ -64,8 +44,23 @@ app:
         already_have_account: I already have an account
         member_since: member since
     home: home
+    form: 
+        image: image
+        title: titre
+        summary: summary
+        article: article
+        article_subcategory: article sub category
+        article_category: article category
+        choose_subcategory: choose sub category
+        choose_category: choose category
+        publish_article: publish article
+        email: email
+        plain_password: password
+        plain_password_repeate: repeate password
+        avatar: avatar
+        name: name
+        login: email
     admin: 
         admin: admin
         search:
             article: search an article
-            user: search a user
