@@ -25,6 +25,8 @@ class AppKernel extends Kernel
             new FM\ElfinderBundle\FMElfinderBundle(),
             //bundle permettant de gérer l'affichage de dates "5 months ago"
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+            //bundle permettant d'ajouter des fonctionnalités à Doctrine : treeable, sortable, timestampable, sluggable, ...
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new AppBundle\AppBundle(),
         ];
 

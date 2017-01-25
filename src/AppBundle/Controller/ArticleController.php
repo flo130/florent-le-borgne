@@ -26,7 +26,7 @@ class ArticleController extends Controller
     /**
      * Page détail d'un article
      * 
-     * @Route("/show/{id}", name="article_show"))
+     * @Route("/show/{slug}", name="article_show"))
      * 
      * @Method({"GET"})
      * 

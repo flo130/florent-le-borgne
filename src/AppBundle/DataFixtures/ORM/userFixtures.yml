@@ -1,9 +1,9 @@
 AppBundle\Entity\User:
-    user_{1..50}:
+    user_{1..20}:
         email: <email()>
         plainPassword: password
         roles: <roles()>
         name: <userName()>
         avatar: 02b126e6ea583541c6f64f8c3a6347d4.jpeg
-        loginCount: randomDigitNotNull()
+        loginCount: <randomDigitNotNull()>
         firstLogin: <dateTimeBetween('-4 years', 'now')>

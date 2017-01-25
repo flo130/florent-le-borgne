@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\ArticleComment;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -126,6 +127,18 @@ class Article
      */
     private $status;
 
+    /**
+     * @var string
+     * 
+     * Gedmo\Slug permet de créer facilement des URLs SEO-Friendly.
+     * Ici on met updatable à false, cela indiquera que le slug ne sera jamais mis à jour une fois créé, même si "title" est changé.
+     * cf. stof_doctrine_extensions dans config.yml
+     * @Gedmo\Slug(fields={"title"}, updatable=false)
+     * 
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
 
     public function __construct()
     {
@@ -237,6 +250,13 @@ class Article
     }
 
     /**
+     * @return string
+     */
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    /**
      * @param User $user
      */
     public function setUser(User $user)
@@ -330,5 +350,12 @@ class Article
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug) {
+        $this->slug = $slug;
     }
 }

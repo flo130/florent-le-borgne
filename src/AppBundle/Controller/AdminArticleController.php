@@ -38,7 +38,7 @@ class AdminArticleController extends Controller
     /**
      * Page d'édition d'un article
      *
-     * @Route("/edit/{id}", name="admin_article_edit"))
+     * @Route("/edit/{slug}", name="admin_article_edit"))
      *
      * @Method({"GET", "POST"})
      *
@@ -52,7 +52,7 @@ class AdminArticleController extends Controller
     /**
      * Page de suppression d'un article
      *
-     * @Route("/delete/{id}", name="admin_article_delete"))
+     * @Route("/delete/{slug}", name="admin_article_delete"))
      *
      * @Method({"GET"})
      *

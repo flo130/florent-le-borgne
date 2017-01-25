@@ -4,7 +4,7 @@
         - printArticleImage : boolean
 #}
 <h2>
-    <a href="{{ path('article_show', { 'id' : article.id }) }}">
+    <a href="{{ path('article_show', { 'slug' : article.slug }) }}">
         {{ article.title }}
     </a>
 </h2>
@@ -39,6 +39,6 @@
 <p>
     {{ article.summary }}
 </p>
-<a class="btn btn-primary" href="{{ path('article_show', { 'id' : article.id }) }}">
+<a class="btn btn-primary" href="{{ path('article_show', { 'slug' : article.slug }) }}">
     {{ 'app.read_more' | trans | capitalize }}
 </a>
