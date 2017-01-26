@@ -36,6 +36,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        //en ajax ou pas, on a toujours besoin de la pagination des articles
         $pagination = array(
             'page' => $page,
             'pages_count' => ceil($em->getRepository('AppBundle:Article')->countPublished() / self::MAX_ARTICLES_PER_PAGE),
@@ -43,6 +44,8 @@ class HomeController extends Controller
             'ajax_callback' => true,
         );
 
+        //si on appel la home page en ajax, c'est qu'on veut raffraichir la liste des articles seulement
+        //sinon c'est qu'on veut toute la page
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'content' => $this->renderView('AppBundle:blocs:articleTeaserList.html.twig', array(
