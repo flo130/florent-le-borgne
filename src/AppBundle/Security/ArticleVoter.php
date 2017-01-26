@@ -13,6 +13,10 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
  */
 class ArticleVoter extends Voter
 {
+    const CREATE = 'create';
+    const EDIT = 'edit';
+    const DELETE = 'delete';
+
     /**
      * @var AccessDecisionManagerInterface
      */
@@ -28,15 +32,15 @@ class ArticleVoter extends Voter
     }
 
     /**
-     * Se charge de vérifier que les attributs passés sont bien ceux qu'on veut tester 
+     * Se charge de vérifier que les attributs passés sont bien ceux qu'on veut tester dans ce voter
      * 
      * {@inheritDoc}
      * @see \Symfony\Component\Security\Core\Authorization\Voter\Voter::supports()
      */
-    protected function supports($attribute, $subject)
+    protected function supports($action, $subject)
     {
-        //vérifie que l'attribut passé est bien l'un de ceux qu'un veut vérifier
-        if ($attribute != 'edit' && $attribute != 'delete') {
+        //vérifie que l'attribut passé est bien l'un de ceux qu'on veut vérifier
+        if ($action != self::CREATE && $action != self::EDIT && $action != self::DELETE) {
             return false;
         }
 
@@ -50,31 +54,33 @@ class ArticleVoter extends Voter
 
     /**
      * Partie "Voter" de Symfony.
-     * Il va rendre son verdict (voter) : l'utilisateur a-t-il le doit de faire l'action demandée ?
+     * Il va rendre son verdict (voter) : l'utilisateur a-t-il le doit de faire l'action demandée sur l'entity ?
      * 
      * {@inheritDoc}
      * @see \Symfony\Component\Security\Core\Authorization\Voter\Voter::voteOnAttribute()
      * 
-     * @param string $attribute
-     * @param Article $subject
-     * @param TokenInterface $token
+     * @param string $action : edit/delete/create
+     * @param Article $article : entity
+     * @param TokenInterface $token : contient l'utilisateur
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($action, $article, TokenInterface $token)
     {
-        $user = $token->getUser();
-        if (!$user instanceof User) {
-            //l'utilisateur doit etre loggé, sinon on retourne false (-> access deny)
+        //l'utilisateur doit etre loggé, sinon on retourne false (-> access deny)
+        if (!$token->getUser() instanceof User) {
             return false;
         }
-        //si l'utilisateur est admin, il peut éditer n'importe quel article on retourne true (-> access ok)
-        if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
-            return true;
-        }
-        //sinon on appel la method qui contient le metier qui va permettre de 
-        //savoir si l'utilisateur peut éditer un article
-        switch ($attribute) {
-            case 'edit':
-                return $this->canEdit($subject, $user);
+
+        //on appel la method qui contient le metier qui va permettre de 
+        //savoir si l'utilisateur peut faire une action sur un article
+        switch ($action) {
+            case self::EDIT:
+                return $this->canEdit($article, $token);
+                break;
+            case self::DELETE:
+                return $this->canDelete($article, $token);
+                break;
+            case self::CREATE:
+                return $this->canCreate($article, $token);
                 break;
             default:
                 throw new \LogicException('This code should not be reached!');
@@ -89,8 +95,40 @@ class ArticleVoter extends Voter
      * 
      * @return boolean
      */
-    private function canEdit(Article $article, User $user)
+    private function canEdit(Article $article, TokenInterface $user)
     {
-        return $user === $article->getUser();
+        //si l'utilisateur est le créateur de l'article, il peut éditer l'article
+        $owner = $user->getUser() === $article->getUser();
+
+        //si l'utilisateur est admin il peut éditer n'importe quel article
+        $admin = $this->decisionManager->decide($user, array('ROLE_ADMIN'));
+
+        return $owner || $admin;
+    }
+
+    /**
+     * Détermine si l'utilisateur peut supprimer un article
+     *
+     * @param Article $article
+     * @param User $user
+     *
+     * @return boolean
+     */
+    private function canDelete(Article $article, TokenInterface $user)
+    {
+        return true;
+    }
+
+    /**
+     * Détermine si l'utilisateur peut créer un article
+     *
+     * @param Article $article
+     * @param User $user
+     *
+     * @return boolean
+     */
+    private function canCreate(Article $article, TokenInterface $user)
+    {
+        return true;
     }
 }

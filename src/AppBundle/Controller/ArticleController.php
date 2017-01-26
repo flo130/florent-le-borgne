@@ -108,7 +108,7 @@ class ArticleController extends Controller
      */
     public function EditAction(Request $request, Article $article)
     {
-        //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
+        //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony cf. AppBundle\Security\ArticleVoter)
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('edit', $article);
         $image = $article->getImage();

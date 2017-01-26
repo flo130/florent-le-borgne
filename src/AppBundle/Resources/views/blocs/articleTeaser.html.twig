@@ -2,13 +2,15 @@
     params : 
         - article : Article object
         - printArticleImage : boolean
+        - printDeleteButton : boolean pour la vue liste de la home on ne veut pas le bouton supprimer, mais dans ma partie compte utilisateur on le veut
 #}
 <h2>
     <a href="{{ path('article_show', { 'slug' : article.slug }) }}">
         {{ article.title }}
     </a>
 </h2>
-{% if is_granted('ROLE_USER') and app.user.id == article.user.id %}
+{# si l'utilisateur peut éditer l'article, on lui affiche le lien vers la page #}
+{% if is_granted('edit', article) %}
     <div class="pull-right">
         <a class="btn btn-default" href="{{ path('article_edit', { 'id' : article.id }) }}" role="button">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

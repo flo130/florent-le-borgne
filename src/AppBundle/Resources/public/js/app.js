@@ -226,8 +226,6 @@ function manageAjaxFormSubmit()
             $('.btn', $this).removeAttr('disabled');
             //s'il y a des images, il faut relancer le lazy load
             manageImageLazyLoad();
-            //scroll vers le haut pour voir les modifications
-            scrollTo($('.submit-ajax'));
         });
     });
 }
