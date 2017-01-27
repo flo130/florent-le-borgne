@@ -5,7 +5,7 @@
 <h1>{{ article.title }}</h1>
 {# si l'utilisateur peut éditer l'article, on lui affiche le lien vers la page #}
 {% if is_granted('edit', article) %}
-    <a class="btn btn-default pull-right" href="{{ path('article_edit', { 'id' : article.id }) }}" role="button">
+    <a class="btn btn-default pull-right" href="{{ path('article_edit', { 'slug' : article.slug }) }}" role="button">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> {{ 'app.edit' | trans | capitalize }}
     </a>
 {% endif %}

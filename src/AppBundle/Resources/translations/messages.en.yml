@@ -27,6 +27,7 @@ app:
         category: no category found
         article: no article found
         comment: no comment found
+        user: no user found
     previous: previous
     next: next
     submit: submit

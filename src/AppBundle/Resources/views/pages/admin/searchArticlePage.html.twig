@@ -52,9 +52,9 @@
                             </td>
                             <td>{{ article.user.name }}</td>
                             <td>
-                                <a href="{{ path('admin_article_edit', { 'slug' : article.slug }) }}">{{ 'app.edit' | trans | capitalize }}</a>&nbsp;
+                                <a href="{{ path('article_edit', { 'slug' : article.slug }) }}">{{ 'app.edit' | trans | capitalize }}</a>&nbsp;
                                 <a href="{{ path('article_show', { 'slug' : article.slug }) }}">{{ 'app.see' | trans | capitalize }}</a>&nbsp;
-                                <a href="{{ path('admin_article_delete', { 'slug' : article.slug }) }}">{{ 'app.delete' | trans | capitalize }}</a>
+                                <a href="{{ path('article_delete', { 'slug' : article.slug }) }}">{{ 'app.delete' | trans | capitalize }}</a>
                             </td>
                         </tr>
                     {% else %}

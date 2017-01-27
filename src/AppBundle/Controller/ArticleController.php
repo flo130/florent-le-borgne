@@ -97,7 +97,7 @@ class ArticleController extends Controller
      * Essayer avec :
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
-     * @Route("/edit/{id}", name="article_edit"))
+     * @Route("/edit/{slug}", name="article_edit"))
      * 
      * @Method({"GET", "POST"})
      * 
@@ -210,7 +210,7 @@ class ArticleController extends Controller
     /**
      * Page de suppression d'un article
      *
-     * @Route("/delete/{id}", name="article_delete"))
+     * @Route("/delete/{slug}", name="article_delete"))
      * 
      * @Method({"GET"})
      *

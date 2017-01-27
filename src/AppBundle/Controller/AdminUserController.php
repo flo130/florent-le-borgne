@@ -7,8 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Entity\User;
 
 /**
@@ -29,20 +27,9 @@ class AdminUserController extends Controller
      */
     public function SearchAction(Request $request)
     {
-    	return $this->render('AppBundle:pages/admin:searchUserPage.html.twig');
-    }
-
-    /**
-     * Page détail d'un utilisateur
-     * 
-     * @Route("/edit/{id}", name="admin_user_edit"))
-     * 
-     * @Method({"GET", "POST"})
-     * 
-     * @param User $user
-     */
-    public function EditAction(Request $request, User $user)
-    {
-        die('admin_user_edit');
+        $em = $this->getDoctrine()->getManager();
+        return $this->render('AppBundle:pages/admin:searchUserPage.html.twig', array(
+            'users' => $em->getRepository('AppBundle:User')->findAll(),
+        ));
     }
 }

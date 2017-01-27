@@ -24,6 +24,7 @@ app:
         category: aucune categorie trouvée
         article: aucun article trouvé
         comment: aucun commentaire trouvé
+        user: pas d'utilisateur trouvé
     previous: précédent
     next: suivant
     submit: valider

@@ -34,32 +34,4 @@ class AdminArticleController extends Controller
             'articles' => $em->getRepository('AppBundle:Article')->findAll(),
         ));
     }
-
-    /**
-     * Page d'édition d'un article
-     *
-     * @Route("/edit/{slug}", name="admin_article_edit"))
-     *
-     * @Method({"GET", "POST"})
-     *
-     * @param Article $article
-     */
-    public function EditAction(Request $request, Article $article)
-    {
-        die('admin_article_edit');
-    }
-
-    /**
-     * Page de suppression d'un article
-     *
-     * @Route("/delete/{slug}", name="admin_article_delete"))
-     *
-     * @Method({"GET"})
-     *
-     * @param Article $article
-     */
-    public function DeleteAction(Request $request, Article $article)
-    {
-        die('admin_article_delete');
-    }
 }
