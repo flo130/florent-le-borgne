@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <ul>
                         {% for subCategory in category.articleSubCategories %}
-                            <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory }}</a></li>
+                            <li><a href="{{ path('article_by_sub_category', { 'id' : subCategory.id }) }}">{{ subCategory.articleSubCategory | capitalize }}</a></li>
                         {% else %}
                             {{ 'app.no_data.category' | trans | capitalize }}
                         {% endfor %}
