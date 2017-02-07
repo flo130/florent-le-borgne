@@ -30,7 +30,7 @@ class Article
      * @var User
      * 
      * @ORM\ManyToOne(targetEntity="User", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 

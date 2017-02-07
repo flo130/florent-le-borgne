@@ -126,14 +126,14 @@ class ArticleController extends Controller
                 $em->flush();
                 //ajoute un flash message si on est pas en ajax
                 if (!$request->isXmlHttpRequest()) {
-                    $this->addFlash('success', $this->get('translator')->trans('update_success'));
+                    $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
                 }
             }
         }
         //retourne un JsonResponse si on est en ajax, une Response sinon
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
-                'message' => $isValid ? $this->get('translator')->trans('update_success') : '',
+                'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
                 'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
                     'form' => $form->createView(),
                 )),
@@ -177,7 +177,7 @@ class ArticleController extends Controller
                 $em->persist($article);
                 $em->flush();
                 //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
-                $this->addFlash('success', $this->get('translator')->trans('create_success'));
+                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
                 $redirectUrl = $this->generateUrl('article_edit', array(
                     'id' => $article->getId(),
                 ),
@@ -227,7 +227,7 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
         $em->flush();
-        $this->addFlash('success', $this->get('translator')->trans('delete_success'));
+        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
         return $this->redirect($this->generateUrl('homepage'));
     }
 }

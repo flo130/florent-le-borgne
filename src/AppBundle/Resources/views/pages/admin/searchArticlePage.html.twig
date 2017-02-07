@@ -44,17 +44,19 @@
                             <td>{{ article.id }}</td>
                             <td>{{ article.title }}</td>
                             <td>
-                                {% if article.status == 1 %}
-                                    <div class="text-center">
-                                        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
-                                    </div>
-                                {% endif %}
+                                <div class="text-center">
+                                    {% if article.status == 1 %}
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'app.published' | trans | capitalize }}"></span>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'app.draft' | trans | capitalize }}"></span>
+                                    {% endif %}
+                                </div>
                             </td>
                             <td>{{ article.user.name }}</td>
                             <td>
-                                <a href="{{ path('article_edit', { 'slug' : article.slug }) }}">{{ 'app.edit' | trans | capitalize }}</a>&nbsp;
-                                <a href="{{ path('article_show', { 'slug' : article.slug }) }}">{{ 'app.see' | trans | capitalize }}</a>&nbsp;
-                                <a href="{{ path('article_delete', { 'slug' : article.slug }) }}">{{ 'app.delete' | trans | capitalize }}</a>
+                                <a href="{{ path('article_edit', { 'slug' : article.slug }) }}">{{ 'app.edit' | trans | capitalize }}</a> - 
+                                <a href="{{ path('article_show', { 'slug' : article.slug }) }}">{{ 'app.see' | trans | capitalize }}</a> - 
+                                <a href="#" data-href="{{ path('article_delete', { 'slug' : article.slug }) }}" data-toggle="modal" data-target="#modal-confirm">{{ 'app.delete' | trans | capitalize }}</a>
                             </td>
                         </tr>
                     {% else %}

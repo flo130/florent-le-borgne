@@ -65,6 +65,14 @@ services:
         tags:
             - { name: security.voter }
 
+    # Voter Symfony pour les utilisateurs (permettant de savoir qui a le droit de faire quoi)
+    app.user_voter:
+        class: AppBundle\Security\UserVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
     # Class d'upload de fichiers
     app.file_uploader:
         class: AppBundle\Service\FileUploader

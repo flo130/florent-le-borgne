@@ -1,6 +1,9 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
+    update_success: mis à jour avec succès
+    delete_success: supprimer avec succès
+    create_success: créé avec succès
     action: action
     title: titre
     status: status
@@ -13,8 +16,10 @@ app:
     result: résultat
     by: par
     leave_a: laisser un
-    posted_on: publié
-    last_edit_on: dernière modification
+    posted: posté
+    published: publié
+    draft: brouillon
+    last_edit: dernière modification
     read_more: lire
     create_article: créer un article
     update_article: modifier un article
@@ -41,6 +46,7 @@ app:
         no_account: je n'est pas encore de compte
         already_have_account: j'ai déjà un compte
         member_since: membre depuis
+        welcome: bienvenue
     home: accueil
     form: 
         image: image
@@ -62,3 +68,4 @@ app:
         admin: admin
         search:
             article: rechercher article
+            user: rechercher utilisateur

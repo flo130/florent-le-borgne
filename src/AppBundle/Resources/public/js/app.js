@@ -13,6 +13,8 @@ $(window).on('load', function() {
     manageImageLazyLoad();
     manageAlertClose();
     manageNavTab();
+    manageTooltip();
+    manageConfirmModals();
     manageAjaxFormSubmit();
     manageArticleCommentAjaxFormSubmit();
     manageAjaxPagination();
@@ -24,28 +26,50 @@ $(window).on('load', function() {
 // Fonctions utiles //
 //////////////////////
 /**
+ * Permet la gestion du comportement des modals de type "confirm"
+ * 
+ * @return void
+ */
+function manageConfirmModals() {
+    $('#modal-confirm').on('show.bs.modal', function(e) {
+        $(this).find('.btn-modal-confirm-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+}
+
+/**
+ * Gère le comportement du Tooltip
+ * 
+ * @return void
+ */
+function manageTooltip() {
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+}
+
+/**
  * Gère la recherche coté client : un champ texte <=> un tableau
  * 
  * @return void
  */
 function manageTableSearch() {
-	$('.table-search').on('onkeyup', function (e) {
-		var input, filter, table, tr, td, i;
-		input = document.getElementById($(this).attr('id'));
-		filter = input.value.toUpperCase();
-		table = document.getElementById($(this).data('table-search'));
-		tr = table.getElementsByTagName("tr");
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-					tr[i].style.display = "";
-				} else {
-					tr[i].style.display = "none";
-				}
-			}
-		}
-	});
+    $('.table-search').on('onkeyup', function (e) {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById($(this).attr('id'));
+        filter = input.value.toUpperCase();
+        table = document.getElementById($(this).data('table-search'));
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    });
 }
 
 /**

@@ -13,7 +13,7 @@
     {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
 </p>
 <p>
-    <span class="glyphicon glyphicon-time"></span> {{ 'app.posted_on' | trans | capitalize }} {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
+    <span class="glyphicon glyphicon-time"></span> {{ 'app.posted' | trans | capitalize }} {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
 </p>
 <img class="center-block img-responsive lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}" width="100%">
 <hr>

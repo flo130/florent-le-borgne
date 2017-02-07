@@ -1,6 +1,10 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
+    confirm: confirm
+    cancel: cancel
+    ok: ok
+    msg_confirm: are you sure to continue this action ? 
     article:
         create: create an article
         search: search an article
@@ -15,5 +19,5 @@ app:
     admin: 
         admin: admin
         search:
-            article: search an article
-            user: search a user
+            article: articles
+            user: users

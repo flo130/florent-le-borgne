@@ -33,8 +33,7 @@
     <body>
         {# header de la page (menu) #}
         {% block header %}
-            {% include '::menu_canvas.html.twig' %}
-            {% include '::menu.html.twig' %}
+            {% include '::menus/baseMenu.html.twig' %}
         {% endblock %}
 
         {# contenu qui prend toute la largeur de la page : carousel, banniere de pub, ... #}
@@ -52,9 +51,14 @@
             {% include '::footer.html.twig' %}
         {% endblock %}
 
-        {# templates des messages (alertes type : erreur/succes/...) #}
-        {% block messages %}
-            {% include '::alerts.html.twig' %}
+        {# templates des messages ("alertes" type : erreurs/succes qui se ferment tout seul) #}
+        {% block alertes %}
+            {% include '::alerts/baseAlert.html.twig' %}
+        {% endblock %}
+
+        {# templates des messages ("modals" type : messages/confirmations qui se ferment sur action de l'utilisateur) #}
+        {% block modals %}
+            {% include '::modals/baseModal.html.twig' %}
         {% endblock %}
 
         {# js #}

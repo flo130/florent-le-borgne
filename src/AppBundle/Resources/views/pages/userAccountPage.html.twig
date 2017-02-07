@@ -61,7 +61,7 @@
                 <div role="tabpanel" class="tab-pane fade in active" id="account">
                     <h2>{{ 'app.user.account' | trans | capitalize }}</h2>
                     {{ 'app.user.member_since' | trans | capitalize }} {{ user.createdAt | date("d/m/Y") }}
-                    {% if is_granted('ROLE_USER') and app.user.id == user.id %}
+                    {% if is_granted('edit', user) %}
                         {% include 'AppBundle:forms:userForm.html.twig' with { 'form' : userForm } %}
                     {% else %}
                         {% include 'AppBundle:blocs:userAccount.html.twig' with { 'user' : user } %}

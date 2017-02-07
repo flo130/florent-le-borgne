@@ -100,7 +100,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', $this->get('translator')->trans('welcome') . ' ' . $user->getEmail());
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.user.welcome'))) . ' ' . $user->getEmail());
             return $this->get('security.authentication.guard_handler')->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
@@ -158,5 +158,28 @@ class UserController extends Controller
             'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUser($user->getId()),
             'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
         ));
+    }
+
+    /**
+     * Page de suppression d'un compte utilisateur
+     *
+     * @Route("/{name}/delete", name="user_delete")
+     *
+     * @Method({"GET"})
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request, User $user)
+    {
+        /** @see AppBundle\Security\UserVoter */
+        $this->denyAccessUnlessGranted('delete', $user);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
+        return $this->redirect($this->generateUrl('homepage'));
     }
 }
