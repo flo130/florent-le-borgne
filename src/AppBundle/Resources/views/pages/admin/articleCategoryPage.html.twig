@@ -26,10 +26,10 @@
                 {{ articleCategory.articleCategory }}
                 <ul>
                     {% for articleSubCategory in articleCategory.articleSubCategories %}
-                        <li>articleSubCategory.articleSubCategory</li>
+                        <li>{{ articleSubCategory.articleSubCategory }}</li>
                     {% endfor %}
                 </ul>
-            <li>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

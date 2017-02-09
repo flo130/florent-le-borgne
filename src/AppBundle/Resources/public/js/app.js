@@ -19,12 +19,24 @@ $(window).on('load', function() {
     manageArticleCommentAjaxFormSubmit();
     manageAjaxPagination();
     manageTableSearch();
+    manageHighlightBlock();
 });
 
 
 //////////////////////
 // Fonctions utiles //
 //////////////////////
+/**
+ * Permet la gestion de la coloration syntaxique des blocs de code
+ * 
+ * @return void
+ */
+function manageHighlightBlock() {
+    $('code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+}
+
 /**
  * Permet la gestion du comportement des modals de type "confirm"
  * 

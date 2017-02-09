@@ -101,22 +101,25 @@ assetic:
 # Ivory CKEditor
 #https://www.remipoignon.fr/12-symfony-2-editeur-wiziwig-ckeditor-avec-ivoryckeditorbundle
 ivory_ck_editor:
+    plugins:
+        pbckcode:
+            path: '/bundles/app/js/pluginCkeditor/pbckcode/'
+            filename: 'plugin.js'
+    #nom de la config qui sera chargée par défaut
     default_config: article_config
     configs:
+        #ici article_config est utiliser pour charger l'éditeur des articles (dans le form builder). Il peut y avoir plusieurs conf
         article_config:
+            #exemple de toolbar complete : toolbar: [ [ 'Preview' ], [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ], [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ], [ 'Source' ], [ "About" ], "/", [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript','-','RemoveFormat' ], [ 'NumberedList','BulletedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink','Anchor' ], [ 'pbckcode', 'Image', 'Video', 'Table','SpecialChar','Iframe' ], '/', [ 'Styles', 'Format','Font','FontSize' ], [ 'TextColor','BGColor' ], [ 'RemoveFormat' ], [ 'Maximize' ] ]
+            #ou tout simplement : toolbar: full, standard, basic
+            #pour changer la couleur de fond de l'éditeur : uiColor: "#FFFFFF"
+            toolbar: [ [ 'Source' ], ['pbckcode'], [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ], [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ], [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript','-','RemoveFormat' ], [ 'NumberedList','BulletedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink','Anchor' ], [ 'pbckcode', 'Image', 'Video', 'Table','SpecialChar','Iframe' ] ]
+            extraPlugins: 'pbckcode'
+            pbckcode: { highlighter : 'HIGHLIGHT', tab_size : '4', theme : 'github',  modes :  [['Text', 'text'],['HTML', 'html'], ['CSS', 'css'], ['PHP', 'php'], ['JS', 'javascript'], ['YAML', 'yaml'], ['JSON', 'json'], ['SQL', 'sql'], ['Bash', 'bash']], js : "https://cdn.jsdelivr.net//ace/1.1.4/noconflict/" }
             language: "%locale%"
-            toolbar: full
             filebrowserBrowseRoute: elfinder
             filebrowserBrowseRouteParameters:
                 instance: ckeditor
-    #styles perso pour coller avec Bootstrap
-    styles:
-        my_styles:
-            - { name: "Alerte Success", element: "div",  attributes: { class: "alert alert-success", role: "alert" }}
-            - { name: "Alerte Info", element: "div",  attributes: { class: "alert alert-info", role: "alert" }}
-            - { name: "Alerte Warning", element: "div",  attributes: { class: "alert alert-warning", role: "alert" }}
-            - { name: "Alerte Danger", element: "div",  attributes: { class: "alert alert-danger", role: "alert" }}
-            - { name: "Badge", element: "span",  attributes: { class: "badge" }}
 
 # FMElfinderBundle
 #https://github.com/helios-ag/FMElfinderBundle

@@ -33,7 +33,9 @@ class ArticleCommentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('articleComment', TextareaType::class)
+            ->add('articleComment', TextareaType::class, array(
+                'label' => 'app.form.comment',
+            ))
             ->add('article', HiddenType::class)
         ;
 

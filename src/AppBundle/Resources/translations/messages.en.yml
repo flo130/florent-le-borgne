@@ -68,6 +68,7 @@ app:
         avatar: avatar
         name: name
         login: email
+        comment: comment
     admin:
         index: index
         admin: admin

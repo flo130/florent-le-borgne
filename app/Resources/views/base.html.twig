@@ -26,6 +26,7 @@
                 '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css'
                 '//cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css'
                 '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'
+                '//cdn.jsdelivr.net/highlight.js/8.5/styles/default.min.css'
                 '@css_app'
             %}
                 <link rel="stylesheet" href="{{ asset_url }}">
@@ -58,7 +59,7 @@
             {% include '::alerts/baseAlert.html.twig' %}
         {% endblock %}
 
-        {# templates des messages "modals" (type : messages/confirmations qui se ferment sur action de l'utilisateur) #}
+        {# templates des messages "modals"/"pop-in" (type : messages/confirmations qui se ferment sur action de l'utilisateur) #}
         {% block modals %}
             {% include '::modals/baseModal.html.twig' %}
         {% endblock %}
@@ -72,11 +73,12 @@
                 '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js'
                 '//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js'
                 '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js'
-                '//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian'
+                '//cdn.jsdelivr.net/highlight.js/8.5/highlight.min.js'
                 '@js_app'
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+
             {# affichage des messages #}
             {% for msg in app.session.flashBag.get('success') %}
                 <script type="text/javascript">showSuccessMessage('{{ msg|e('js')  }}');</script>
