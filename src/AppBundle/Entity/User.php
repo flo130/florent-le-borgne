@@ -24,6 +24,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User implements UserInterface, \Serializable
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_MEMBRE = 'ROLE_MEMBRE';
+
     /**
      * Mot de passe en clair (crypté lors de l'enregistrement en base)
      * 
@@ -157,13 +160,15 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        $roles = $this->roles;
-        //tous les utilisateur doivent au minimum avoir un role.
-        //ici tous le monde aura le role ROLE_USER
-        if (!in_array('ROLE_USER', $roles)) {
-            $roles[] = 'ROLE_USER';
-        }
-        return $roles;
+        return $this->roles;
+
+//         $roles = $this->roles;
+//         //tous les utilisateur doivent au minimum avoir un role.
+//         //ici tous le monde aura le role ROLE_USER
+//         if (!in_array('ROLE_USER', $roles)) {
+//             $roles[] = 'ROLE_USER';
+//         }
+//         return $roles;
     }
 
     public function getSalt()

@@ -51,7 +51,6 @@ class HomeController extends Controller
                 'content' => $this->renderView('AppBundle:blocs:articleTeaserList.html.twig', array(
                     'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByPublishedDate($page, self::MAX_ARTICLES_PER_PAGE),
                     'printArticleImage' => true,
-                    'printDeleteButton' => false
                 )),
                 'pagination' => $this->renderView('AppBundle:blocs:pagination.html.twig', array(
                     'pagination' => $pagination,

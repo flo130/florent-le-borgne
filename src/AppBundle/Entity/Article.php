@@ -94,7 +94,7 @@ class Article
     /**
      * @var ArticleComment
      * 
-     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article")
      * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $articleComments;

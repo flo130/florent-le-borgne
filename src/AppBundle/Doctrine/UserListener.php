@@ -40,8 +40,10 @@ class UserListener
         $user->setCreatedAt(new \DateTime());
         //par défaut, on prend comme nom d'utilisateur le début de l'email
         $user->setName(strstr($user->getEmail(), '@', true));
-        //renseigne le role par défaut
-        $user->setRoles(array('ROLE_MEMBRE'));
+        //renseigne le role par défaut si aucun role n'est définit
+        if (!$user->getRoles()) {
+            $user->setRoles(array('ROLE_MEMBRE'));
+        }
     }
 
     /**

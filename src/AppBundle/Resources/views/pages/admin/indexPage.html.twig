@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.index' | trans | capitalize }}
+{% endblock %}
+{% block body %}
+    <h1>{{ 'app.admin.index' | trans | capitalize }}</h1>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-collapse-stats">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-stats" aria-expanded="true" aria-controls="collapse-stats">
+                        Infos / stats
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-stats" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-collapse-stats">
+                <div class="panel-body">
+                    bla bla bla
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-collapse-admin">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-admin" aria-expanded="false" aria-controls="collapse-admin">
+                        {{ 'app.admin.admin' | trans | capitalize }}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-admin" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-collapse-admin">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_user') }}">{{ 'app.admin.search.user' | trans | capitalize }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_article') }}">{{ 'app.admin.search.article' | trans | capitalize }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_category') }}">{{ 'app.admin.search.category' | trans | capitalize }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -31,8 +31,7 @@
             <h1 class="page-header">{{ 'app.articles' | trans | capitalize }}</h1>
             {% include 'AppBundle:blocs:articleTeaserList.html.twig' with {
                 'articles' : articles,
-                'printArticleImage' : true,
-                'printDeleteButton' : false
+                'printArticleImage' : true
             } %}
             <nav class="text-center">
                 {% include 'AppBundle:blocs:pagination.html.twig' with { 'pagination' : articlesPagination } %}

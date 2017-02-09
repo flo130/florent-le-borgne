@@ -18,11 +18,13 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="msapplication-TileImage" content="{{ asset('bundles/app/images/favicon/mstile-144x144.png') }}">
         <meta name="theme-color" content="#ffffff">
+        {# block des css #}
         {% block stylesheets %}
             {% stylesheets filter='cssrewrite'
                 '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'
                 '//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.css'
                 '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css'
+                '//cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css'
                 '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'
                 '@css_app'
             %}
@@ -48,26 +50,28 @@
 
         {# footer de la page #}
         {% block footer %}
-            {% include '::footer.html.twig' %}
+            {% include '::footer/baseFooter.html.twig' %}
         {% endblock %}
 
-        {# templates des messages ("alertes" type : erreurs/succes qui se ferment tout seul) #}
+        {# templates des messages "alertes" (type : erreurs/succes qui se ferment tout seul) #}
         {% block alertes %}
             {% include '::alerts/baseAlert.html.twig' %}
         {% endblock %}
 
-        {# templates des messages ("modals" type : messages/confirmations qui se ferment sur action de l'utilisateur) #}
+        {# templates des messages "modals" (type : messages/confirmations qui se ferment sur action de l'utilisateur) #}
         {% block modals %}
             {% include '::modals/baseModal.html.twig' %}
         {% endblock %}
 
-        {# js #}
+        {# block des js #}
         {% block javascripts %}
             {% javascripts
                 '//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
                 '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'
                 '//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js'
                 '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js'
+                '//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js'
+                '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js'
                 '//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian'
                 '@js_app'
             %}

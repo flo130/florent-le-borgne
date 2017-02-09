@@ -1,0 +1,56 @@
+{#
+    params : 
+        - articleComments : array of ArticleComment object
+#}
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.search.comment' | trans | capitalize }}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.admin.search.comment' | trans | capitalize }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <h1>{{ 'app.admin.search.comment' | trans | capitalize }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover table-bordered table-search">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'app.by' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.search.article' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.search.comment' | trans | capitalize }}</th>
+                        <th>{{ 'app.action' | trans | capitalize }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for articleComment in articleComments %}
+                        <tr>
+                            <td>{{ articleComment.id }}</td>
+                            <td><a href="{{ path('user_account', { 'name' : articleComment.user.name }) }}">{{ articleComment.user.name }}</a></td>
+                            <td><a href="{{ path('article_show', { 'slug' : articleComment.article.slug }) }}">{{ articleComment.article.title }}</a></td>
+                            <td>{{ articleComment.articleComment }}</td>
+                            <td>
+                                <a class="print-confirm" href="{{ path('admin_comment_delete', { 'id' : articleComment.id }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-remove danger" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        {{ 'app.no_data.comment' | trans | capitalize }}
+                        <hr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -3,14 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="modal-confirm-label">{{ 'app.confirm' | trans |capitalize }}</h4>
+                <h4 class="modal-title" id="modal-confirm-label">{{ 'app.confirm' | trans | capitalize }}</h4>
             </div>
             <div class="modal-body">
-                <p>{{ 'app.msg_confirm' | trans |capitalize }}</p>
+                <p>{{ 'app.msg_confirm' | trans | capitalize }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'app.cancel' | trans |capitalize }}</button>
-                <a class="btn btn-danger btn-modal-confirm-ok">{{ 'app.ok' | trans |capitalize }}</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'app.no' | trans | capitalize }}</button>
+                <a class="btn btn-danger" id="modal-confirm-btn-ok">{{ 'app.yes' | trans | capitalize }}</a>
             </div>
         </div>
     </div>

@@ -28,6 +28,7 @@ app:
     update_article: update an article
     name: name
     email: email
+    role: role
     no_data:
         category: no category found
         article: no article found
@@ -67,8 +68,14 @@ app:
         avatar: avatar
         name: name
         login: email
-    admin: 
+    admin:
+        index: index
         admin: admin
+        connect_with_this_account: connect with this account
         search:
-            article: search article
-            user: search user
+            article: articles
+            user: users
+            category: categories
+            comment: comments
+        return_admin_account: exit impersonation
+        change_role: change role

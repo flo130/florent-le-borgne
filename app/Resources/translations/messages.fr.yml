@@ -4,6 +4,8 @@ app:
     confirm: confirmer
     cancel: quitter
     ok: ok
+    yes: oui
+    no: non
     msg_confirm: êtes-vous sûr de continuer cette action ?
     article:
         create: créer un article
@@ -21,3 +23,7 @@ app:
         search:
             article: articles
             user: utilisateurs
+            category: categories
+            comment: commentaires
+        return_admin_account: quitter ce compte
+        change_role: changer le rôle

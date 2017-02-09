@@ -25,6 +25,7 @@ app:
     update_article: modifier un article
     name: nom
     email: email
+    role: rôle
     no_data:
         category: aucune categorie trouvée
         article: aucun article trouvé
@@ -65,7 +66,13 @@ app:
         name: nom
         login: adresse email
     admin: 
+        index: index
         admin: admin
+        connect_with_this_account: se connecter avec ce compte
         search:
-            article: rechercher article
-            user: rechercher utilisateur
+            article: articles
+            user: utilisateurs
+            category: categories
+            comment: commentaires
+        return_admin_account: quitter ce compte
+        change_role: changer le rôle

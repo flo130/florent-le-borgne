@@ -1,0 +1,73 @@
+{#
+    params : 
+        - users : array of User object
+#}
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.search.user' | trans | capitalize }}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.admin.search.user' | trans | capitalize }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <h1>{{ 'app.admin.search.user' | trans | capitalize }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover table-bordered table-search">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'app.name' | trans | capitalize }}</th>
+                        <th>{{ 'app.email' | trans | capitalize }}</th>
+                        <th>{{ 'app.role' | trans | capitalize }}</th>
+                        <th>{{ 'app.articles' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.search.comment' | trans | capitalize }}</th>
+                        <th>{{ 'app.action' | trans | capitalize }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles | join(', ') }}</td>
+                            <td>{{ user.getArticles | length }}</td>
+                            <td>{{ user.getArticleComments | length }}</td>
+                            <td>
+                                <a href="{{ path('user_account', { 'name' : user.name }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.see' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                                <a href="{{ path('user_account', { 'name' : user.name }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.edit' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                                <a class="print-confirm" href="{{ path('user_delete', { 'name' : user.name }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-remove danger" aria-hidden="true"></span>
+                                </a>
+                                |
+                                <a href="{{ path('homepage', { '_switch_user' : user.email }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.admin.connect_with_this_account' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </a>
+                                <a href="{{ path('admin_change_role', { 'name' : user.name }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.admin.change_role' | trans | capitalize }}">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        {{ 'app.no_data.user' | trans | capitalize }}
+                        <hr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

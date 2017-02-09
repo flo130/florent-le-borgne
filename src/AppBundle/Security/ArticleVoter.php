@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
  */
 class ArticleVoter extends Voter
 {
-    const CREATE = 'create';
     const EDIT = 'edit';
     const DELETE = 'delete';
 
@@ -40,12 +39,12 @@ class ArticleVoter extends Voter
     protected function supports($action, $subject)
     {
         //vérifie que l'attribut passé est bien l'un de ceux qu'on veut vérifier
-        if ($action != self::CREATE && $action != self::EDIT && $action != self::DELETE) {
+        if ($action != self::EDIT && $action != self::DELETE) {
             return false;
         }
 
         //vérifie que le sujet passé est bien un article
-        if (! $subject instanceof Article) {
+        if (!$subject instanceof Article) {
             return false;
         }
 
@@ -78,9 +77,6 @@ class ArticleVoter extends Voter
                 break;
             case self::DELETE:
                 return $this->canDelete($article, $token);
-                break;
-            case self::CREATE:
-                return $this->canCreate($article, $token);
                 break;
             default:
                 throw new \LogicException('This code should not be reached!');
@@ -116,19 +112,12 @@ class ArticleVoter extends Voter
      */
     private function canDelete(Article $article, TokenInterface $user)
     {
-        return true;
-    }
+        //si l'utilisateur est le créateur de l'article, il peut supprimer l'article
+        $owner = $user->getUser() === $article->getUser();
 
-    /**
-     * Détermine si l'utilisateur peut créer un article
-     *
-     * @param Article $article
-     * @param User $user
-     *
-     * @return boolean
-     */
-    private function canCreate(Article $article, TokenInterface $user)
-    {
-        return true;
+        //si l'utilisateur est admin il peut supprimer n'importe quel article
+        $admin = $this->decisionManager->decide($user, array('ROLE_ADMIN'));
+
+        return $owner || $admin;
     }
 }

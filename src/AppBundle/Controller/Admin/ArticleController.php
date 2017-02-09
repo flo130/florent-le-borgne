@@ -1,14 +1,12 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Entity\Article;
 
 /**
@@ -18,19 +16,19 @@ use AppBundle\Entity\Article;
  * 
  * @Route("/admin/article")
  */
-class AdminArticleController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Page de recherche d'un article
      *
-     * @Route("/search", name="admin_article_search"))
+     * @Route("/", name="admin_article"))
      *
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
-    public function SearchAction(Request $request)
+    public function ArticleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        return $this->render('AppBundle:pages/admin:searchArticlePage.html.twig', array(
+        return $this->render('AppBundle:pages/admin:articlePage.html.twig', array(
             'articles' => $em->getRepository('AppBundle:Article')->findAll(),
         ));
     }

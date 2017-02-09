@@ -31,8 +31,13 @@ $(window).on('load', function() {
  * @return void
  */
 function manageConfirmModals() {
-    $('#modal-confirm').on('show.bs.modal', function(e) {
-        $(this).find('.btn-modal-confirm-ok').attr('href', $(e.relatedTarget).data('href'));
+    $('.print-confirm').on('click', function(e) {
+        //supprime le comportement du lien par défaut
+        e.preventDefault();
+        e.stopPropagation();
+        //on remplis le href du bouton ok de la modal par l'URL de l'action à effectuée suite à la confirmation
+        $('#modal-confirm-btn-ok').attr('href', $(this).attr('href'));
+        $('#modal-confirm').modal('show');
     });
 }
 
@@ -42,34 +47,32 @@ function manageConfirmModals() {
  * @return void
  */
 function manageTooltip() {
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 /**
- * Gère la recherche coté client : un champ texte <=> un tableau
+ * Gère la recherche coté client via la librairie DataTable
  * 
  * @return void
  */
 function manageTableSearch() {
-    $('.table-search').on('onkeyup', function (e) {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById($(this).attr('id'));
-        filter = input.value.toUpperCase();
-        table = document.getElementById($(this).data('table-search'));
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    });
+    //récupère la locale dans l'url
+    var link = document.createElement("a");
+    link.href = window.location.href;
+    var pieces = link.pathname.split("/");
+    //construit le paramétrage du DataTable
+    var params = {
+        //affiche les bouton "dernier", "suivants", "premier", "précedent" (autrement seul "suivant" et "précédent" sont affichés)
+        'pagingType': 'full_numbers',
+    };
+    //passe la langue en français si besoin (sinon ça sera l'anglais) en ajoutant l'option dans le paramétrage
+    if (pieces[1] == 'fr') {
+        params['language'] = {
+            'url': 'http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json'
+        };
+    }
+    //initialise le DataTable sur les éléments ayant la class 'table-search'
+    $('.table-search').DataTable(params);
 }
 
 /**

@@ -7,58 +7,67 @@
     <ul class="nav navmenu-nav">
         {% if is_granted('ROLE_ADMIN') %}
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.admin.admin' | trans |capitalize }} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.admin.admin' | trans | capitalize }} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li{% if route == 'admin_user_search' %} class="active"{% endif %}>
-                        <a href="{{ path('admin_user_search') }}">{{ 'app.admin.search.user' | trans |capitalize }}</a>
+                    <li{% if route == 'admin_index' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_index' %} href="{{ path('admin_index') }}"{% endif %}>{{ 'app.admin.admin' | trans | capitalize }}</a>
                     </li>
-                    <li{% if route == 'admin_article_search' %} class="active"{% endif %}>
-                        <a href="{{ path('admin_article_search') }}">{{ 'app.admin.search.article' | trans |capitalize }}</a>
+                    <li{% if route == 'admin_user' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_user' %} href="{{ path('admin_user') }}"{% endif %}>{{ 'app.admin.search.user' | trans | capitalize }}</a>
+                    </li>
+                    <li{% if route == 'admin_article' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_article' %} href="{{ path('admin_article') }}"{% endif %}>{{ 'app.admin.search.article' | trans | capitalize }}</a>
+                    </li>
+                    <li{% if route == 'admin_category' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_category' %} href="{{ path('admin_category') }}"{% endif %}>{{ 'app.admin.search.category' | trans | capitalize }}</a>
+                    </li>
+                    <li{% if route == 'admin_comment' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_comment' %} href="{{ path('admin_comment') }}"{% endif %}>{{ 'app.admin.search.comment' | trans | capitalize }}</a>
                     </li>
                 </ul>
             </li>
         {% endif %}
         <li{% if route == 'search' %} class="active"{% endif %}>
-            <a href="{{ path('search') }}">{{ 'app.article.search' | trans |capitalize }}</a>
+            <a{% if route != 'search' %} href="{{ path('search') }}"{% endif %}>{{ 'app.article.search' | trans | capitalize }}</a>
         </li>
         {% if is_granted('ROLE_USER') %}
             <li{% if route == 'article_create' %} class="active"{% endif %}>
-                <a href="{{ path('article_create') }}">{{ 'app.article.create' | trans |capitalize }}</a>
+                <a{% if route != 'article_create' %} href="{{ path('article_create') }}"{% endif %}>{{ 'app.article.create' | trans | capitalize }}</a>
             </li>
         {% endif %}
     </ul>
     <ul class="nav navmenu-nav">
         {% if is_granted('ROLE_USER') %}
             <li{% if route == 'user_account' %} class="active"{% endif %}>
-                <a href="{{ path('user_account', { name: app.user.name }) }}">
+                <a{% if route != 'user_account' %} href="{{ path('user_account', { name: app.user.name }) }}"{% endif %}>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                 </a>
             </li>
             <li>
                 <a href="{{ path('user_logout') }}">
-                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> {{ 'app.user.logout' | trans |capitalize }}
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> {{ 'app.user.logout' | trans | capitalize }}
                 </a>
             </li>
         {% else %}
             <li{% if route == 'user_register' %} class="active"{% endif %}>
-                <a href="{{ path('user_register') }}">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ 'app.user.register' | trans |capitalize }}
+                <a{% if route != 'user_register' %} href="{{ path('user_register') }}"{% endif %}>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ 'app.user.register' | trans | capitalize }}
                 </a>
             </li>
             <li{% if route == 'user_login' %} class="active"{% endif %}>
-                <a href="{{ path('user_login') }}">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> {{ 'app.user.login' | trans |capitalize }}
+                <a{% if route != 'user_login' %} href="{{ path('user_login') }}"{% endif %}>
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> {{ 'app.user.login' | trans | capitalize }}
                 </a>
             </li>
         {% endif %}
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.language.languages' | trans |capitalize }} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ 'app.language.languages' | trans | capitalize }} <span class="caret"></span></a>
             <ul class="dropdown-menu navmenu-nav">
                 <li{% if locale == 'fr' %} class="active"{% endif %}>
-                    <a{% if locale != 'fr' %} href="{{ path(route, params | merge({ _locale : 'fr' })) }}"{% endif %}>{{ 'app.language.french' | trans |capitalize }}</a>
+                    <a{% if locale != 'fr' %} href="{{ path(route, params | merge({ _locale : 'fr' })) }}"{% endif %}>{{ 'app.language.french' | trans | capitalize }}</a>
                 </li>
                 <li{% if locale == 'en' %} class="active"{% endif %}>
-                    <a{% if locale != 'en' %} href="{{ path(route, params | merge({ _locale : 'en' })) }}"{% endif %}>{{ 'app.language.english' | trans |capitalize }}</a>
+                    <a{% if locale != 'en' %} href="{{ path(route, params | merge({ _locale : 'en' })) }}"{% endif %}>{{ 'app.language.english' | trans | capitalize }}</a>
                 </li>
             </ul>
         </li>

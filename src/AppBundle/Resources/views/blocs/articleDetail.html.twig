@@ -3,12 +3,19 @@
         - article : Article object
 #}
 <h1>{{ article.title }}</h1>
-{# si l'utilisateur peut éditer l'article, on lui affiche le lien vers la page #}
-{% if is_granted('edit', article) %}
-    <a class="btn btn-default pull-right" href="{{ path('article_edit', { 'slug' : article.slug }) }}" role="button">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> {{ 'app.edit' | trans | capitalize }}
-    </a>
-{% endif %}
+{# si l'utilisateur peut éditer ou supprimer l'article, on lui affiche le lien vers la page #}
+<div class="pull-right">
+    {% if is_granted('edit', article) %}
+        <a class="btn btn-default" href="{{ path('article_edit', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.edit' | trans | capitalize }}">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </a>
+    {% endif %}
+    {% if is_granted('delete', article) %}
+        <a class="btn btn-danger print-confirm" href="{{ path('article_delete', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </a>
+    {% endif %}
+</div>
 <p class="lead">
     {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
 </p>

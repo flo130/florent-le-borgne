@@ -4,6 +4,8 @@ app:
     confirm: confirm
     cancel: cancel
     ok: ok
+    yes: yes
+    no: no
     msg_confirm: are you sure to continue this action ? 
     article:
         create: create an article
@@ -21,3 +23,7 @@ app:
         search:
             article: articles
             user: users
+            category: categories
+            comment: comments
+        return_admin_account: exit impersonation
+        change_role: change role

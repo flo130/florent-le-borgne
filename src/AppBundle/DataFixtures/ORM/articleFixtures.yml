@@ -1,16 +1,16 @@
 #http://php-symfony.uk/examples-faker-to-create-fixtures-with-alice-bundle/
 
 AppBundle\Entity\ArticleCategory:
-    articleCategory_{1..4}:
+    articleCategory_{1..20}:
         articleCategory: <word(3)>
 
 AppBundle\Entity\ArticleSubCategory:
-    articleSubCategory_{1..8}:
+    articleSubCategory_{1..60}:
         articleSubCategory: <word(3)>
         articleCategory: '@articleCategory_*'
 
 AppBundle\Entity\Article:
-    article_{1..30}:
+    article_{1..150}:
         user: '@user_*'
         title: <sentence()>
         image: 02b126e6ea583541c6f64f8c3a6347d4.jpeg
@@ -20,11 +20,11 @@ AppBundle\Entity\Article:
         publishedAt: <dateTimeBetween('-4 years', 'now')>
         updatedAt: <dateTimeBetween('-4 years', 'now')>
         createdAt: <dateTimeBetween('-4 years', 'now')>
-        status: <status()>
+        status: <getRandomStatus()>
         summary: <paragraph(2)>
 
 AppBundle\Entity\ArticleComment:
-    articleComment_{1..50}:
+    articleComment_{1..300}:
         user: '@user_*'
         article: '@article_*'
         articleComment: <paragraph(10)>

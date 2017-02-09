@@ -5,10 +5,13 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Fixtures;
 use AppBundle\Entity\Article;
+use AppBundle\Entity\User;
 
 class LoadFixtures implements FixtureInterface
 {
     /**
+     * Appeler lors du load des fixtures
+     * 
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
@@ -23,31 +26,48 @@ class LoadFixtures implements FixtureInterface
             ['providers' => [$this]]
         );
     }
-    
+
     /**
      * Ici on retourne aléatoirement des roles
-     * Dans notre fichie de conf "xxxfixtures.yml", on pourra l'appeler directement "<roles()>" pour avoir un role aléatoire
+     * Dans le fichier de conf "xxxfixtures.yml" on pourra appeler directement "<getRandomRole()>" pour avoir un role aléatoire
      *
      * @return String
      */
-    public function roles() {
+    public function getRandomRole() {
         $data = array(
-            ['ROLE_ADMIN'],
-            ['ROLE_MEMBRE'],
-            [],
+            [User::ROLE_ADMIN],
+            [User::ROLE_MEMBRE]
         );
         $key = array_rand($data);
         $return = $data[$key];
         return $return;
     }
-    
+
+    /**
+     * Fournis le role admin 
+     * 
+     * @return string[]
+     */
+    public function getAdminRole() {
+        return array(User::ROLE_ADMIN);
+    }
+
+    /**
+     * Fournis le role membre
+     *
+     * @return string[]
+     */
+    public function getMemberRole() {
+        return array(User::ROLE_MEMBRE);
+    }
+
     /**
      * Ici on retourne aléatoirement des statuts
-     * Dans notre fichie de conf "xxxfixtures.yml", on pourra l'appeler directement "<status()>" pour avoir un statut aléatoire
+     * Dans le fichier de conf "xxxfixtures.yml" on pourra appeler directement "<getRandomStatus()>" pour avoir un status aléatoire
      *
      * @return String
      */
-    public function status() {
+    public function getRandomStatus() {
         $data = array(
             Article::DRAFT_STATUS,
             Article::PUBLISHED_STATUS,
