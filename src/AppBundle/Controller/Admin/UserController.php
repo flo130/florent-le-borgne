@@ -52,6 +52,7 @@ class UserController extends Controller
         /** @see AppBundle\Security\UserVoter */
         $this->denyAccessUnlessGranted('delete', $user);
         $em = $this->getDoctrine()->getManager();
+        $this->get('logger')->notice('User suppression', array('email' => $user->getEmail()));
         $em->remove($user);
         $em->flush();
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));

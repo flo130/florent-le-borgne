@@ -43,9 +43,7 @@ class UserController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         if ($error) {
-            $this->get('logger')->notice('Bad login for '.$lastUsername);
-        } else {
-            $this->get('logger')->notice('Login for '.$lastUsername);
+            $this->get('logger')->notice('Bad login', array('email' => $lastUsername));
         }
         $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
 
@@ -96,6 +94,7 @@ class UserController extends Controller
     {
         //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->get('logger')->notice('Already authenticated user register attempt');
             return $this->redirectToRoute('homepage');
         }
         $form = $this->createForm(RegistrationForm::class);
@@ -106,7 +105,9 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $this->get('logger')->info('Account creation', array('email' => $user->getEmail()));
             $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.user.welcome'))) . ' ' . $user->getEmail());
+            //autologin de l'utilisateur
             return $this->get('security.authentication.guard_handler')->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
@@ -156,6 +157,7 @@ class UserController extends Controller
             }
             $em->persist($user);
             $em->flush();
+            $this->get('logger')->info('Account modification', array('email' => $user->getEmail()));
             $this->addFlash('success', 'Update successfully');
         }
         return $this->render('AppBundle:pages:userAccountPage.html.twig', array(

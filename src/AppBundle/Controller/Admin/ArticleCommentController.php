@@ -44,6 +44,7 @@ class ArticleCommentController extends Controller
     public function DeleteAction(Request $request, ArticleComment $comment)
     {
         $em = $this->getDoctrine()->getManager();
+        $this->get('logger')->notice('Comment suppression', array('id' => $comment->getId()));
         $em->remove($comment);
         $em->flush();
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));

@@ -124,6 +124,7 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+                $this->get('logger')->info('Article modification', array('title' => $article->getTitle()));
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
                 $redirectUrl = $this->generateUrl('article_show', array(
                     'slug' => $article->getSlug(),
@@ -185,6 +186,7 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+                $this->get('logger')->info('Article creation', array('title' => $article->getTitle()));
                 //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
                 $redirectUrl = $this->generateUrl('article_show', array(
@@ -233,6 +235,7 @@ class ArticleController extends Controller
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('delete', $article);
         $em = $this->getDoctrine()->getManager();
+        $this->get('logger')->notice('Article suppression', array('title' => $article->getTitle()));
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));

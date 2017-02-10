@@ -51,6 +51,7 @@ class ArticleController extends Controller
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('delete', $article);
         $em = $this->getDoctrine()->getManager();
+        $this->get('logger')->notice('Article suppression', array('title' => $article->getTitle()));
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
