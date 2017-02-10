@@ -38,7 +38,7 @@ class UserController extends Controller
     /**
      * Page de suppression d'un compte utilisateur
      *
-     * @Route("/{name}/delete", name="admin_user_delete")
+     * @Route("/delete/{name}", name="admin_user_delete")
      *
      * @Method({"GET"})
      *

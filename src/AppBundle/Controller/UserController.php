@@ -127,7 +127,7 @@ class UserController extends Controller
      * Essayer avec :
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
-     * @Route("/{name}/account", name="user_account")
+     * @Route("/account/{name}", name="user_account")
      * 
      * @Method({"GET", "POST"})
      * 
