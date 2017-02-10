@@ -248,9 +248,13 @@ function manageAjaxFormSubmit()
                     //le serveur n'a pas retourné de formulaire, on affiche donc une erreur générale
                     showErrorMessage('An error occurred');
                 } else {
-                    //la requete est en erreur mais on a quand même récupéré un formulaire depuis le serveur.
-                    //on lui applique une petite annimation pour montrer l'erreur...
-                    $('.submit-ajax').addClass('animated shake');
+                    //la requete est en erreur mais on a quand même récupéré un formulaire depuis le serveur (erreur de saisie surement, controle de champs).
+                    //du coup on lui applique une petite annimation pour montrer l'erreur à l'utilisateur...
+                    $('.submit-ajax').parent().addClass('animated shake');
+                    //une fois l'animation terminée, on retire les classes css qui ont servie
+                    setTimeout(function() {
+                        $('.submit-ajax').parent().removeClass('animated shake');
+                    }, 500);
                 }
             } else {
                 //erreur générale

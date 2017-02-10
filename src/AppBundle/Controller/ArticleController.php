@@ -139,14 +139,14 @@ class ArticleController extends Controller
             if ($isValid) {
                 return new JsonResponse(array(
                     'redirect' => $redirectUrl,
-                ), $isValid ? 200 : 400);
+                ), 200);
             } else {
                 return new JsonResponse(array(
                     'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
                     'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
                         'form' => $form->createView(),
                     )),
-                ), $isValid ? 200 : 400);
+                ), 400);
             }
         } else {
             return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
@@ -202,13 +202,13 @@ class ArticleController extends Controller
             if ($isValid) {
                 return new JsonResponse(array(
                     'redirect' => $redirectUrl,
-                ), $isValid ? 200 : 400);
+                ), 200);
             } else {
                 return new JsonResponse(array(
                     'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
                         'form' => $form->createView(),
                     )),
-                ), $isValid ? 200 : 400);
+                ), 400);
             }
         } else {
             return $this->render('AppBundle:pages:articleCreatePage.html.twig', array(

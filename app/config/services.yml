@@ -84,3 +84,8 @@ services:
         arguments: ['@doctrine']
         tags:
             - { name: form.type }
+
+    # Ici on va surcharger le comportement par défaut de symfony lors du login (pas de redirection pour l'ajax par exemple)
+    #cf : http://symfony.com/doc/current/security/target_path.html
+    security.exception_listener.class:
+        class: AppBundle\Security\ExceptionListener

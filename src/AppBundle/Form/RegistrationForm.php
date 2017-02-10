@@ -55,7 +55,7 @@ class RegistrationForm extends AbstractType
             ),
             //rajoute une class css pour pouvoir capter la soumission du form (et utiliser l'ajax par exemple
             'attr' => array(
-                //'class' => 'submit-ajax',
+                'class' => 'submit-ajax',
             ),
         ));
     }

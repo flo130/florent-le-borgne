@@ -35,23 +35,34 @@ class UserController extends Controller
     {
         //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $this->get('logger')->notice('Already authenticated user login attempt');
             return $this->redirectToRoute('homepage');
         }
 
+        //authentifie l'utilisateur
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         if ($error) {
-            $this->get('logger')->notice('Bad login', array('email' => $lastUsername));
+            $this->get('logger')->info('Bad login', array('email' => $lastUsername));
         }
         $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
 
         //retourne un JsonResponse si on est en ajax, une Response sinon
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'form' => $form->createView(),
-            ), $error ? 200 : 400);
+            //ici on traite une requete en ajax : cf. AppBundle\Security\ExceptionListener.php pour 
+            //supprimer le comportement par défaut de Symfony
+            if (!$error) {
+                return new JsonResponse(array(
+                    'redirect' => $this->generateUrl('homepage'),
+                ), 200);
+            } else {
+                return new JsonResponse(array(
+                    'form' => $this->renderView('AppBundle:forms:loginForm.html.twig', array(
+                        'form' => $form->createView(),
+                        'error' => $error,
+                    )),
+                ), 400);
+            }
         } else {
             return $this->render('AppBundle:pages:userLoginPage.html.twig', array(
                 'form' => $form->createView(),
@@ -94,31 +105,52 @@ class UserController extends Controller
     {
         //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $this->get('logger')->notice('Already authenticated user register attempt');
             return $this->redirectToRoute('homepage');
         }
         $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            /** @var User $user */
-            $user = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            $this->get('logger')->info('Account creation', array('email' => $user->getEmail()));
-            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.user.welcome'))) . ' ' . $user->getEmail());
-            //autologin de l'utilisateur
-            return $this->get('security.authentication.guard_handler')->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                //ce service est à définir dans service.yml
-                $this->get('app.security.login_form_authenticator'),
-                'main'
-            );
+        if ($form->isSubmitted()) {
+            $isValid = $form->isValid();
+            if ($isValid) {
+                /** @var User $user */
+                $user = $form->getData();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $this->get('logger')->info('Account creation', array('email' => $user->getEmail()));
+                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.user.welcome'))) . ' ' . $user->getEmail());
+                //login de l'utilisateur
+                $auth = $this->get('security.authentication.guard_handler')->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    //ce service est à définir dans service.yml
+                    $this->get('app.security.login_form_authenticator'),
+                    'main'
+                );
+                if (!$request->isXmlHttpRequest()) {
+                    //authenticateUserAndHandleSuccess retourne une "Response", on peut donc la retourner si on est pas en ajax
+                    return $auth;
+                }
+            }
         }
-        return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        //retourne un JsonResponse si on est en ajax, une Response sinon
+        if ($request->isXmlHttpRequest()) {
+            if ($isValid) {
+                return new JsonResponse(array(
+                    'redirect' => $this->generateUrl('homepage'),
+                ), 200);
+            } else {
+                return new JsonResponse(array(
+                    'form' => $this->renderView('AppBundle:forms:registerForm.html.twig', array(
+                        'form' => $form->createView(),
+                    )),
+                ), 400);
+            }
+        } else {
+            return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
