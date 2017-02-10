@@ -4,6 +4,10 @@
     {{ parent() }} - {{ 'app.user.login' | trans | capitalize }}
 {% endblock %}
 
+{% block description %}
+    {{ parent() }} - {{ 'app.user.login' | trans | capitalize }}
+{% endblock %}
+
 {% block body %}
     <h2 class="text-center">{{ 'app.user.login' | trans | capitalize }}</h2>
     <section class="row">

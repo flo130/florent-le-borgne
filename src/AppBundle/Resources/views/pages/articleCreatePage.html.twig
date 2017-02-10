@@ -8,6 +8,10 @@
     {{ parent() }} - {{ 'app.create_article' | trans | capitalize }}
 {% endblock %}
 
+{% block description %}
+    {{ parent() }} - {{ 'app.create_article' | trans | capitalize }}
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">

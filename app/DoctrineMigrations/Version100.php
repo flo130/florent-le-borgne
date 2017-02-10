@@ -7,11 +7,13 @@ use Doctrine\DBAL\Schema\Schema;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
+use AppBundle\Entity\ArticleCategory;
+use AppBundle\Entity\ArticleSubCategory;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Script d'installation de la BDD en version 1.0.0
  */
-class Version20170209130103 extends AbstractMigration implements ContainerAwareInterface
+class Version100 extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * Container Symfony
@@ -75,8 +77,10 @@ class Version20170209130103 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * Exécuté après la création de la base :
+     * Exécuté après la création de la base (pour avoir un site "pret à l'emploi) :
      *     - on ajoute un utilisateur administrateur
+     *     - on ajoute des catégories
+     *     - on ajoute des sous-catégories
      *
      * @param Schema $schema
      * @return void
@@ -85,6 +89,7 @@ class Version20170209130103 extends AbstractMigration implements ContainerAwareI
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
 
+        //création de l'utilisateur admin
         $adminUser = new User();
         $adminUser->setEmail('admin@admin.com');
         $adminUser->setPlainPassword('password');
@@ -92,12 +97,77 @@ class Version20170209130103 extends AbstractMigration implements ContainerAwareI
         $entityManager->persist($adminUser);
         $this->warnIf(true, 'The administrator user has been added with "admin@admin.com / password"');
 
+        //création de l'utilisateur de test
         $testUser = new User();
         $testUser->setEmail('test@test.com');
         $testUser->setPlainPassword('password');
         $testUser->setRoles(array(User::ROLE_MEMBRE));
         $entityManager->persist($testUser);
         $this->warnIf(true, 'A test user has been added with "test@test.com / password"');
+
+        //creation de la catégorie "informatique"
+        $computerCategory = new ArticleCategory();
+        $computerCategory->setArticleCategory('informatique');
+        $computerCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($computerCategory);
+
+        //creation de la catégorie "bricolage"
+        $doItYourselfCategory = new ArticleCategory();
+        $doItYourselfCategory->setArticleCategory('bricolage');
+        $doItYourselfCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($doItYourselfCategory);
+
+        //creation de la catégorie "sport"
+        $sportCategory = new ArticleCategory();
+        $sportCategory->setArticleCategory('sport');
+        $sportCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($sportCategory);
+
+        $this->warnIf(true, 'Main categories created');
+
+        //creation de la sous-catégorie "php"
+        $phpSubCategory = new ArticleSubCategory();
+        $phpSubCategory->setArticleSubCategory('php');
+        $phpSubCategory->setArticleCategory($computerCategory);
+        $phpSubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($phpSubCategory);
+
+        //creation de la sous-catégorie "php symfony"
+        $phpSymfonySubCategory = new ArticleSubCategory();
+        $phpSymfonySubCategory->setArticleSubCategory('php symfony');
+        $phpSymfonySubCategory->setArticleCategory($computerCategory);
+        $phpSymfonySubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($phpSymfonySubCategory);
+
+        //creation de la sous-catégorie "css"
+        $cssSubCategory = new ArticleSubCategory();
+        $cssSubCategory->setArticleSubCategory('css');
+        $cssSubCategory->setArticleCategory($computerCategory);
+        $cssSubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($cssSubCategory);
+
+        //creation de la sous-catégorie "javascript"
+        $jsSubCategory = new ArticleSubCategory();
+        $jsSubCategory->setArticleSubCategory('javascript');
+        $jsSubCategory->setArticleCategory($computerCategory);
+        $jsSubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($jsSubCategory);
+
+        //creation de la sous-catégorie "VTT"
+        $vttSubCategory = new ArticleSubCategory();
+        $vttSubCategory->setArticleSubCategory('VTT');
+        $vttSubCategory->setArticleCategory($sportCategory);
+        $vttSubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($vttSubCategory);
+
+        //creation de la sous-catégorie "running"
+        $runningSubCategory = new ArticleSubCategory();
+        $runningSubCategory->setArticleSubCategory('running');
+        $runningSubCategory->setArticleCategory($sportCategory);
+        $runningSubCategory->setCreatedAt(new \DateTime());
+        $entityManager->persist($runningSubCategory);
+
+        $this->warnIf(true, 'Sub categories created');
 
         $entityManager->flush();
     }

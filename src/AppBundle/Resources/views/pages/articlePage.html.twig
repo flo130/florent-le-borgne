@@ -9,6 +9,10 @@
     {{ parent() }} - {{ article.title }}
 {% endblock %}
 
+{% block description %}
+    {{ parent() }} - {{ article.title }}
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">

@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-language" content="{{ app.request.getLocale() }}">
-        <meta name="description" content="{{ appname }} blog">
-        <meta name="keyword" content="php;symfony;web;javascript;css">
+        <meta name="description" content="{% block description %}{{ appname }}{% endblock %}">
+        <meta name="keyword" content="blog;php;symfony;web;javascript;css">
         <title>{% block title %}{{ appname }}{% endblock %}</title>
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('bundles/app/images/favicon/apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" href="{{ asset('bundles/app/images/favicon/favicon-32x32.png') }}" sizes="32x32">

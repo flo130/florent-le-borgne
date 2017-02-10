@@ -16,6 +16,10 @@
     {{ parent() }} - {{ 'app.home' | trans | capitalize }}
 {% endblock %}
 
+{% block description %}
+    {{ parent() }} - {{ 'app.home' | trans | capitalize }}
+{% endblock %}
+
 {% block banner %}
     <div class="row">
         <div class="col-md-12">
