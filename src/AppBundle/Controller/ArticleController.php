@@ -178,7 +178,7 @@ class ArticleController extends Controller
                 $em->flush();
                 //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
-                $redirectUrl = $this->generateUrl('article_edit', array(
+                $redirectUrl = $this->generateUrl('article_show', array(
                     'slug' => $article->getSlug(),
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL);

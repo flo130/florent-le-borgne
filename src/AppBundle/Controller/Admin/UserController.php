@@ -36,6 +36,29 @@ class UserController extends Controller
     }
 
     /**
+     * Page de suppression d'un compte utilisateur
+     *
+     * @Route("/{name}/delete", name="admin_user_delete")
+     *
+     * @Method({"GET"})
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request, User $user)
+    {
+        /** @see AppBundle\Security\UserVoter */
+        $this->denyAccessUnlessGranted('delete', $user);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
+        return $this->redirect($this->generateUrl('admin_user'));
+    }
+
+    /**
      * Formualire de changement de role d'un utilisateur
      * 
      * @Route("/change-role/{name}", name="admin_change_role"))

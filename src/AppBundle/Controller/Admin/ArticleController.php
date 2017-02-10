@@ -32,4 +32,28 @@ class ArticleController extends Controller
             'articles' => $em->getRepository('AppBundle:Article')->findAll(),
         ));
     }
+
+    /**
+     * Page de suppression d'un article
+     *
+     * @Route("/delete/{slug}", name="admin_article_delete"))
+     *
+     * @Method({"GET"})
+     *
+     * @param Request $request
+     * @param Article $article
+     *
+     * @return Response
+     */
+    public function DeleteAction(Request $request, Article $article)
+    {
+        //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
+        /** @see AppBundle\Security\ArticleVoter */
+        $this->denyAccessUnlessGranted('delete', $article);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
+        return $this->redirect($this->generateUrl('admin_article'));
+    }
 }

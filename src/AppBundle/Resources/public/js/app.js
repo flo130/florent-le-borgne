@@ -76,6 +76,8 @@ function manageTableSearch() {
     var params = {
         //affiche les bouton "dernier", "suivants", "premier", "précedent" (autrement seul "suivant" et "précédent" sont affichés)
         'pagingType': 'full_numbers',
+        //garde l'état du tableau entre le rechargement de deux pages
+        stateSave: true
     };
     //passe la langue en français si besoin (sinon ça sera l'anglais) en ajoutant l'option dans le paramétrage
     if (pieces[1] == 'fr') {

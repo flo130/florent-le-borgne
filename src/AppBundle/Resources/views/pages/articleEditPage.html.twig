@@ -29,6 +29,17 @@
         </div>
     </div>
     <h1>{{ 'app.update_article' | trans | capitalize }}</h1>
+    {# si l'utilisateur peut voir ou supprimer l'article en cours d'édition, on lui affiche le lien vers la page #}
+    <div class="pull-right">
+        <a class="btn btn-default" href="{{ path('article_show', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.see' | trans | capitalize }}">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        </a>
+        {% if is_granted('delete', article) %}
+            <a class="btn btn-danger print-confirm" href="{{ path('article_delete', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+        {% endif %}
+    </div>
     <div class="row">
         <div class="col-md-12">
             {% include 'AppBundle:forms:articleForm.html.twig' with { 'form' : articleForm } %}

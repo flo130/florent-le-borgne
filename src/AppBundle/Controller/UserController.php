@@ -159,27 +159,4 @@ class UserController extends Controller
             'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
         ));
     }
-
-    /**
-     * Page de suppression d'un compte utilisateur
-     *
-     * @Route("/{name}/delete", name="user_delete")
-     *
-     * @Method({"GET"})
-     *
-     * @param Request $request
-     * @param User $user
-     *
-     * @return Response
-     */
-    public function deleteAction(Request $request, User $user)
-    {
-        /** @see AppBundle\Security\UserVoter */
-        $this->denyAccessUnlessGranted('delete', $user);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
-        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
-        return $this->redirect($this->generateUrl('homepage'));
-    }
 }
