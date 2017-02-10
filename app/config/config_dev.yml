@@ -8,7 +8,9 @@ framework:
     profiler: { only_exceptions: false }
 
 web_profiler:
+    #on active la toolbar symfony
     toolbar: true
+    #si intercept_redirects: true, alors toutes les redirections s'arreterons pour afficher du debug
     intercept_redirects: false
 
 monolog:
@@ -16,6 +18,7 @@ monolog:
         main:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
+            #ici pour changer le niveau de log (debug, info, notice, warning, error, critical, alert, emergency)
             level: debug
             channels: [!event]
         console:
