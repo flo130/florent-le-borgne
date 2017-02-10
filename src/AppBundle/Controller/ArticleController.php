@@ -124,20 +124,29 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
-                //ajoute un flash message si on est pas en ajax
+                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
+                $redirectUrl = $this->generateUrl('article_show', array(
+                    'slug' => $article->getSlug(),
+                ), UrlGeneratorInterface::ABSOLUTE_URL);
                 if (!$request->isXmlHttpRequest()) {
-                    $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
+                    return $this->redirect($redirectUrl);
                 }
             }
         }
         //retourne un JsonResponse si on est en ajax, une Response sinon
         if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
-                'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
-                    'form' => $form->createView(),
-                )),
-            ), $isValid ? 200 : 400);
+            if ($isValid) {
+                return new JsonResponse(array(
+                    'redirect' => $redirectUrl,
+                ), $isValid ? 200 : 400);
+            } else {
+                return new JsonResponse(array(
+                    'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
+                    'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+                        'form' => $form->createView(),
+                    )),
+                ), $isValid ? 200 : 400);
+            }
         } else {
             return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
                 'article' => $article,
@@ -180,8 +189,7 @@ class ArticleController extends Controller
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
                 $redirectUrl = $this->generateUrl('article_show', array(
                     'slug' => $article->getSlug(),
-                ),
-                UrlGeneratorInterface::ABSOLUTE_URL);
+                ), UrlGeneratorInterface::ABSOLUTE_URL);
                 if (!$request->isXmlHttpRequest()) {
                     return $this->redirect($redirectUrl);
                 }
