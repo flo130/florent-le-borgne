@@ -48,7 +48,7 @@
                 {# Pas besoin de charger le bloc des commentaires ici, car il sera chargé en ajax via le script react inclus plus bas #}
                 {# include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comments' : article.articleComments } #}
             </div>
-            {% if is_granted('ROLE_USER') %}
+            {% if is_granted('ROLE_MEMBRE') %}
                 <div class="well">
                     <h4>{{ 'app.leave_a' | trans | capitalize }} {{ 'app.comment' | trans | capitalize }}</h4>
                     {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 

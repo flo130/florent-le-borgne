@@ -30,14 +30,14 @@
         <li{% if route == 'search' %} class="active"{% endif %}>
             <a{% if route != 'search' %} href="{{ path('search') }}"{% endif %}>{{ 'app.article.search' | trans | capitalize }}</a>
         </li>
-        {% if is_granted('ROLE_USER') %}
+        {% if is_granted('ROLE_MEMBRE') %}
             <li{% if route == 'article_create' %} class="active"{% endif %}>
                 <a{% if route != 'article_create' %} href="{{ path('article_create') }}"{% endif %}>{{ 'app.article.create' | trans | capitalize }}</a>
             </li>
         {% endif %}
     </ul>
     <ul class="nav navmenu-nav">
-        {% if is_granted('ROLE_USER') %}
+        {% if is_granted('ROLE_MEMBRE') %}
             <li{% if route == 'user_account' %} class="active"{% endif %}>
                 <a{% if route != 'user_account' %} href="{{ path('user_account', { name: app.user.name }) }}"{% endif %}>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}

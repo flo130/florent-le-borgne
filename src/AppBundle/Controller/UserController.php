@@ -35,12 +35,18 @@ class UserController extends Controller
     {
         //il faut que l'utilisateur soit annonyme
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->get('logger')->notice('Already authenticated user login attempt');
             return $this->redirectToRoute('homepage');
         }
 
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
+        if ($error) {
+            $this->get('logger')->notice('Bad login for '.$lastUsername);
+        } else {
+            $this->get('logger')->notice('Login for '.$lastUsername);
+        }
         $form = $this->createForm(LoginForm::class, ['_username' => $lastUsername]);
 
         //retourne un JsonResponse si on est en ajax, une Response sinon
