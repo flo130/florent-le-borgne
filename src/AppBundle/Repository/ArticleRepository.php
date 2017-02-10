@@ -58,7 +58,7 @@ class ArticleRepository extends EntityRepository
     public function findAllOrderByCreatedDate()
     {
         return $this->createQueryBuilder('article')
-            ->orderBy('article.createdAt', 'DESC')
+            ->orderBy('article.createdAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -76,7 +76,7 @@ class ArticleRepository extends EntityRepository
         $query = $this->createQueryBuilder('article')
             ->setFirstResult(($page - 1) * $maxResults)
             ->setMaxResults($maxResults)
-            ->orderBy('article.createdAt', 'DESC');
+            ->orderBy('article.createdAt', 'ASC');
         $paginator = new Paginator($query);
         return $paginator;
     }
@@ -96,7 +96,7 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults($maxResults)
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::DRAFT_STATUS)
-            ->orderBy('article.createdAt', 'DESC');
+            ->orderBy('article.createdAt', 'ASC');
         $paginator = new Paginator($query);
         return $paginator;
     }
@@ -116,7 +116,7 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults($maxResults)
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::PUBLISHED_STATUS)
-            ->orderBy('article.publishedAt', 'DESC');
+            ->orderBy('article.publishedAt', 'ASC');
         $paginator = new Paginator($query);
         return $paginator;
     }
@@ -133,7 +133,7 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('article')
             ->andWhere('article.articleSubCategory = :idSubCategory')
             ->setParameter('idSubCategory', $idSubCategory)
-            ->orderBy('article.createdAt', 'DESC')
+            ->orderBy('article.createdAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -148,7 +148,7 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('article')
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::DRAFT_STATUS)
-            ->orderBy('article.createdAt', 'DESC')
+            ->orderBy('article.createdAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -167,7 +167,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('published', Article::PUBLISHED_STATUS)
             ->setMaxResults($nb)
             ->setFirstResult(0)
-            ->orderBy('article.createdAt', 'DESC')
+            ->orderBy('article.createdAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -182,7 +182,7 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('article')
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::PUBLISHED_STATUS)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -200,7 +200,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('published', Article::PUBLISHED_STATUS)
             ->setMaxResults($nb)
             ->setFirstResult(0)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -219,7 +219,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('published', Article::PUBLISHED_STATUS)
             ->andWhere('article.articleCategory = :idCategory')
             ->setParameter('idCategory', $idCategory)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -238,7 +238,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('published', Article::PUBLISHED_STATUS)
             ->andWhere('article.articleSubCategory = :idSubCategory')
             ->setParameter('idSubCategory', $idSubCategory)
-            ->orderBy('article.publishedAt', 'DESC')
+            ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -255,6 +255,7 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('article')
             ->andWhere('article.user = :idUser')
             ->setParameter('idUser', $idUser)
+            ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();
     }
