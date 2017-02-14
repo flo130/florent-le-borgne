@@ -7,102 +7,86 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\ArticleCategory;
-use AppBundle\Form\ArticleCategoryCreateForm;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\Entity\ArticleSubCategory;
+use AppBundle\Form\ArticleSubCategoryCreateForm;
 
 /**
- * Cette class sert à l'admin des categories
+ * Cette class sert à l'admin des sous categories
  * 
  * @Security("is_granted('ROLE_ADMIN')")
  * 
- * @Route("/admin/category")
+ * @Route("/admin/sub-category")
  */
-class ArticleCategoryController extends Controller
+class ArticleSubCategoryController extends Controller
 {
-    /**
-     * Page de recherche d'une categorie
-     *
-     * @Route("/", name="admin_category"))
-     *
-     * @Method({"GET"})
-     */
-    public function CategoryAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        return $this->render('AppBundle:pages/admin:articleCategoryPage.html.twig', array(
-            'articleCategories' => $em->getRepository('AppBundle:ArticleCategory')->findAll(),
-        ));
-    }
-
     /**
      * Page de renommage d'une categorie
      *
-     * @Route("/rename/{id}", name="admin_category_rename"))
+     * @Route("/rename/{id}", name="admin_sub_category_rename"))
      *
      * @Method({"POST"})
      *
      * @param Request $request
-     * @param ArticleCategory $articleCategory
+     * @param ArticleSubCategory $articleSubCategory
      *
      * @return Response
      */
-    public function RenameAction(Request $request, ArticleCategory $articleCategory)
+    public function RenameAction(Request $request, ArticleSubCategory $articleSubCategory)
     {
-        $articleCategory->setArticleCategory($request->get('category-name', null));
+        $articleSubCategory->setArticleSubCategory($request->get('sub-category-name', null));
         $em = $this->getDoctrine()->getManager();
-        $em->persist($articleCategory);
+        $em->persist($articleSubCategory);
         $em->flush();
-        $this->get('logger')->info('Category modification', array(
-            'label' => $articleCategory->getArticleCategory()
+        $this->get('logger')->info('SubCategory modification', array(
+            'label' => $articleSubCategory->getArticleCategory()
         ));
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
         return $this->redirect($this->generateUrl('admin_category'));
     }
 
     /**
-     * Page de suppression d'une categorie
+     * Page de suppression d'une sous-categorie
      *
-     * @Route("/delete/{id}", name="admin_category_delete"))
+     * @Route("/delete/{id}", name="admin_sub_category_delete"))
      *
      * @Method({"GET"})
      *
      * @param Request $request
-     * @param ArticleCategory $articleCategory
+     * @param ArticleSubCategory $articleSubCategory
      *
      * @return Response
      */
-    public function DeleteAction(Request $request, ArticleCategory $articleCategory)
+    public function DeleteAction(Request $request, ArticleSubCategory $articleSubCategory)
     {
         $em = $this->getDoctrine()->getManager();
         $this->get('logger')->notice('Category suppression', array(
-            'label' => $articleCategory->getArticleCategory()
+            'label' => $articleSubCategory->getArticleSubCategory(),
         ));
-        $em->remove($articleCategory);
+        $em->remove($articleSubCategory);
         $em->flush();
         $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
         return $this->redirect($this->generateUrl('admin_category'));
     }
-
+    
     /**
      * Page de creation d'une categorie
      *
-     * @Route("/create", name="admin_category_create"))
+     * @Route("/create", name="admin_sub_category_create"))
      *
      * @Method({"GET", "POST"})
      */
     public function CreateAction(Request $request)
     {
-        $form = $this->createForm(ArticleCategoryCreateForm::class);
+        $form = $this->createForm(ArticleSubCategoryCreateForm::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $isValid = $form->isValid();
             if ($isValid) {
-                $articleCategory = $form->getData();
+                $articleSubCategory = $form->getData();
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($articleCategory);
+                $em->persist($articleSubCategory);
                 $em->flush();
-                $this->get('logger')->info('ArticleCategory creation', array('label' => $articleCategory->getArticleCategory()));
+                $this->get('logger')->info('ArticleSubCategory creation', array('label' => $articleSubCategory->getArticleSubCategory()));
                 //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
                 $redirectUrl = $this->generateUrl('admin_category', array(), UrlGeneratorInterface::ABSOLUTE_URL);
@@ -115,18 +99,18 @@ class ArticleCategoryController extends Controller
         if ($request->isXmlHttpRequest()) {
             if ($isValid) {
                 return new JsonResponse(array(
-                        'redirect' => $redirectUrl,
+                    'redirect' => $redirectUrl,
                 ), 200);
             } else {
                 return new JsonResponse(array(
-                    'form' => $this->renderView('AppBundle:forms:articleCategoryForm.html.twig', array(
+                    'form' => $this->renderView('AppBundle:forms:articleSubCategoryForm.html.twig', array(
                         'form' => $form->createView(),
                     )),
                 ), 400);
             }
         } else {
-            return $this->render('AppBundle:pages/admin:articleCategoryCreatePage.html.twig', array(
-                'articleCategoryForm' => $form->createView(),
+            return $this->render('AppBundle:pages/admin:articleSubCategoryCreatePage.html.twig', array(
+                'articleSubCategoryForm' => $form->createView(),
             ));
         }
     }

@@ -3,9 +3,11 @@
         - articles : array of Article object
 #}
 {% extends '::base.html.twig' %}
+
 {% block title %}
     {{ parent() }} - {{ 'app.admin.search.category' | trans | capitalize }}
 {% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -20,16 +22,47 @@
         </div>
     </div>
     <h1>{{ 'app.admin.search.category' | trans | capitalize }}</h1>
-    <ul>
-        {% for articleCategory in articleCategories %}
-            <li>
-                {{ articleCategory.articleCategory }}
-                <ul>
-                    {% for articleSubCategory in articleCategory.articleSubCategories %}
-                        <li>{{ articleSubCategory.articleSubCategory }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
+        <a class="btn btn-default" href="{{ path('admin_category_create') }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.create_category' | trans | capitalize }}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+        <ul>
+            {% for articleCategory in articleCategories %}
+                <li>
+                    <form class="form-inline" action="{{ path('admin_category_rename', { 'id' : articleCategory.id }) }}" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="category-name" value="{{ articleCategory.articleCategory }}" placeholder="{{ 'app.update_category' | trans | capitalize }} {{ articleCategory.articleCategory }}">
+                        </div>
+                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'app.ok' | trans | capitalize }}">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </button>
+                        &nbsp;
+                        <a class="btn btn-danger print-confirm" href="{{ path('admin_category_delete', { 'id' : articleCategory.id }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                        &nbsp;
+                        <a class="btn btn-default" href="{{ path('admin_sub_category_create') }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.create_sub_category' | trans | capitalize }}">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </a>
+                    </form>
+                    <ul>
+                        {% for articleSubCategory in articleCategory.articleSubCategories %}
+                            <li>
+                                <form class="form-inline" action="{{ path('admin_sub_category_rename', { 'id' : articleSubCategory.id }) }}" method="POST">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="sub-category-name" value="{{ articleSubCategory.articleSubCategory }}" placeholder="{{ 'app.update_sub_category' | trans | capitalize }} {{ articleSubCategory.articleSubCategory }}">
+                                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'app.ok' | trans | capitalize }}">
+                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                        </button>
+                                        &nbsp;
+                                        <a class="btn btn-danger print-confirm" href="{{ path('admin_sub_category_delete', { 'id' : articleSubCategory.id }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
 {% endblock %}

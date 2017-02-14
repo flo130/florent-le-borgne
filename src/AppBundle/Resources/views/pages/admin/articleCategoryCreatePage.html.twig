@@ -1,0 +1,30 @@
+{#
+    params : 
+        - articleForm : ArticleCategoryForm object
+#}
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.search.category' | trans | capitalize }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.admin.search.category' | trans | capitalize }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <h1>{{ 'app.admin.search.category' | trans | capitalize }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'AppBundle:forms:articleCategoryForm.html.twig' with { 'form' : articleCategoryForm } %}
+        </div>
+    </div>
+{% endblock %}

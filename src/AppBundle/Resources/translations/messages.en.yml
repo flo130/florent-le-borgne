@@ -26,6 +26,10 @@ app:
     read_more: read more
     create_article: create an article
     update_article: update an article
+    create_category: create category
+    update_category: update category
+    create_sub_category: create sub category
+    update_sub_category: update sub category
     name: name
     email: email
     role: role
