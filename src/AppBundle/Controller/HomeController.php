@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Form\SearchForm;
+use AppBundle\Entity\Category;
 
 /**
  * Cette class sert à afficher la page d'accueil du site
@@ -35,6 +36,32 @@ class HomeController extends Controller
     public function indexAction(Request $request, $page=1)
     {
         $em = $this->getDoctrine()->getManager();
+
+        
+        
+        $food = new Category();
+        $food->setTitle('Food');
+        
+        $fruits = new Category();
+        $fruits->setTitle('Fruits');
+        $fruits->setParent($food);
+        
+        $vegetables = new Category();
+        $vegetables->setTitle('Vegetables');
+        $vegetables->setParent($food);
+        
+        $carrots = new Category();
+        $carrots->setTitle('Carrots');
+        $carrots->setParent($vegetables);
+        
+        $em->persist($food);
+        $em->persist($fruits);
+        $em->persist($vegetables);
+        $em->persist($carrots);
+        $em->flush();
+        
+        
+
 
         //en ajax ou pas, on a toujours besoin de la pagination des articles
         $pagination = array(
