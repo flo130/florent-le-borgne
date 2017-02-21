@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Doctrine;
+namespace AppBundle\Listener;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -31,31 +31,10 @@ class HashPasswordListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (! $entity instanceof User) {
+        if (!$entity instanceof User) {
             return;
         }
-
         $this->encodePassword($entity);
-    }
-
-    /**
-     * Permet l'encodage d'un mot de passe
-     * 
-     * @param User $entity
-     * 
-     * @return void || null
-     */
-    private function encodePassword(User $user)
-    {
-        if (! $user->getPlainPassword()) {
-            return;
-        }
-
-        $encoded = $this->passwordEncoder->encodePassword(
-            $user,
-            $user->getPlainPassword()
-        );
-        $user->setPassword($encoded);
     }
 
     /**
@@ -68,15 +47,32 @@ class HashPasswordListener
     public function preUpdate(LifecycleEventArgs $args)
     {
         $user = $args->getEntity();
-        if (! $user instanceof User) {
+        if (!$user instanceof User) {
             return;
         }
-
         $this->encodePassword($user);
-
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($user));
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $user);
+    }
+
+    /**
+     * Permet l'encodage d'un mot de passe
+     *
+     * @param User $entity
+     *
+     * @return void || null
+     */
+    private function encodePassword(User $user)
+    {
+        if (!$user->getPlainPassword()) {
+            return;
+        }
+        $encoded = $this->passwordEncoder->encodePassword(
+            $user,
+            $user->getPlainPassword()
+        );
+        $user->setPassword($encoded);
     }
 }

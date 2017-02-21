@@ -11,10 +11,16 @@ class LoadFixtures implements FixtureInterface
 {
     /**
      * Appeler lors du load des fixtures
+     * Permet de dire quels fichiers Fixtures, avec quels provider utiliser pour injecter les données
      * 
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
+        Fixtures::load(
+            __DIR__.'/categoryFixtures.yml',
+            $manager,
+            ['providers' => [$this]]
+        );
         Fixtures::load(
             __DIR__.'/userFixtures.yml',
             $manager,
@@ -22,6 +28,11 @@ class LoadFixtures implements FixtureInterface
         );
         Fixtures::load(
             __DIR__.'/articleFixtures.yml',
+            $manager,
+            ['providers' => [$this]]
+        );
+        Fixtures::load(
+            __DIR__.'/articleCommentFixtures.yml',
             $manager,
             ['providers' => [$this]]
         );

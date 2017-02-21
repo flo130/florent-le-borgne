@@ -1,13 +1,13 @@
 <?php
 namespace AppBundle\Entity;
 
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\ArticleComment;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class servant à gérer nos utilisateurs.
@@ -113,11 +113,22 @@ class User implements UserInterface, \Serializable
     private $firstLogin;
 
     /**
-     * @var \DateTime $createdAt
+     * @var DateTime
+     * 
+     * @Gedmo\Timestampable(on="create")
      *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var DateTime
+     * 
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
 
     public function __construct()
@@ -161,14 +172,6 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         return $this->roles;
-
-//         $roles = $this->roles;
-//         //tous les utilisateur doivent au minimum avoir un role.
-//         //ici tous le monde aura le role ROLE_USER
-//         if (!in_array('ROLE_USER', $roles)) {
-//             $roles[] = 'ROLE_USER';
-//         }
-//         return $roles;
     }
 
     public function getSalt()
@@ -249,14 +252,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * @param array $roles
      */
     public function setRoles(array $roles)
@@ -316,9 +311,30 @@ class User implements UserInterface, \Serializable
         $this->firstLogin = $firstLogin;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /** 
@@ -340,7 +356,7 @@ class User implements UserInterface, \Serializable
             $this->createdAt,
         ));
     }
-    
+
     /** 
      * @see \Serializable::unserialize()
      */

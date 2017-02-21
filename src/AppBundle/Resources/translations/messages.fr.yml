@@ -59,7 +59,7 @@ app:
         summary: summary
         article: article
         article_subcategory: Catégorie d'article
-        article_category: Sous-catégorie d'article
+        article_category: catégorie d'article
         choose_subcategory: choisissez une sous-catégorie
         choose_category: choisissez une catégorie
         publish_article: publier cet article

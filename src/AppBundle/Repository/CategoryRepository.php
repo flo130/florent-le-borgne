@@ -1,16 +1,18 @@
 <?php
 namespace AppBundle\Repository;
 
-use Gedmo\Tree\Traits\Repository\ORM\NestedTreeRepositoryTrait;
+use Doctrine\ORM\EntityRepository;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
-class CategoryRepository extends EntityRepository
+class CategoryRepository extends NestedTreeRepository
 {
-    //ici on déclare le trait correspondant à la methode de tree définit dans l'entity : @Gedmo\Tree(type="nested")
-    //NestedTreeRepositoryTrait ou MaterializedPathRepositoryTrait ou ClosureTreeRepositoryTrait
-    use NestedTreeRepositoryTrait; 
-
-    public function __construct(EntityManager $em, ClassMetadata $class) {
-        parent::__construct($em, $class);
-        $this->initializeTreeRepository($em, $class);
-    }
+	/**
+	 * Récupère toutes les catégories triés par ordre alphabétique
+	 *
+	 * @return QueryBuilder
+	 */
+	public function createAlphabeticalQueryBuilder()
+	{
+		return $this->childrenQueryBuilder();
+	}
 }

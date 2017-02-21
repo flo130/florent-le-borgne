@@ -122,23 +122,6 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
-     * Retourne la liste des articles associés à une sous-catégorie, triés par date de création
-     * 
-     * @param int $idSubCategory
-     * 
-     * @return Article[]
-     */
-    public function findBySubCategoryOrderByCreatedDate($idSubCategory)
-    {
-        return $this->createQueryBuilder('article')
-            ->andWhere('article.articleSubCategory = :idSubCategory')
-            ->setParameter('idSubCategory', $idSubCategory)
-            ->orderBy('article.createdAt', 'ASC')
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
      * Retourne la liste des articles en brouillon, triés par date de creation
      * 
      * @return Article[]
@@ -217,27 +200,8 @@ class ArticleRepository extends EntityRepository
         return $this->createQueryBuilder('article')
             ->andWhere('article.status = :published')
             ->setParameter('published', Article::PUBLISHED_STATUS)
-            ->andWhere('article.articleCategory = :idCategory')
+            ->andWhere('article.category = :idCategory')
             ->setParameter('idCategory', $idCategory)
-            ->orderBy('article.publishedAt', 'ASC')
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * Retourne tous les articles publiés, liés à une sous-catégorie, triés par date de publication
-     * 
-     * @param int $idCategory
-     * 
-     * @return Article[]
-     */
-    public function findPublishedBySubCategoryOrderByPublishedDate($idSubCategory)
-    {
-        return $this->createQueryBuilder('article')
-            ->andWhere('article.status = :published')
-            ->setParameter('published', Article::PUBLISHED_STATUS)
-            ->andWhere('article.articleSubCategory = :idSubCategory')
-            ->setParameter('idSubCategory', $idSubCategory)
             ->orderBy('article.publishedAt', 'ASC')
             ->getQuery()
             ->execute();

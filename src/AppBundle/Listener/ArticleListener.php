@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Doctrine;
+namespace AppBundle\Listener;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -17,7 +17,7 @@ class ArticleListener
 
 
     /**
-     * @param FileUploader $uploader
+     * @param FileUploader $uploaderListener
      * @param string $targetPath
      */
     public function __construct(FileUploader $uploader)
@@ -35,15 +35,9 @@ class ArticleListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $article = $args->getEntity();
-        if (! $article instanceof Article) {
+        if (!$article instanceof Article) {
             return;
         }
-
-        if (!$article->getCreatedAt()) {
-            $article->setCreatedAt(new \DateTime());
-        }
-
-        $article->setUpdatedAt(new \DateTime());
         $this->uploadFile($article);
     }
 
@@ -57,23 +51,17 @@ class ArticleListener
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $article = $args->getEntity();
-        if (! $article instanceof Article) {
+        if (!$article instanceof Article) {
             return;
         }
-
         //renseigne la date de publication de l'article
         if ($args->hasChangedField('status')) {
             if ($args->getNewValue('status') == Article::PUBLISHED_STATUS) {
                 $article->setPublishedAt(new \DateTime());
             }
         }
-
-        //renseigne la date de mise à jour de l'article
-        $article->setUpdatedAt(new \DateTime());
-
         //upload les potentielles images
         $this->uploadFile($article);
-
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($article));
@@ -91,10 +79,9 @@ class ArticleListener
     {
         $file = $article->getImage();
         //on upload seulement les nouveaux fichiers
-        if (! $file instanceof UploadedFile) {
+        if (!$file instanceof UploadedFile) {
             return;
         }
-
         $fileName = $this->uploader->upload($file);
         $article->setImage($fileName);
     }

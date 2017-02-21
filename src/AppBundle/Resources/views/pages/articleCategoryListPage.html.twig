@@ -6,11 +6,11 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - {{ articleCategory.articleCategory }}
+    {{ parent() }} - {{ currentCategory.title }}
 {% endblock %}
 
 {% block description %}
-    {{ parent() }} - {{ articleCategory.articleCategory }}
+    {{ parent() }} - {{ currentCategory.title }}
 {% endblock %}
 
 {% block body %}
@@ -20,15 +20,19 @@
                 <li>
                     <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
-                <li class="active">
-                    {{ articleCategory.articleCategory }}
-                </li>
+                {% for category in categoriesTree %}
+                    {%  if loop.last %}
+                        <li class="active">{{ category.title }}</li>
+                    {% else %}
+                        <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
             </ol>
         </div>
     </div>
     <div class="row">
         <section class="col-md-8">
-            <h1>Articles {{ articleCategory.articleCategory }}</h1>
+            <h1>{{ 'app.articles' | trans | capitalize }} - {{ currentCategory.title | capitalize }}</h1>
             {% for article in articles %}
                 <div class="row">
                     <div class="col-md-12">
@@ -43,12 +47,20 @@
                 {{ 'app.no_data.article' | trans | capitalize }}
                 <hr>
             {% endfor %}
-        </div>
-        <section class="col-md-4">
-            <div class="well">
+        </section>
+        <div class="col-md-4">
+            <section class="well">
+                <h4>{{ 'app.search' | trans | capitalize }}</h4>
+                {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
+            </section>
+            <section class="well">
                 <h4>{{ 'app.categories' | trans | capitalize }}</h4>
-                {% include 'AppBundle:blocs:articleCategories.html.twig' with { 'categories' : categories } %}
-            </div>
+                <div class="list-group-tree">
+                    <div class="list-group list-group-root well">
+                        {{ allCategoriesTree | raw }}
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 {% endblock %}

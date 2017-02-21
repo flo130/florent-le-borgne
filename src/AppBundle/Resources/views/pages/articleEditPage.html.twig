@@ -20,12 +20,9 @@
                 <li>
                     <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
-                <li>
-                    <a href="{{ path('article_by_category', { 'id' : article.articleCategory.id }) }}">{{ article.articleCategory.articleCategory }}</a>
-                </li>
-                <li>
-                    <a href="{{ path('article_by_sub_category', { 'id' : article.articleSubCategory.id }) }}">{{ article.articleSubCategory.articleSubCategory }}</a>
-                </li>
+                {% for category in categoriesTree %}
+                    <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title }}</a></li>
+                {% endfor %}
                 <li class="active">
                     {{ 'app.edit' | trans | capitalize }} - {{ article.title }}
                 </li>

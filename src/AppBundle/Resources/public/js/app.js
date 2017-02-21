@@ -20,12 +20,26 @@ $(window).on('load', function() {
     manageAjaxPagination();
     manageTableSearch();
     manageHighlightBlock();
+    manageMenuTree();
 });
 
 
 //////////////////////
 // Fonctions utiles //
 //////////////////////
+/**
+ * Permet la gestion des fleches d'un menu type "arbre" utilisant les icones Bootstrap
+ * 
+ * @return void
+ */
+function manageMenuTree() {
+    $('.list-group-tree .list-group-item').on('click', function() {
+        $('.glyphicon', this)
+            .toggleClass('glyphicon-chevron-right')
+            .toggleClass('glyphicon-chevron-down');
+    });
+}
+
 /**
  * Permet la gestion de la coloration syntaxique des blocs de code
  * 

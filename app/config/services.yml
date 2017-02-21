@@ -10,54 +10,42 @@ services:
         autowire: true
 
     # Ecoute une requete doctrine et hash le mot de passe utilisateur
-    # s'il s'agit d'une requete d'enregistrement d'utilisateur
+    # ssi il s'agit d'une requete d'enregistrement d'utilisateur
     app.doctrine.hash_password_listener:
-        class: AppBundle\Doctrine\HashPasswordListener
+        class: AppBundle\Listener\HashPasswordListener
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    # Ecoute une requete doctrine et mets a jour certaines données d'un article
+    # Ecoute une requete doctrine et met à jour certaines données d'un article
     app.doctrine.article_listener:
-        class: AppBundle\Doctrine\ArticleListener
+        class: AppBundle\Listener\ArticleListener
         arguments: ['@app.file_uploader']
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    # Ecoute une requete doctrine et mets a jour certaines données d'une categorie
-    app.doctrine.article_category_listener:
-        class: AppBundle\Doctrine\ArticleCategoryListener
-        autowire: true
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
-    # Ecoute une requete doctrine et mets a jour certaines données d'une sous-categorie
-    app.doctrine.article_sub_category_listener:
-        class: AppBundle\Doctrine\ArticleSubCategoryListener
-        autowire: true
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
-    # Ecoute une requete doctrine et mets a jour certaines données d'un utilisateur
+    # Ecoute une requete doctrine et met à jour certaines données d'un utilisateur
     app.doctrine.user_listener:
-        class: AppBundle\Doctrine\UserListener
+        class: AppBundle\Listener\UserListener
         arguments: ['@app.file_uploader']
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    # Ecoute un login utilisateur pour faire des choses juste apres (va chercher a appeler la method "onSecurityInteractiveLogin" dans le listener)
+    # Ecoute un login utilisateur pour faire des choses juste apres 
+    # (va chercher a appeler la method "onSecurityInteractiveLogin" dans le listener)
     app.listener.login_listener:
         class: AppBundle\Listener\LoginListener
         arguments: ['@security.token_storage', '@doctrine']
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
 
-    # Voter Symfony pour les articles (permettant de savoir qui a le droit de faire quoi)
+    # Voter Symfony pour les articles 
+    # (permettant de savoir qui a le droit de faire quoi)
     app.article_voter:
         class: AppBundle\Security\ArticleVoter
         arguments: ['@security.access.decision_manager']
@@ -65,7 +53,8 @@ services:
         tags:
             - { name: security.voter }
 
-    # Voter Symfony pour les utilisateurs (permettant de savoir qui a le droit de faire quoi)
+    # Voter Symfony pour les utilisateurs 
+    # (permettant de savoir qui a le droit de faire quoi)
     app.user_voter:
         class: AppBundle\Security\UserVoter
         arguments: ['@security.access.decision_manager']
@@ -78,7 +67,8 @@ services:
         class: AppBundle\Service\FileUploader
         arguments: ['%uploads_dir%']
 
-    # Ici on déclare ce formulaire en particulier car il faut lui passer doctrine. Les autres se gerent tout seul
+    # Ici on déclare ce formulaire en particulier car il faut lui passer doctrine.
+    # Les autres se gerent tout seul
     app.form.article_comment:
         class: AppBundle\Form\ArticleCommentForm
         arguments: ['@doctrine']
@@ -86,6 +76,29 @@ services:
             - { name: form.type }
 
     # Ici on va surcharger le comportement par défaut de symfony lors du login (pas de redirection pour l'ajax par exemple)
-    #cf : http://symfony.com/doc/current/security/target_path.html
+    # cf : http://symfony.com/doc/current/security/target_path.html
     security.exception_listener.class:
         class: AppBundle\Security\ExceptionListener
+
+    # Ici on défini le listener DoctrineExtensionListener
+    # cf : https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/symfony2.md
+    extension.listener:
+        class: AppBundle\Listener\DoctrineExtensionListener
+        calls:
+            - [ setContainer, [ "@service_container" ] ]
+        tags:
+            # translatable sets locale after router processing
+            #- { name: kernel.event_listener, event: kernel.request, method: onLateKernelRequest, priority: -10 }
+            # loggable hooks user username if one is in security context
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            # translatable sets locale such as default application locale before command execute
+            #- { name: kernel.event_listener, event: console.command, method: onConsoleCommand, priority: -10 }
+
+    # Ici on défini le listener Loggable
+    # cf : https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/symfony2.md
+    gedmo.listener.loggable:
+        class: Gedmo\Loggable\LoggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]

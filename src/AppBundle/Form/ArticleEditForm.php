@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -9,11 +8,10 @@ use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use AppBundle\Entity\ArticleSubCategory;
-use AppBundle\Entity\ArticleCategory;
-use AppBundle\Repository\ArticleCategoryRepository;
-use AppBundle\Repository\ArticleSubCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Article;
+use AppBundle\Repository\CategoryRepository;
 
 class ArticleEditForm extends AbstractType
 {
@@ -41,21 +39,16 @@ class ArticleEditForm extends AbstractType
                 'config_name' => 'article_config',
                 'label' => 'app.form.article',
             ))
-            ->add('articleSubCategory', EntityType::class, array(
-                'label' => 'app.form.article_subcategory',
-                'placeholder' => 'app.form.choose_subcategory',
-                'class' => ArticleSubCategory::class,
-                'query_builder' => function (ArticleSubCategoryRepository $repo) {
-                    return $repo->createAlphabeticalQueryBuilder();
-                }
-            ))
-            ->add('articleCategory', EntityType::class, array(
+            ->add('category', EntityType::class, array(
                 'label' => 'app.form.article_category',
                 'placeholder' => 'app.form.choose_category',
-                'class' => ArticleCategory::class,
-                'query_builder' => function (ArticleCategoryRepository $repo) {
-                    return $repo->createAlphabeticalQueryBuilder();
-                }
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $repo) {
+                    return $repo->createQueryBuilder('c')
+                        ->orderBy('c.root', 'ASC')
+                        ->addOrderBy('c.lft', 'ASC');
+                },
+                'choice_label' => 'indentedTitle',
             ))
             ->add('status', CheckboxType::class, array(
                 'label' => 'app.form.publish_article',

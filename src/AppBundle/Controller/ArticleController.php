@@ -9,12 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Article;
-use AppBundle\Entity\ArticleCategory;
-use AppBundle\Entity\ArticleSubCategory;
+use AppBundle\Entity\Category;
 use AppBundle\Form\ArticleCommentForm;
 use AppBundle\Form\ArticleEditForm;
 use AppBundle\Form\ArticleCreateForm;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\Form\SearchForm;
 
 /**
  * Cette class sert à gérer les articles du site (pas en mode admin)
@@ -26,7 +26,7 @@ class ArticleController extends Controller
     /**
      * Page détail d'un article
      * 
-     * @Route("/show/{slug}", name="article_show"))
+     * @Route("/{slug}", name="article_show"))
      * 
      * @Method({"GET"})
      * 
@@ -35,6 +35,11 @@ class ArticleController extends Controller
     public function ShowAction(Article $article)
     {
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
+            //getPath : permet de récupérer tous les parents de la catégorie de l'article
+            'categories' => $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Category')
+                ->getPath($article->getCategory()),
             'commentForm' => $this->createForm(ArticleCommentForm::class)->createView(),
             'article' => $article,
         ));
@@ -43,44 +48,55 @@ class ArticleController extends Controller
     /**
      * Récupère tous les articles appartenants à une catégorie
      * 
-     * @Route("/category/{id}", name="article_by_category"))
+     * @Route("/category/{slug}", name="article_by_category"))
      * 
      * @Method({"GET"})
      * 
-     * @param ArticleCategory $articleCategory
+     * @param Category $category
      * 
      * @return Response
      */
-    public function ByCategoryAction(ArticleCategory $articleCategory)
+    public function ByCategoryAction(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-        return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
-            'articleCategory' => $articleCategory,
-            'articles' => $em->getRepository('AppBundle:Article')
-                ->findPublishedByCategoryOrderByPublishedDate($articleCategory->getId()),
-            'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
-        ));
-    }
+        $parent = 0;
+        $options = array(
+            'decorate' => true,
+            'rootOpen' => function($tree) use (&$parent) {
+                if (count($tree) && ($tree[0]['lvl'] != 0)) {
+                    return '<div class="list-group collapse" id="item-' . $parent . '">';
+                }
+            },
+            'rootClose' => function($child) {
+                if (count($child) && ($child[0]['lvl'] != 0)) {
+                    return '</div>';
+                }
+            },
+            'childOpen' => '',
+            'childClose' => '',
+            'nodeDecorator' => function($node) use (&$parent) {
+                //cherche les élements qui ont des enfants pour leur appliquer un comportement particulier
+                $nbChilds = count($node['__children']);
+                if ($nbChilds > 0) {
+                    $parent = $node['id'];
+                    return '<a href="#item-' . $parent . '" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>' . $node['title'] . '<span class="badge">' . $nbChilds . '</span></a>';
+                } else {
+                    return '<a href="' . $this->generateUrl('article_by_category', array('slug' => $node['slug'])) . '" class="list-group-item">' . $node['title'] . '</a>';
+                }
+            },
+        );
+        $allCategoriesTree = $em->getRepository('AppBundle:Category')->childrenHierarchy(
+            null,
+            false,
+            $options
+        );
 
-    /**
-     * Récupère tous les articles appartenants à une sous-catégorie
-     *
-     * @Route("/sub-category/{id}", name="article_by_sub_category"))
-     * 
-     * @Method({"GET"})
-     * 
-     * @param ArticleSubCategory $articleSubCategory
-     * 
-     * @return Response
-     */
-    public function BySubCategoryAction(ArticleSubCategory $articleSubCategory)
-    {
-        $em = $this->getDoctrine()->getManager();
-        return $this->render('AppBundle:pages:articleSubCategoryListPage.html.twig', array(
-            'articleSubCategory' => $articleSubCategory,
-            'articles' => $em->getRepository('AppBundle:Article')
-                ->findPublishedBySubCategoryOrderByPublishedDate($articleSubCategory->getId()),
-            'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
+        return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
+            'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
+            'currentCategory' => $category,
+            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoryOrderByPublishedDate($category->getId()),
+            'allCategoriesTree' => $allCategoriesTree,
+            'searchForm' => $this->createForm(SearchForm::class)->createView(),
         ));
     }
 
@@ -111,6 +127,7 @@ class ArticleController extends Controller
         //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony cf. AppBundle\Security\ArticleVoter)
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('edit', $article);
+        $em = $this->getDoctrine()->getManager();
         $image = $article->getImage();
         $form = $this->createForm(ArticleEditForm::class, $article);
         $form->handleRequest($request);
@@ -121,7 +138,6 @@ class ArticleController extends Controller
                 if (!$article->getImage()) {
                     $article->setImage($image);
                 }
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
                 $this->get('logger')->info('Article modification', array('title' => $article->getTitle()));
@@ -152,6 +168,7 @@ class ArticleController extends Controller
             return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
                 'article' => $article,
                 'articleForm' => $form->createView(),
+                'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
             ));
         }
     }

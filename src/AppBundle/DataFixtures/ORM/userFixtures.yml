@@ -11,7 +11,7 @@ AppBundle\Entity\User:
         roles: <getMemberRole()>
         avatar: 02b126e6ea583541c6f64f8c3a6347d4.jpeg
 
-    user_{2..120}:
+    user_{2..20}:
         email: <email()>
         plainPassword: password
         roles: <getRandomRole()>

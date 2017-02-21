@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Form\SearchForm;
 use AppBundle\Entity\Category;
+use AppBundle\AppBundle;
 
 /**
  * Cette class sert à afficher la page d'accueil du site
@@ -33,35 +34,9 @@ class HomeController extends Controller
      * 
      * @return Response || JsonResponse
      */
-    public function indexAction(Request $request, $page=1)
+    public function homeAction(Request $request, $page=1)
     {
         $em = $this->getDoctrine()->getManager();
-
-        
-        
-        $food = new Category();
-        $food->setTitle('Food');
-        
-        $fruits = new Category();
-        $fruits->setTitle('Fruits');
-        $fruits->setParent($food);
-        
-        $vegetables = new Category();
-        $vegetables->setTitle('Vegetables');
-        $vegetables->setParent($food);
-        
-        $carrots = new Category();
-        $carrots->setTitle('Carrots');
-        $carrots->setParent($vegetables);
-        
-        $em->persist($food);
-        $em->persist($fruits);
-        $em->persist($vegetables);
-        $em->persist($carrots);
-        $em->flush();
-        
-        
-
 
         //en ajax ou pas, on a toujours besoin de la pagination des articles
         $pagination = array(
@@ -69,6 +44,45 @@ class HomeController extends Controller
             'pages_count' => ceil($em->getRepository('AppBundle:Article')->countPublished() / self::MAX_ARTICLES_PER_PAGE),
             'page_name' => 'homepagepaginate',
             'ajax_callback' => true,
+        );
+
+        //génère un arbre des catégories 
+        //on construit les options : 
+        //    "rootOpen / rootClose" : va encadrer tous les enfants d'un parents
+        //    "nodeDecorator" : permet de personnaliser l'élément
+        //https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/tree.md
+        //https://jsfiddle.net/ann7tctp/
+        $repo = $em->getRepository('AppBundle:Category');
+        $parent = 0;
+        $options = array(
+            'decorate' => true,
+            'rootOpen' => function($tree) use (&$parent) { 
+                if (count($tree) && ($tree[0]['lvl'] != 0)) {
+                    return '<div class="list-group collapse" id="item-' . $parent . '">';
+                }
+            },
+            'rootClose' => function($child) { 
+                if (count($child) && ($child[0]['lvl'] != 0)) {
+                    return '</div>';
+                }
+            },
+            'childOpen' => '',
+            'childClose' => '',
+            'nodeDecorator' => function($node) use (&$parent) {
+                //cherche les élements qui ont des enfants pour leur appliquer un comportement particulier
+                $nbChilds = count($node['__children']);
+                if ($nbChilds > 0) {
+                    $parent = $node['id'];
+                    return '<a href="#item-' . $parent . '" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>' . $node['title'] . '<span class="badge">' . $nbChilds . '</span></a>';
+                } else {
+                   return '<a href="' . $this->generateUrl('article_by_category', array('slug' => $node['slug'])) . '" class="list-group-item">' . $node['title'] . '</a>';
+                }
+            },
+        );
+        $htmlTree = $repo->childrenHierarchy(
+            null,
+            false,
+            $options
         );
 
         //si on appel la home page en ajax, c'est qu'on veut raffraichir la liste des articles seulement
@@ -87,11 +101,10 @@ class HomeController extends Controller
             return $this->render('AppBundle:pages:homePage.html.twig', array(
                 'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByPublishedDate($page, self::MAX_ARTICLES_PER_PAGE),
                 'articlesPagination' => $pagination,
-                'categories' => $em->getRepository('AppBundle:ArticleCategory')->findAllOrderByCreatedDate(),
+                'categoriesTree' => $htmlTree,
                 'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDate(self::NB_LAST_ARTICLE),
                 'searchForm' => $this->createForm(SearchForm::class)->createView(),
             ));
         }
-
     }
 }

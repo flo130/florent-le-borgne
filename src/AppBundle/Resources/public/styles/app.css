@@ -1,14 +1,42 @@
-/* utile car la navbar est en position fixed : elle ne bouge pas */
+/* utile car la navbar est en position fixed : elle ne bouge pas, on décale donc toute la page de la taille de cette navbar */
 body {
-	padding-top: 75px;
+    padding-top: 75px;
 }
 
-/* permet juste de rajouter un petit liseret en dessous du menu */
+/* rajoute un petit liseret en dégradé en dessous du menu */
 .navbar {
-	box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 1px 10px rgba(0,0,0,0.3);
 }
 
-/* permet d'avoir toujours la même taille de carousel (tronque les images...) */
+/* permet d'avoir toujours la même taille de carousel (tronque les images... : à revoir) */
 .carousel-inner {
-	max-height: 400px;
+    max-height: 400px;
+}
+
+/* styles du menu en forme d'arbo */
+.list-group-tree {
+    padding: 15px;
+}
+.list-group-tree .list-group.list-group-root {
+    padding: 0;
+    overflow: hidden;
+}
+.list-group-tree .list-group.list-group-root .list-group {
+    margin-bottom: 0;
+}
+.list-group-tree .list-group.list-group-root .list-group-item {
+    border-radius: 0;
+    border-width: 1px 0 0 0;
+}
+.list-group-tree .list-group.list-group-root > .list-group-item:first-child {
+    border-top-width: 0;
+}
+.list-group-tree .list-group.list-group-root > .list-group > .list-group-item {
+    padding-left: 30px;
+}
+.list-group-tree .list-group.list-group-root > .list-group > .list-group > .list-group-item {
+    padding-left: 45px;
+}
+.list-group-tree .list-group-item .glyphicon {
+    margin-right: 5px;
 }

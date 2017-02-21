@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Doctrine;
+namespace AppBundle\Listener;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -32,12 +32,9 @@ class UserListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $user = $args->getEntity();
-        if (! $user instanceof User) {
+        if (!$user instanceof User) {
             return;
         }
-
-        //renseigne la date de création
-        $user->setCreatedAt(new \DateTime());
         //par défaut, on prend comme nom d'utilisateur le début de l'email
         $user->setName(strstr($user->getEmail(), '@', true));
         //renseigne le role par défaut si aucun role n'est définit
@@ -56,12 +53,10 @@ class UserListener
     public function preUpdate(LifecycleEventArgs $args)
     {
         $user = $args->getEntity();
-        if (! $user instanceof User) {
+        if (!$user instanceof User) {
             return;
         }
-
         $this->uploadFile($user);
-
         //obligatoire pour forcer l'update et voir les changement
         $em = $args->getEntityManager();
         $meta = $em->getClassMetadata(get_class($user));
@@ -79,10 +74,9 @@ class UserListener
     {
         $file = $user->getAvatar();
         //on upload seulement les nouveaux fichiers
-        if (! $file instanceof UploadedFile) {
+        if (!$file instanceof UploadedFile) {
             return;
         }
-
         $fileName = $this->uploader->upload($file);
         $user->setAvatar($fileName);
     }

@@ -6,9 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\ArticleComment;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\File;
+use AppBundle\Entity\Category;
 
 /**
+ * @Gedmo\Loggable
+ * 
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
  * @ORM\Table(name="article")
  */
@@ -37,6 +39,8 @@ class Article
     /**
      * @var string
      * 
+     * @Gedmo\Versioned
+     * 
      * @ORM\Column(type="string")
      * 
      * @Assert\NotBlank()
@@ -56,6 +60,8 @@ class Article
     /**
      * @var string
      * 
+     * @Gedmo\Versioned
+     * 
      * @ORM\Column(type="text")
      * 
      * @Assert\NotBlank()
@@ -65,6 +71,8 @@ class Article
     /**
      * @var string
      * 
+     * @Gedmo\Versioned
+     * 
      * @ORM\Column(type="text")
      * 
      * @Assert\NotBlank()
@@ -72,24 +80,14 @@ class Article
     private $article;
 
     /**
-     * @var ArticleSubCategory
-     * 
-     * @ORM\ManyToOne(targetEntity="ArticleSubCategory")
-     * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Assert\NotBlank()
-     */
-    private $articleSubCategory;
-
-    /**
      * @var ArticleCategory
      * 
-     * @ORM\ManyToOne(targetEntity="ArticleCategory")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(nullable=true)
      * 
      * @Assert\NotBlank()
      */
-    private $articleCategory;
+    private $category;
 
     /**
      * @var ArticleComment
@@ -102,6 +100,8 @@ class Article
     /**
      * @var \DateTime
      * 
+     * @Gedmo\Timestampable(on="create")
+     *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -109,6 +109,8 @@ class Article
     /**
      * @var \DateTime
      * 
+     * @Gedmo\Timestampable(on="update")
+     *
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -202,19 +204,11 @@ class Article
     }
 
     /**
-     * @return ArticleSubCategory
+     * @return Category
      */
-    public function getArticleSubCategory()
+    public function getCategory()
     {
-        return $this->articleSubCategory;
-    }
-
-    /**
-     * @return ArticleCategory
-     */
-    public function getArticleCategory()
-    {
-        return $this->articleCategory;
+        return $this->category;
     }
 
     /**
@@ -305,19 +299,11 @@ class Article
     }
 
     /**
-     * @param ArticleSubCategory $articleSubCategory
+     * @param Category $category
      */
-    public function setArticleSubCategory(ArticleSubCategory $articleSubCategory)
+    public function setCategory(Category $category)
     {
-        $this->articleSubCategory = $articleSubCategory;
-    }
-
-    /**
-     * @param ArticleCategory $articleCategory
-     */
-    public function setArticleCategory(ArticleCategory $articleCategory)
-    {
-        $this->articleCategory = $articleCategory;
+        $this->category = $category;
     }
 
     /**

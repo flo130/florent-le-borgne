@@ -1,0 +1,6 @@
+AppBundle\Entity\ArticleComment:
+    articleComment_{1..50}:
+        user: '@user_*'
+        article: '@article_*'
+        articleComment: <paragraph(10)>
+        createdAt: <dateTimeBetween('-4 years', 'now')>
