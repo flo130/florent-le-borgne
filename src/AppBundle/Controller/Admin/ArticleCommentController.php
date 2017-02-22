@@ -26,7 +26,7 @@ class ArticleCommentController extends Controller
      *
      * @Method({"GET"})
      */
-    public function CommentAction(Request $request)
+    public function commentAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages/admin:articleCommentPage.html.twig', array(
@@ -41,7 +41,7 @@ class ArticleCommentController extends Controller
      *
      * @Method({"GET"})
      */
-    public function DeleteAction(Request $request, ArticleComment $comment)
+    public function deleteAction(Request $request, ArticleComment $comment)
     {
         $em = $this->getDoctrine()->getManager();
         $this->get('logger')->notice('Comment suppression', array('id' => $comment->getId()));

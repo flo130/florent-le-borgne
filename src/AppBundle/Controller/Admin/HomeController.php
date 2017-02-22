@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * 
  * @Route("/admin")
  */
-class IndexController extends Controller
+class HomeController extends Controller
 {
     /**
      * Page d'accueil de l'admin
@@ -24,13 +24,13 @@ class IndexController extends Controller
      *
      * @Method({"GET"})
      */
-    public function HomeAction(Request $request)
+    public function homeAction(Request $request)
     {
         //nb articles créés pour n jours
         //nb articles consultés
         //nb users créés
         //autres stats
         //...
-        return $this->render('AppBundle:pages/admin:indexPage.html.twig');
+        return $this->render('AppBundle:pages/admin:homePage.html.twig');
     }
 }

@@ -130,6 +130,18 @@ class User implements UserInterface, \Serializable
      */
     private $updatedAt;
 
+    /**
+     * @var string
+     *
+     * Gedmo\Slug permet de créer facilement des URLs SEO-Friendly.
+     * Ici on met updatable à true, cela indiquera que le slug sera mis à jour
+     * cf. stof_doctrine_extensions dans config.yml
+     * @Gedmo\Slug(fields={"name"}, updatable=true)
+     *
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
 
     public function __construct()
     {
@@ -146,6 +158,14 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

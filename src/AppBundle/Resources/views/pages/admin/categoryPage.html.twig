@@ -1,6 +1,6 @@
 {#
     params : 
-        - articles : array of Article object
+        - articleCategories : string HTML structure of categories
 #}
 {% extends '::base.html.twig' %}
 
@@ -22,32 +22,8 @@
         </div>
     </div>
     <h1>{{ 'app.admin.search.category' | trans | capitalize }}</h1>
-        <a class="btn btn-default" href="{{ path('admin_category_create') }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.create_category' | trans | capitalize }}">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </a>
-        <ul>
-            {% for articleCategory in articleCategories %}
-                <li>
-                    <form class="form-inline" action="{{ path('admin_category_rename', { 'id' : articleCategory.id }) }}" method="POST">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="category-name" value="{{ articleCategory.title }}" placeholder="{{ 'app.update_category' | trans | capitalize }} {{ articleCategory.title }}">
-                        </div>
-                        <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'app.ok' | trans | capitalize }}">
-                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
-                        &nbsp;
-                        <a class="btn btn-danger print-confirm" href="{{ path('admin_category_delete', { 'id' : articleCategory.id }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </a>
-                        &nbsp;
-                        <a class="btn btn-default" href="{{ path('admin_category_create') }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.create_sub_category' | trans | capitalize }}">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </a>
-                    </form>
-                    <ul>
-
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
+    {# voir dans le js #}
+    <div class="jstree">
+        {{ articleCategories | raw }}
+    </div>
 {% endblock %}

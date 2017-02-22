@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Entity\Category;
 use AppBundle\Form\CategoryForm;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 /**
  * Cette class sert à l'admin des categories
@@ -27,18 +29,29 @@ class CategoryController extends Controller
      *
      * @Method({"GET"})
      */
-    public function CategoryAction(Request $request)
+    public function categoryAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages/admin:categoryPage.html.twig', array(
-            'articleCategories' => $em->getRepository('AppBundle:Category')->findAll(),
+            'articleCategories' => $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Category')
+                ->childrenHierarchy(null, false, array(
+                    'decorate' => true,
+                    'rootOpen' => '<ul>',
+                    'rootClose' => '</ul>',
+                    'childOpen' => function($tree) {
+                        return '<li id="' . $tree['id'] . '">';
+                     },
+                     'childClose' => '</li>',
+                     'nodeDecorator' => function($node) use (&$controller) { return $node['title']; },
+                )),
         ));
     }
 
     /**
-     * Page de renommage d'une categorie
+     * Renommage d'une categorie
      *
-     * @Route("/rename/{id}", name="admin_category_rename"))
+     * @Route("/rename", name="admin_category_rename"))
      *
      * @Method({"POST"})
      *
@@ -47,41 +60,101 @@ class CategoryController extends Controller
      *
      * @return Response
      */
-    public function RenameAction(Request $request, Category $category)
+    public function renameAction(Request $request)
     {
-    	$category->setTitle($request->get('category-name', null));
         $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository('AppBundle:Category')->find($request->get('id', null));
+        $category->setTitle($request->get('title', ''));
         $em->persist($category);
         $em->flush();
         $this->get('logger')->info('Category modification', array(
-            'label' => $category->getTitle()
+            'title' => $category->getTitle(),
+            'id' => $category->getId(),
         ));
-        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
-        return $this->redirect($this->generateUrl('admin_category'));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'status' => true,
+                'message' => ucfirst(strtolower($this->get('translator')->trans('app.rename_success'))),
+            ));
+        } else {
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.rename_success'))));
+            return $this->redirect($this->generateUrl('admin_category'));
+        }
     }
 
     /**
-     * Page de suppression d'une categorie
+     * Déplacement d'une categorie dans l'arbre
      *
-     * @Route("/delete/{id}", name="admin_category_delete"))
+     * @Route("/move", name="admin_category_move"))
      *
-     * @Method({"GET"})
+     * @Method({"POST"})
      *
      * @param Request $request
      * @param Category $category
      *
      * @return Response
      */
-    public function DeleteAction(Request $request, Category $category)
+    public function moveAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $this->get('logger')->notice('Category suppression', array(
-            'label' => $category->getTitle()
-        ));
-        $em->remove($category);
+        $repo = $em->getRepository('AppBundle:Category');
+        $category = $repo->find($request->get('currentId', null));
+        $parentCategory = $repo->find($request->get('parentId', null));
+        
+        var_dump($parentCategory->getId());
+        
+        //on check s'il y a un parent, alors on le place "enfant de" sinon on le met "en haut de la pile"
+        if ($parentCategory) {
+        	var_dump('ici');
+            $repo->persistAsFirstChildOf($category, $parentCategory);
+        } else {
+        	var_dump('la');
+            $repo->persistAsFirstChild($category);
+        }
         $em->flush();
-        $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
-        return $this->redirect($this->generateUrl('admin_category'));
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'status' => true,
+                'message' => ucfirst(strtolower($this->get('translator')->trans('app.action_success'))),
+            ));
+        } else {
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.action_success'))));
+            return $this->redirect($this->generateUrl('admin_category'));
+        }
+    }
+
+    /**
+     * Page de suppression d'une categorie
+     *
+     * @Route("/delete", name="admin_category_delete"))
+     *
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @param Category $category
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Category');
+        $category = $repo->find($request->get('id', null));
+        $this->get('logger')->notice('Category suppression', array(
+            'title' => $category->getTitle(),
+            'id' => $category->getId(),
+        ));
+        $repo->removeFromTree($category);
+        $em->clear();
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'status' => true,
+                'message' => ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))),
+            ));
+        } else {
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.delete_success'))));
+            return $this->redirect($this->generateUrl('admin_category'));
+        }
     }
 
     /**
@@ -91,43 +164,26 @@ class CategoryController extends Controller
      *
      * @Method({"GET", "POST"})
      */
-    public function CreateAction(Request $request)
+    public function createAction(Request $request)
     {
-        $form = $this->createForm(CategoryForm::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $isValid = $form->isValid();
-            if ($isValid) {
-                $category = $form->getData();
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($category);
-                $em->flush();
-                $this->get('logger')->info('ArticleCategory creation', array('label' => $category->getTitle()));
-                //ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
-                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
-                $redirectUrl = $this->generateUrl('admin_category', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-                if (!$request->isXmlHttpRequest()) {
-                    return $this->redirect($redirectUrl);
-                }
-            }
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Category');
+        $parentCategory = $repo->find($request->get('parentId', null));
+        $category = new Category();
+        $category->setTitle($request->get('title', ''));
+        if ($parentCategory) {
+            $category->setParent($parentCategory);
         }
-        //retourne un JsonResponse si on est en ajax, une Response sinon
+        $em->persist($category);
+        $em->flush();
         if ($request->isXmlHttpRequest()) {
-            if ($isValid) {
-                return new JsonResponse(array(
-                        'redirect' => $redirectUrl,
-                ), 200);
-            } else {
-                return new JsonResponse(array(
-                    'form' => $this->renderView('AppBundle:forms:categoryForm.html.twig', array(
-                        'form' => $form->createView(),
-                    )),
-                ), 400);
-            }
-        } else {
-            return $this->render('AppBundle:pages/admin:categoryCreatePage.html.twig', array(
-                'articleCategoryForm' => $form->createView(),
+            return new JsonResponse(array(
+                'status' => true,
+                'id' => $category->getId(),
             ));
+        } else {
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
+            return $this->redirect($this->generateUrl('admin_category'));
         }
     }
 }

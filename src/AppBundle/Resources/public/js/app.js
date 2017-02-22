@@ -21,6 +21,7 @@ $(window).on('load', function() {
     manageTableSearch();
     manageHighlightBlock();
     manageMenuTree();
+    manageMenuTreeJs();
 });
 
 
@@ -29,6 +30,7 @@ $(window).on('load', function() {
 //////////////////////
 /**
  * Permet la gestion des fleches d'un menu type "arbre" utilisant les icones Bootstrap
+ * (sur le front)
  * 
  * @return void
  */
@@ -38,6 +40,89 @@ function manageMenuTree() {
             .toggleClass('glyphicon-chevron-right')
             .toggleClass('glyphicon-chevron-down');
     });
+}
+
+/**
+ * Permet la gestion d'un menu type "arbre" (ajout / suppression / modification / présentation)
+ * (sur le back)
+ * 
+ * @return void
+ */
+function manageMenuTreeJs() {
+    $('.jstree').jstree({
+        "core" : {
+            //durée de l'annimation lorsqu'on déplis une catégorie
+            "animation" : 200,
+            //est-ce qu'on autorise les callbacks sur les actions utilisateur
+            "check_callback" : true,
+            "themes" : {
+                "icons" : false,
+                "reponsive" : true
+            }
+        },
+        //ici pour voir la liste des plugin : https://www.jstree.com/plugins/
+        "plugins" : [
+            //plugin pour afficher les option (create/delete/rename) sur un click droit
+            "contextmenu", 
+            //plugin drag and drop pour glisser déposer les noeuds
+            "dnd",
+            //plugin qui va sauvegarder l'état de l'arbre dans le navigateur pour le réafficher tel quel lorsqu'on reviendra sur la page
+            //"state"
+        ]
+    })
+    .on('rename_node.jstree', function (e, data) {
+        $.post("/" + findLanguage() + "/admin/category/rename", { 
+            'id' : data.node.id, 
+            'title' : data.text
+        }).done(function(response) {
+            if (response.status == true) {
+                showSuccessMessage(response.message);
+            } else {
+                showErrorMessage(response.message);
+            }
+        });
+    })
+    .on('delete_node.jstree', function (e, data) {
+        $.post("/" + findLanguage() + "/admin/category/delete", { 
+            'id' : data.node.id
+        }).done(function(response) {
+            if (response.status == true) {
+                showSuccessMessage(response.message);
+            } else {
+                showErrorMessage(response.message);
+            }
+        });
+    })
+    .on('move_node.jstree', function (e, data) {
+    	
+    	console.log(data);
+    	
+        $.post("/" + findLanguage() + "/admin/category/move", { 
+            'currentId' : data.node.id,
+            'parentId' : data.node.parent
+        }).done(function(response) {
+            if (response.status == true) {
+                showSuccessMessage(response.message);
+            } else {
+                showErrorMessage(response.message);
+            }
+        });
+    })
+    .on('create_node.jstree', function (e, data) {
+        $.post("/" + findLanguage() + "/admin/category/create", {
+            'parentId' : data.parent,
+            'title' : 'title'
+        }).done(function(response) {
+            //modifie l'id du nouveau noeud par l'id créé en base
+            $('#'+data.node.id).attr('id', response.id);
+            if (data.status == true) {
+                showSuccessMessage(response.message);
+            } else {
+                showErrorMessage(response.message);
+            }
+        });
+    })
+    ;
 }
 
 /**
@@ -82,10 +167,6 @@ function manageTooltip() {
  * @return void
  */
 function manageTableSearch() {
-    //récupère la locale dans l'url
-    var link = document.createElement("a");
-    link.href = window.location.href;
-    var pieces = link.pathname.split("/");
     //construit le paramétrage du DataTable
     var params = {
         //affiche les bouton "dernier", "suivants", "premier", "précedent" (autrement seul "suivant" et "précédent" sont affichés)
@@ -94,13 +175,25 @@ function manageTableSearch() {
         stateSave: true
     };
     //passe la langue en français si besoin (sinon ça sera l'anglais) en ajoutant l'option dans le paramétrage
-    if (pieces[1] == 'fr') {
+    if (findLanguage() == 'fr') {
         params['language'] = {
             'url': 'http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json'
         };
     }
     //initialise le DataTable sur les éléments ayant la class 'table-search'
     $('.table-search').DataTable(params);
+}
+
+/**
+ * Retourne la langue utilisée
+ * 
+ * @return string
+ */
+function findLanguage() {
+    var link = document.createElement("a");
+    link.href = window.location.href;
+    var pieces = link.pathname.split("/");
+    return pieces[1];
 }
 
 /**

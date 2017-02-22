@@ -1,9 +1,11 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
+    action_success: succès
     update_success: mis à jour avec succès
     delete_success: supprimer avec succès
     create_success: créé avec succès
+    rename_success: renommé avec succès
     action: action
     title: titre
     status: status
@@ -58,9 +60,7 @@ app:
         title: titre
         summary: summary
         article: article
-        article_subcategory: Catégorie d'article
         article_category: catégorie d'article
-        choose_subcategory: choisissez une sous-catégorie
         choose_category: choisissez une catégorie
         publish_article: publier cet article
         email: email

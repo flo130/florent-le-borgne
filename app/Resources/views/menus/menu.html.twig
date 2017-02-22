@@ -51,7 +51,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_MEMBRE') %}
                     <li{% if route == 'user_account' %} class="active"{% endif %}>
-                        <a{% if route != 'user_account' %} href="{{ path('user_account', { name: app.user.name }) }}"{% endif %}>
+                        <a{% if route != 'user_account' %} href="{{ path('user_account', { 'slug' : app.user.slug }) }}"{% endif %}>
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.name }}
                         </a>
                     </li>

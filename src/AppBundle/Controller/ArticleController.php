@@ -26,13 +26,13 @@ class ArticleController extends Controller
     /**
      * Page détail d'un article
      * 
-     * @Route("/{slug}", name="article_show"))
+     * @Route("/show/{slug}", name="article_show"))
      * 
      * @Method({"GET"})
      * 
      * @param Article $article
      */
-    public function ShowAction(Article $article)
+    public function showAction(Article $article)
     {
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
             //getPath : permet de récupérer tous les parents de la catégorie de l'article
@@ -56,9 +56,10 @@ class ArticleController extends Controller
      * 
      * @return Response
      */
-    public function ByCategoryAction(Category $category)
+    public function byCategoryAction(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
+        //configure le "Tree" des catégories
         $parent = 0;
         $options = array(
             'decorate' => true,
@@ -85,12 +86,12 @@ class ArticleController extends Controller
                 }
             },
         );
+        //récipère les catégories sous forme d'arbre en appliquant les options ci-dessus
         $allCategoriesTree = $em->getRepository('AppBundle:Category')->childrenHierarchy(
             null,
             false,
             $options
         );
-
         return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
             'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
             'currentCategory' => $category,
@@ -122,7 +123,7 @@ class ArticleController extends Controller
      * 
      * @return Response || JsonResponse
      */
-    public function EditAction(Request $request, Article $article)
+    public function editAction(Request $request, Article $article)
     {
         //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony cf. AppBundle\Security\ArticleVoter)
         /** @see AppBundle\Security\ArticleVoter */
@@ -186,7 +187,7 @@ class ArticleController extends Controller
      * 
      * @return Response || JsonResponse
      */
-    public function CreateAction(Request $request)
+    public function createAction(Request $request)
     {
         $form = $this->createForm(ArticleCreateForm::class);
         $form->handleRequest($request);
@@ -246,7 +247,7 @@ class ArticleController extends Controller
      *
      * @return Response
      */
-    public function DeleteAction(Request $request, Article $article)
+    public function deleteAction(Request $request, Article $article)
     {
         //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
         /** @see AppBundle\Security\ArticleVoter */

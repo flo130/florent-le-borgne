@@ -1,17 +1,17 @@
 <?php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use AppBundle\Entity\Category;
-use AppBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Article;
+use AppBundle\Repository\CategoryRepository;
 
 class ArticleCreateForm extends AbstractType
 {

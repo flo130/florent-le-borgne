@@ -27,7 +27,7 @@
     {% else %}
         <img class="img-thumbnail img-responsive lazy" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ article.user.name }}" width="80px">
     {% endif %}
-    {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
+    {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'slug' : article.user.slug }) }}">{{ article.user.name }}</a>
 </p>
 <p>
     <span class="glyphicon glyphicon-time"></span> {{ 'app.posted' | trans | capitalize }} {{ article.publishedAt | ago }}

@@ -166,7 +166,7 @@ class UserController extends Controller
      * Essayer avec :
      *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
      * 
-     * @Route("/account/{name}", name="user_account")
+     * @Route("/account/{slug}", name="user_account")
      * 
      * @Method({"GET", "POST"})
      * 
@@ -185,12 +185,13 @@ class UserController extends Controller
             /** @var User $user */
             $user = $form->getData();
             if (!$user->getAvatar()) {
-                $user->setImage($image);
+                $user->setAvatar($image);
             }
             $em->persist($user);
             $em->flush();
             $this->get('logger')->info('Account modification', array('email' => $user->getEmail()));
             $this->addFlash('success', 'Update successfully');
+            return $this->redirect($this->generateUrl('user_account', array('slug' => $user->getSlug())));
         }
         return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
             'user' => $user,

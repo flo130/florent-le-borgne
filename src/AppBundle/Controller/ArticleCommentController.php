@@ -28,7 +28,7 @@ class ArticleCommentController extends Controller
      *
      * @Method({"GET"})
      */
-    public function GetAction(Request $request, Article $article)
+    public function getAction(Request $request, Article $article)
     {
         $comments = [];
         foreach ($article->getArticleComments() as $comment) {
@@ -43,7 +43,7 @@ class ArticleCommentController extends Controller
                     'name' => $user->getName(),
                     'avatar' => $avatar,
                     'url' => $this->generateUrl('user_account', array(
-                        'name' => $user->getName(),
+                        'slug' => $user->getSlug(),
                     )),
                 ],
                 'createdAt' => $comment->getCreatedAt()->format("F jS \\a\\t g:ia"),
@@ -64,7 +64,7 @@ class ArticleCommentController extends Controller
      *
      * @Method({"POST"})
      */
-    public function CreateAction(Request $request)
+    public function createAction(Request $request)
     {
         $form = $this->createForm(ArticleCommentForm::class);
         $form->handleRequest($request);

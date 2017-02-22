@@ -36,7 +36,7 @@
                     {% for articleComment in articleComments %}
                         <tr>
                             <td>{{ articleComment.id }}</td>
-                            <td><a href="{{ path('user_account', { 'name' : articleComment.user.name }) }}">{{ articleComment.user.name }}</a></td>
+                            <td><a href="{{ path('user_account', { 'slug' : articleComment.user.slug }) }}">{{ articleComment.user.name }}</a></td>
                             <td><a href="{{ path('article_show', { 'slug' : articleComment.article.slug }) }}">{{ articleComment.article.title }}</a></td>
                             <td>{{ articleComment.articleComment }}</td>
                             <td>

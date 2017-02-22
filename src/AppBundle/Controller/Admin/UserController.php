@@ -27,7 +27,7 @@ class UserController extends Controller
      *
      * @Method({"GET"})
      */
-    public function UserAction(Request $request)
+    public function userAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages/admin:userPage.html.twig', array(
@@ -38,7 +38,7 @@ class UserController extends Controller
     /**
      * Page de suppression d'un compte utilisateur
      *
-     * @Route("/delete/{name}", name="admin_user_delete")
+     * @Route("/delete/{slug}", name="admin_user_delete")
      *
      * @Method({"GET"})
      *
@@ -62,7 +62,7 @@ class UserController extends Controller
     /**
      * Formualire de changement de role d'un utilisateur
      * 
-     * @Route("/change-role/{name}", name="admin_change_role"))
+     * @Route("/change-role/{slug}", name="admin_change_role"))
      * 
      * @Method({"GET", "POST"})
      * 
@@ -70,7 +70,7 @@ class UserController extends Controller
      * 
      * @return Response || JsonResponse
      */
-    public function ChangeRoleAction(Request $request, User $user) {
+    public function changeRoleAction(Request $request, User $user) {
 
         return new Response("uuuuuuuuuuuuu");
 

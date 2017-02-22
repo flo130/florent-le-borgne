@@ -46,7 +46,7 @@
                                     {% endif %}
                                 </div>
                             </td>
-                            <td><a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a></td>
+                            <td><a href="{{ path('user_account', { 'slug' : article.user.slug }) }}">{{ article.user.name }}</a></td>
                             <td>
                                 <a href="{{ path('article_show', { 'slug' : article.slug }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.see' | trans | capitalize }}">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

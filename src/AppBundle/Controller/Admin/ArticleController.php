@@ -25,7 +25,7 @@ class ArticleController extends Controller
      *
      * @Method({"GET"})
      */
-    public function ArticleAction(Request $request)
+    public function articleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages/admin:articlePage.html.twig', array(
@@ -45,7 +45,7 @@ class ArticleController extends Controller
      *
      * @return Response
      */
-    public function DeleteAction(Request $request, Article $article)
+    public function deleteAction(Request $request, Article $article)
     {
         //vérifie qu'un utilisateur a le droit d'éditer l'article ("Voter" Symfony)
         /** @see AppBundle\Security\ArticleVoter */

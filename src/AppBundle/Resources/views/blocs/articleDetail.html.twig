@@ -17,7 +17,7 @@
     {% endif %}
 </div>
 <p class="lead">
-    {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'name' : article.user.name }) }}">{{ article.user.name }}</a>
+    {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'slug' : article.user.slug }) }}">{{ article.user.name }}</a>
 </p>
 <p>
     <span class="glyphicon glyphicon-time"></span> {{ 'app.posted' | trans | capitalize }} {{ article.publishedAt | date("F jS \\a\\t g:ia") }}
