@@ -1,11 +1,11 @@
 AppBundle\Entity\Category:
-    rootCategory_{1..5}:
+    rootCategory_{1..10}:
         title: <word(3)>
 
-    subCategory_{1..15}:
+    subCategory_{1..30}:
         title: <word(3)>
         parent: '@rootCategory_*'
 
-    subSubCategory_{1..45}:
+    subSubCategory_{1..90}:
         title: <word(3)>
         parent: '@subCategory_*'

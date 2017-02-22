@@ -1,5 +1,5 @@
 AppBundle\Entity\ArticleComment:
-    articleComment_{1..50}:
+    articleComment_{1..300}:
         user: '@user_*'
         article: '@article_*'
         articleComment: <paragraph(10)>

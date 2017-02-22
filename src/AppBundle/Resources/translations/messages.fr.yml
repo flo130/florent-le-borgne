@@ -5,7 +5,6 @@ app:
     update_success: mis à jour avec succès
     delete_success: supprimer avec succès
     create_success: créé avec succès
-    rename_success: renommé avec succès
     action: action
     title: titre
     status: status

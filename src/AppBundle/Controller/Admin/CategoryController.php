@@ -74,10 +74,10 @@ class CategoryController extends Controller
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'status' => true,
-                'message' => ucfirst(strtolower($this->get('translator')->trans('app.rename_success'))),
+                'message' => ucfirst(strtolower($this->get('translator')->trans('app.action_success'))),
             ));
         } else {
-            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.rename_success'))));
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.action_success'))));
             return $this->redirect($this->generateUrl('admin_category'));
         }
     }
@@ -100,15 +100,10 @@ class CategoryController extends Controller
         $repo = $em->getRepository('AppBundle:Category');
         $category = $repo->find($request->get('currentId', null));
         $parentCategory = $repo->find($request->get('parentId', null));
-        
-        var_dump($parentCategory->getId());
-        
         //on check s'il y a un parent, alors on le place "enfant de" sinon on le met "en haut de la pile"
         if ($parentCategory) {
-        	var_dump('ici');
             $repo->persistAsFirstChildOf($category, $parentCategory);
         } else {
-        	var_dump('la');
             $repo->persistAsFirstChild($category);
         }
         $em->flush();

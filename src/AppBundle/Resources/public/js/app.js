@@ -3,6 +3,10 @@
 ///////////////////////
 var TIMEOUT_TO_CLOSE_MSG = 5000;
 var TIMEOUT_TO_SCROLL_TO = 1000;
+var URL_CATEGORY_RENAME = '/' + findLanguage() + '/admin/category/rename';
+var URL_CATEGORY_CREATE = '/' + findLanguage() + '/admin/category/create';
+var URL_CATEGORY_DELETE = '/' + findLanguage() + '/admin/category/delete';
+var URL_CATEGORY_MOVE = '/' + findLanguage() + '/admin/category/move';
 
 
 ////////////////////////////////////////////////////
@@ -44,6 +48,7 @@ function manageMenuTree() {
 
 /**
  * Permet la gestion d'un menu type "arbre" (ajout / suppression / modification / présentation)
+ * En utilisant la lib jsTree
  * (sur le back)
  * 
  * @return void
@@ -67,11 +72,11 @@ function manageMenuTreeJs() {
             //plugin drag and drop pour glisser déposer les noeuds
             "dnd",
             //plugin qui va sauvegarder l'état de l'arbre dans le navigateur pour le réafficher tel quel lorsqu'on reviendra sur la page
-            //"state"
+            "state"
         ]
     })
     .on('rename_node.jstree', function (e, data) {
-        $.post("/" + findLanguage() + "/admin/category/rename", { 
+        $.post(URL_CATEGORY_RENAME, { 
             'id' : data.node.id, 
             'title' : data.text
         }).done(function(response) {
@@ -83,21 +88,19 @@ function manageMenuTreeJs() {
         });
     })
     .on('delete_node.jstree', function (e, data) {
-        $.post("/" + findLanguage() + "/admin/category/delete", { 
+        $.post(URL_CATEGORY_DELETE, { 
             'id' : data.node.id
         }).done(function(response) {
             if (response.status == true) {
                 showSuccessMessage(response.message);
+                location.reload(true);
             } else {
                 showErrorMessage(response.message);
             }
         });
     })
     .on('move_node.jstree', function (e, data) {
-    	
-    	console.log(data);
-    	
-        $.post("/" + findLanguage() + "/admin/category/move", { 
+        $.post(URL_CATEGORY_MOVE, { 
             'currentId' : data.node.id,
             'parentId' : data.node.parent
         }).done(function(response) {
@@ -109,24 +112,19 @@ function manageMenuTreeJs() {
         });
     })
     .on('create_node.jstree', function (e, data) {
-        $.post("/" + findLanguage() + "/admin/category/create", {
+        $.post(URL_CATEGORY_CREATE, {
             'parentId' : data.parent,
             'title' : 'title'
         }).done(function(response) {
             //modifie l'id du nouveau noeud par l'id créé en base
-            $('#'+data.node.id).attr('id', response.id);
-            if (data.status == true) {
-                showSuccessMessage(response.message);
-            } else {
-                showErrorMessage(response.message);
-            }
+            data.instance.set_id(data.node, response.id);
         });
-    })
-    ;
+    });
 }
 
 /**
  * Permet la gestion de la coloration syntaxique des blocs de code
+ * (utilise la lib highlightBlock)
  * 
  * @return void
  */
@@ -137,7 +135,7 @@ function manageHighlightBlock() {
 }
 
 /**
- * Permet la gestion du comportement des modals de type "confirm"
+ * Permet la gestion du comportement des modals de type "confirm" (modal Bootstrap et non popup navigateur)
  * 
  * @return void
  */
@@ -153,7 +151,7 @@ function manageConfirmModals() {
 }
 
 /**
- * Gère le comportement du Tooltip
+ * Gère le comportement du Tooltip Bootstrap
  * 
  * @return void
  */
@@ -185,7 +183,7 @@ function manageTableSearch() {
 }
 
 /**
- * Retourne la langue utilisée
+ * Retourne la langue utilisée (on regarde le paramètre passé dans l'URL courante)
  * 
  * @return string
  */

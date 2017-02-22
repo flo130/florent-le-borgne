@@ -5,7 +5,6 @@ app:
     update_success: update success
     delete_success: delete success
     create_success: create success
-    rename_success: rename success
     action: action
     title: title
     status: status
