@@ -25,5 +25,6 @@ app:
             user: users
             category: categories
             comment: comments
+            parameter: parameter
         return_admin_account: exit impersonation
         change_role: change role

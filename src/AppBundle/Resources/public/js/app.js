@@ -129,7 +129,7 @@ function manageMenuTreeJs() {
  * @return void
  */
 function manageHighlightBlock() {
-    $('code').each(function(i, block) {
+    $('pre').each(function(i, block) {
         hljs.highlightBlock(block);
     });
 }

@@ -24,6 +24,9 @@
                     <li{% if route == 'admin_comment' %} class="active"{% endif %}>
                         <a{% if route != 'admin_comment' %} href="{{ path('admin_comment') }}"{% endif %}>{{ 'app.admin.search.comment' | trans | capitalize }}</a>
                     </li>
+                    <li{% if route == 'admin_parameter' %} class="active"{% endif %}>
+                        <a{% if route != 'admin_parameter' %} href="{{ path('admin_parameter') }}"{% endif %}>{{ 'app.admin.search.parameter' | trans | capitalize }}</a>
+                    </li>
                 </ul>
             </li>
         {% endif %}

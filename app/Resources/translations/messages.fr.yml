@@ -25,5 +25,6 @@ app:
             user: utilisateurs
             category: categories
             comment: commentaires
+            parameter: paramètres
         return_admin_account: quitter ce compte
         change_role: changer le rôle
