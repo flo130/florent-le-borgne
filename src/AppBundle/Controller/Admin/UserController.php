@@ -10,6 +10,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\UserChangeRoleForm;
 
 /**
  * Cette class sert à l'admin des utilisateurs
@@ -70,29 +71,46 @@ class UserController extends Controller
      * 
      * @return Response || JsonResponse
      */
-    public function changeRoleAction(Request $request, User $user) {
-
-        return new Response("uuuuuuuuuuuuu");
-
+    public function changeRoleAction(Request $request, User $user)
+    {
         $em = $this->getDoctrine()->getManager();
-        $image = $user->getAvatar();
-        $form = $this->createForm(UserForm::class, $user);
+        $form = $this->createForm(UserChangeRoleForm::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var User $user */
-            $user = $form->getData();
-            if (!$user->getAvatar()) {
-                $user->setImage($image);
+        if ($form->isSubmitted()) {
+            $isValid = $form->isValid();
+            if ($isValid) {
+                die(var_dump($user));
+
+                $em->persist($article);
+                $em->flush();
+                $this->get('logger')->info('Article modification', array('id' => $user->getId()));
+                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
+                $redirectUrl = $this->generateUrl('admin_user', array(
+                    'slug' => $user->getSlug(),
+                ), UrlGeneratorInterface::ABSOLUTE_URL);
+                if (!$request->isXmlHttpRequest()) {
+                    return $this->redirect($redirectUrl);
+                }
             }
-            $em->persist($user);
-            $em->flush();
-            $this->addFlash('success', 'Update successfully');
         }
-        return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
-                'user' => $user,
-                'userForm' => $form->createView(),
-                'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUser($user->getId()),
-                'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
-        ));
+        //retourne un JsonResponse si on est en ajax, une Response sinon
+        if ($request->isXmlHttpRequest()) {
+            if ($isValid) {
+                return new JsonResponse(array(
+                    'redirect' => $redirectUrl,
+                ), 200);
+            } else {
+                return new JsonResponse(array(
+                    'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
+                    'form' => $this->renderView('AppBundle:pages/admin:userChangeRolePage.html.twig', array(
+                        'form' => $form->createView(),
+                    )),
+                ), 400);
+            }
+        } else {
+            return $this->render('AppBundle:pages/admin:userChangeRolePage.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 }

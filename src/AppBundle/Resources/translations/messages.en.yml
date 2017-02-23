@@ -1,6 +1,7 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
+    creation: created
     action_success: success
     update_success: update success
     delete_success: delete success
@@ -83,3 +84,6 @@ app:
             comment: comments
         return_admin_account: exit impersonation
         change_role: change role
+        first_login: first login
+        nb_login: nb login
+        last_action: last action

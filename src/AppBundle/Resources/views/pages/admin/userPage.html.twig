@@ -22,13 +22,17 @@
     <h1>{{ 'app.admin.search.user' | trans | capitalize }}</h1>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-condensed table-hover table-bordered table-search">
+            <table class="table table-hover table-bordered table-search">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>{{ 'app.name' | trans | capitalize }}</th>
                         <th>{{ 'app.email' | trans | capitalize }}</th>
                         <th>{{ 'app.role' | trans | capitalize }}</th>
+                        <th>{{ 'app.creation' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.first_login' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.nb_login' | trans | capitalize }}</th>
+                        <th>{{ 'app.admin.last_action' | trans | capitalize }}</th>
                         <th>{{ 'app.articles' | trans | capitalize }}</th>
                         <th>{{ 'app.admin.search.comment' | trans | capitalize }}</th>
                         <th>{{ 'app.action' | trans | capitalize }}</th>
@@ -41,6 +45,10 @@
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.roles | join(', ') }}</td>
+                            <td>{{ user.createdAt | date('d/m/Y') }}</td>
+                            <td>{{ user.firstLogin | date('d/m/Y') }}</td>
+                            <td>{{ user.loginCount }}</td>
+                            <td>{{ user.updatedAt | date('d/m/Y') }}</td>
                             <td>{{ user.getArticles | length }}</td>
                             <td>{{ user.getArticleComments | length }}</td>
                             <td>
@@ -53,7 +61,6 @@
                                 <a class="print-confirm" href="{{ path('admin_user_delete', { 'slug' : user.slug }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
                                     <span class="glyphicon glyphicon-remove danger" aria-hidden="true"></span>
                                 </a>
-                                |
                                 <a href="{{ path('user_account', { 'slug' : user.slug, '_switch_user' : user.email }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.admin.connect_with_this_account' | trans | capitalize }}">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                 </a>
