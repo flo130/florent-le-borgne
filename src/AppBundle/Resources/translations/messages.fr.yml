@@ -16,6 +16,7 @@ app:
     search: rechercher
     result: résultat
     by: par
+    date: date
     leave_a: laisser un
     posted: posté
     published: publié

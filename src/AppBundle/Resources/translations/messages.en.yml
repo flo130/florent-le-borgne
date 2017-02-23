@@ -18,6 +18,7 @@ app:
     search: search
     result: result
     by: by
+    date: date
     leave_a: leave a
     posted: posted
     published: published

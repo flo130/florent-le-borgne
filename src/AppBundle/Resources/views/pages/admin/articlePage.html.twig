@@ -27,6 +27,7 @@
                     <tr>
                         <th>#</th>
                         <th>{{ 'app.title' | trans | capitalize }}</th>
+                        <th>{{ 'app.date' | trans | capitalize }}</th>
                         <th>{{ 'app.status' | trans | capitalize }}</th>
                         <th>{{ 'app.by' | trans | capitalize }}</th>
                         <th>{{ 'app.action' | trans | capitalize }}</th>
@@ -37,6 +38,7 @@
                         <tr>
                             <td>{{ article.id }}</td>
                             <td>{{ article.title }}</td>
+                            <td>{{ article.createdAt | date("d/m/Y H:i:s") }}</td>
                             <td>
                                 <div class="text-center">
                                     {% if article.status == 1 %}
