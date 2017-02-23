@@ -21,10 +21,10 @@
                     <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
                 {% for category in categoriesTree %}
-                    <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title }}</a></li>
+                    <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title | capitalize }}</a></li>
                 {% endfor %}
                 <li class="active">
-                    {{ 'app.edit' | trans | capitalize }} - {{ article.title }}
+                    {{ 'app.edit' | trans | capitalize }} - {{ article.title | capitalize }}
                 </li>
             </ol>
         </div>

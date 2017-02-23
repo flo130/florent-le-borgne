@@ -22,9 +22,9 @@
                 </li>
                 {% for category in categoriesTree %}
                     {%  if loop.last %}
-                        <li class="active">{{ category.title }}</li>
+                        <li class="active">{{ category.title | capitalize }}</li>
                     {% else %}
-                        <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title }}</a></li>
+                        <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title | capitalize }}</a></li>
                     {% endif %}
                 {% endfor %}
             </ol>

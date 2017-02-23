@@ -22,11 +22,11 @@
                 </li>
                 {% for category in categories %}
                     <li>
-                        <a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title }}</a>
+                        <a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title | capitalize }}</a>
                     </li>
                 {% endfor %}
                 <li class="active">
-                    {{ article.title }}
+                    {{ article.title | capitalize }}
                 </li>
             </ol>
         </div>

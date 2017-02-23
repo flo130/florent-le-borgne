@@ -73,9 +73,9 @@ class HomeController extends Controller
                 $nbChilds = count($node['__children']);
                 if ($nbChilds > 0) {
                     $parent = $node['id'];
-                    return '<a href="#item-' . $parent . '" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>' . $node['title'] . '<span class="badge">' . $nbChilds . '</span></a>';
+                    return '<a href="#item-' . $parent . '" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>' . ucfirst($node['title']) . '<span class="badge">' . $nbChilds . '</span></a>';
                 } else {
-                   return '<a href="' . $this->generateUrl('article_by_category', array('slug' => $node['slug'])) . '" class="list-group-item">' . $node['title'] . '</a>';
+                   return '<a href="' . $this->generateUrl('article_by_category', array('slug' => $node['slug'])) . '" class="list-group-item">' . ucfirst($node['title']) . '</a>';
                 }
             },
         );
