@@ -27,6 +27,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             //bundle permettant d'ajouter des fonctionnalités à Doctrine : treeable, sortable, timestampable, sluggable, ...
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            //bundle permettant d'utiliser les Captcha google (Recaptcha)
+            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new AppBundle\AppBundle(),
         ];
 

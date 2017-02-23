@@ -158,3 +158,10 @@ fm_elfinder:
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 5M
+
+# Bundle Recaptcha (pour les captcha Google)
+ewz_recaptcha:
+    public_key:  6Le6oBYUAAAAACyTYgT59XO7XhgrmLiTbq8kGqBI
+    private_key: 6Le6oBYUAAAAAFBRgbSsD2uzcjtEtTjQ20XFTBuO
+    # Not needed as "%kernel.default_locale%" is the default value for the locale key
+    locale_key: %kernel.default_locale%

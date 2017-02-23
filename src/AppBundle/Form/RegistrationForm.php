@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 /**
  * Fomulaire de création de compte utilisateur
@@ -34,6 +35,7 @@ class RegistrationForm extends AbstractType
                 ),
                 'type' => PasswordType::class,
             ))
+            ->add('recaptcha', EWZRecaptchaType::class)
         ;
     }
 

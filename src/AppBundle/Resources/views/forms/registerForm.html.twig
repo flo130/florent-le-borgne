@@ -6,6 +6,7 @@
     {{ form_row(form.email) }}
     {{ form_row(form.plainPassword.first, { 'label' : 'Password' }) }}
     {{ form_row(form.plainPassword.second, { 'label' : 'Repeat Password' }) }}
+    {{ form_row(form.recaptcha) }}
     <button class="btn btn-block btn-primary" type="submit">{{ 'app.user.register' | trans | capitalize }}</button>
     <br>
     <p class="text-center">

@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\ArticleComment;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * Class servant à gérer nos utilisateurs.
@@ -26,6 +27,13 @@ class User implements UserInterface, \Serializable
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_MEMBRE = 'ROLE_MEMBRE';
+
+    /**
+     * Utile juste pour valider la captcha google
+     * 
+     * @Recaptcha\IsTrue
+     */
+    private $recaptcha;
 
     /**
      * Mot de passe en clair (crypté lors de l'enregistrement en base)
@@ -147,6 +155,22 @@ class User implements UserInterface, \Serializable
     {
         $this->articleComments = new ArrayCollection();
         $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getRecaptcha()
+    {
+        return $this->recaptcha;
+    }
+
+    /**
+     * @param boolean $recaptcha
+     */
+    public function setRecaptcha($recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
     }
 
     /**

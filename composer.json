@@ -27,7 +27,8 @@
         "egeloen/ckeditor-bundle": "^4.0",
         "helios-ag/fm-elfinder-bundle": "~6",
         "knplabs/knp-time-bundle": "^1.7",
-        "stof/doctrine-extensions-bundle": "^1.2"
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "excelwebzone/recaptcha-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
