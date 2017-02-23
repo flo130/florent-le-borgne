@@ -1,6 +1,7 @@
 # pour passer ici, il faut mettre : "translator: { fallbacks: ["%locale%"] }" dans config.yml
 
 app:
+    by: by
     confirm: confirm
     cancel: cancel
     ok: ok
