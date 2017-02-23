@@ -1,0 +1,10 @@
+{{ form_start(form, { 
+    'attr': {
+        'role' : 'form',
+        'id' : 'user_change_role_form'
+    },
+    'action' : path('admin_change_role', { 'slug' : user.slug })
+}) }}
+    {{ form_row(form.roles) }}
+    <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
+{{ form_end(form) }}

@@ -76,41 +76,16 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserChangeRoleForm::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $isValid = $form->isValid();
-            if ($isValid) {
-                die(var_dump($user));
-
-                $em->persist($article);
-                $em->flush();
-                $this->get('logger')->info('Article modification', array('id' => $user->getId()));
-                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
-                $redirectUrl = $this->generateUrl('admin_user', array(
-                    'slug' => $user->getSlug(),
-                ), UrlGeneratorInterface::ABSOLUTE_URL);
-                if (!$request->isXmlHttpRequest()) {
-                    return $this->redirect($redirectUrl);
-                }
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($user);
+            $em->flush();
+            $this->get('logger')->info('Article modification', array('id' => $user->getId()));
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
+            return $this->redirect($this->generateUrl('admin_user'));
         }
-        //retourne un JsonResponse si on est en ajax, une Response sinon
-        if ($request->isXmlHttpRequest()) {
-            if ($isValid) {
-                return new JsonResponse(array(
-                    'redirect' => $redirectUrl,
-                ), 200);
-            } else {
-                return new JsonResponse(array(
-                    'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
-                    'form' => $this->renderView('AppBundle:pages/admin:userChangeRolePage.html.twig', array(
-                        'form' => $form->createView(),
-                    )),
-                ), 400);
-            }
-        } else {
-            return $this->render('AppBundle:pages/admin:userChangeRolePage.html.twig', array(
-                'form' => $form->createView(),
-            ));
-        }
+        return $this->render('AppBundle:pages/admin:userChangeRolePage.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView(),
+        ));
     }
 }

@@ -30,8 +30,9 @@ class User implements UserInterface, \Serializable
 
     /**
      * Utile juste pour valider la captcha google
+     * Et utile juste pour le form de registration (cf. groups)
      * 
-     * @Recaptcha\IsTrue
+     * @Recaptcha\IsTrue(groups={"Default"})
      */
     private $recaptcha;
 

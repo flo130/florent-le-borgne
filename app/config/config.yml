@@ -163,5 +163,3 @@ fm_elfinder:
 ewz_recaptcha:
     public_key:  6Le6oBYUAAAAACyTYgT59XO7XhgrmLiTbq8kGqBI
     private_key: 6Le6oBYUAAAAAFBRgbSsD2uzcjtEtTjQ20XFTBuO
-    # Not needed as "%kernel.default_locale%" is the default value for the locale key
-    locale_key: %kernel.default_locale%

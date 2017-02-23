@@ -71,6 +71,9 @@ app:
         name: nom
         login: adresse email
         comment: commentaire
+        roles: rôles
+        role_member: membre
+        role_admin: administrateur
     admin: 
         index: index
         admin: admin

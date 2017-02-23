@@ -50,9 +50,7 @@ class ArticleCommentController extends Controller
                 'articleComment' => $comment->getArticleComment(),
             ];
         }
-        return new JsonResponse([
-            'comments' => $comments,
-        ]);
+        return new JsonResponse(array('comments' => $comments));
     }
 
     /**

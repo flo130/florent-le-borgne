@@ -1,9 +1,23 @@
-{{ form_start(form, { 
-    'attr': {
-        'role' : 'form',
-        'id' : 'user_change_role_form'
-    }})
-}}
-    {{ form_row(form.roles) }}
-    <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
-{{ form_end(form) }}
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ parent() }} - {{ 'app.admin.change_role' | trans | capitalize }} - {{ user.name }}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_user') }}">{{ 'app.admin.search.user' | trans | capitalize }}</a>
+                </li>
+                <li class="active">
+                    {{ 'app.admin.change_role' | trans | capitalize }} - {{ user.name }}
+                </li>
+            </ol>
+        </div>
+    </div>
+    <h1>{{ 'app.admin.change_role' | trans | capitalize }} - {{ user.name }}</h1>
+    {% include 'AppBundle:forms:userChangeRoleForm.html.twig' with { 'form' : form } %}
+{% endblock %}

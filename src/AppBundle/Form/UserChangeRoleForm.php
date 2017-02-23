@@ -18,11 +18,12 @@ class UserChangeRoleForm extends AbstractType
         $builder
             ->add('roles', ChoiceType::class, array(
                 'choices' => array(
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_MEMBRE' => 'ROLE_MEMBRE',
+                    'app.form.role_admin' => 'ROLE_ADMIN',
+                    'app.form.role_member' => 'ROLE_MEMBRE',
                 ),
                 'expanded' => true,
                 'multiple' => true,
+                'label' => 'app.form.roles',
             ))
         ;
     }
@@ -34,6 +35,10 @@ class UserChangeRoleForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
+            //ici on spécifie un groupe de validation pour ne pas prendre en compte les autres règles (cf. "groups" dans l'entity User)
+            'validation_groups' => array(
+                'UserChangeRoleForm',
+            ),
             'data_class' => User::class,
             'attr' => array(
                 //'class' => 'submit-ajax',
