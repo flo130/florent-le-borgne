@@ -36,6 +36,11 @@ class LoadFixtures implements FixtureInterface
             $manager,
             ['providers' => [$this]]
         );
+        Fixtures::load(
+            __DIR__.'/parameterFixtures.yml',
+            $manager,
+            ['providers' => [$this]]
+        );
     }
 
     /**
@@ -82,6 +87,22 @@ class LoadFixtures implements FixtureInterface
         $data = array(
             Article::DRAFT_STATUS,
             Article::PUBLISHED_STATUS,
+        );
+        $key = array_rand($data);
+        $return = $data[$key];
+        return $return;
+    }
+
+    /**
+     * Ici on retourne aléatoirement des boolean
+     * Dans le fichier de conf "xxxfixtures.yml" on pourra appeler directement "<getRandomTrueFalse()>" pour avoir un role aléatoire
+     *
+     * @return String
+     */
+    public function getRandomTrueFalse() {
+        $data = array(
+            true,
+            false,
         );
         $key = array_rand($data);
         $return = $data[$key];

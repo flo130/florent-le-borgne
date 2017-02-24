@@ -1,0 +1,5 @@
+AppBundle\Entity\Parameter:
+    parameter_{0..10}:
+        title: <sentence()>
+        description: <sentence()>
+        isActive: <getRandomTrueFalse()>

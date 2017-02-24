@@ -1,0 +1,9 @@
+{{ form_start(form, { 
+    'attr': {
+        'role' : 'form',
+        'id' : 'param_form'
+    },
+    'action' : path('admin_parameter')
+}) }}
+    {{ form_row(form.isActive, { 'label': param.title, 'attr': { 'onchange': 'this.form.submit();' }}) }}
+{{ form_end(form) }}
