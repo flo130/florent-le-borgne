@@ -8,11 +8,6 @@ body {
     box-shadow: 0 1px 10px rgba(0,0,0,0.3);
 }
 
-/* permet d'avoir toujours la même taille de carousel (tronque les images... : à revoir) */
-.carousel-inner {
-    max-height: 400px;
-}
-
 /* styles du menu en forme d'arbo */
 .list-group-tree {
     padding: 15px;

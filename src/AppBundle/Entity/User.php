@@ -399,6 +399,8 @@ class User implements UserInterface, \Serializable
             $this->loginCount,
             $this->firstLogin,
             $this->createdAt,
+            $this->updatedAt,
+            $this->slug,
         ));
     }
 
@@ -419,6 +421,8 @@ class User implements UserInterface, \Serializable
             $this->loginCount,
             $this->firstLogin,
             $this->createdAt,
+            $this->updatedAt,
+            $this->slug,
         ) = unserialize($serialized);
     }
 }
