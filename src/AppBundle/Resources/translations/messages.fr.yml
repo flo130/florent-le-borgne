@@ -74,6 +74,8 @@ app:
         roles: rôles
         role_member: membre
         role_admin: administrateur
+        captcha: captcha
+        passwd_not_match: Les deux mots de passe ne sont pas les mêmes.
     admin: 
         index: index
         admin: admin

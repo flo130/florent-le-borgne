@@ -43,7 +43,6 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
         </script>
-        <script src='//www.google.com/recaptcha/api.js'></script>
     </head>
     <body>
         {# header de la page (menu) #}
@@ -87,6 +86,7 @@
                 '//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js'
                 '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js'
                 '//cdn.jsdelivr.net/highlight.js/8.5/highlight.min.js'
+                '//www.google.com/recaptcha/api.js'
                 '@js_app'
             %}
                 <script src="{{ asset_url }}"></script>

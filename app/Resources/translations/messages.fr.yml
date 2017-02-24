@@ -8,6 +8,11 @@ app:
     yes: oui
     no: non
     msg_confirm: êtes-vous sûr de continuer cette action ?
+    form: 
+        plain_password: password
+        plain_password_repeate: repeate password
+        captcha: captcha
+        passwd_not_match: Les deux mots de passe ne sont pas les mêmes.
     article:
         create: créer un article
         search: rechercher un article

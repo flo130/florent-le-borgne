@@ -76,6 +76,8 @@ app:
         roles: roles
         role_member: member
         role_admin: administrator
+        captcha: captcha
+        passwd_not_match: The password fields must match.
     admin:
         index: index
         admin: admin

@@ -8,6 +8,11 @@ app:
     yes: yes
     no: no
     msg_confirm: are you sure to continue this action ? 
+    form: 
+        plain_password: password
+        plain_password_repeate: repeate password
+        captcha: captcha
+        passwd_not_match: The password fields must match.
     article:
         create: create an article
         search: search an article

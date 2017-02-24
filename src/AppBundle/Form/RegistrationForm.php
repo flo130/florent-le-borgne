@@ -28,14 +28,17 @@ class RegistrationForm extends AbstractType
             //RepeatedType permet d'avoir un "password confirm"
             ->add('plainPassword', RepeatedType::class, array(
                 'first_options'  => array(
-                    'label' => 'app.form.plain_password',
+                    //'label' => 'app.form.plain_password',
                 ),
                 'second_options' => array(
-                    'label' => 'app.form.plain_password_repeate',
+                    //'label' => 'app.form.plain_password_repeate',
                 ),
                 'type' => PasswordType::class,
+                //'invalid_message' => 'app.form.passwd_not_match',
             ))
-            ->add('recaptcha', EWZRecaptchaType::class)
+            ->add('recaptcha', EWZRecaptchaType::class, array(
+                'label' => 'app.form.captcha',
+            ))
         ;
     }
 
