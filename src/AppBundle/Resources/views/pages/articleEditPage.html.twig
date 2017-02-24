@@ -29,7 +29,7 @@
             </ol>
         </div>
     </div>
-    <h1>{{ 'app.update_article' | trans | capitalize }}</h1>
+    <h1>{{ 'app.edit' | trans | capitalize }} - {{ article.title | capitalize }}</h1>
     {# si l'utilisateur peut voir ou supprimer l'article en cours d'édition, on lui affiche le lien vers la page #}
     <div class="pull-right">
         <a class="btn btn-default" href="{{ path('article_show', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.see' | trans | capitalize }}">
