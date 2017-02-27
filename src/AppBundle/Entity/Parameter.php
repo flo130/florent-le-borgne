@@ -36,6 +36,13 @@ class Parameter
 	private $description;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(type="string")
+	 */
+	private $key;
+
+	/**
 	 * @var boolean
 	 * 
 	 * @ORM\Column(type="boolean")
@@ -89,6 +96,19 @@ class Parameter
 	public function setDescription($description)
 	{
 		$this->description = $description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getKey()
+	{
+		return $this->key;
+	}
+
+	public function setKey($key)
+	{
+		$this->key = $key;
 	}
 
 	/**

@@ -18,34 +18,40 @@ use AppBundle\Form\ParameterForm;
  */
 class ParameterController extends Controller
 {
-	/**
-	 * Page des parametres
-	 *
-	 * @Route("/", name="admin_parameter"))
-	 *
-	 * @Method({"GET", "POST"})
-	 */
-	public function parameterAction(Request $request)
-	{
-		if ($request->isMethod('GET')) {
-			$em = $this->getDoctrine()->getManager();
-			$params = $em->getRepository('AppBundle:Parameter')->findAll();
-			
-			$paramsFormsTab = array();
-			foreach ($params as $param) {
-				$form = $this->createForm(ParameterForm::class, $param);
-				$paramsFormsTab[] = $this->renderView('AppBundle:forms:parameterForm.html.twig', array(
-					'form' => $form->createView(),
-					'param' => $param,
-				));
-			}
-			return $this->render('AppBundle:pages/admin:parameterPage.html.twig', array(
-				'paramsFormsTab' => $paramsFormsTab,
-			));
-		}
-
-		if ($request->isMethod('POST')) {
-			
-		}
-	}
+    /**
+     * Page des parametres
+     *
+     * @Route("/", name="admin_parameter"))
+     *
+     * @Method({"GET", "POST"})
+     */
+    public function parameterAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        //soumission d'un formulaire de parametre
+        if ($request->isMethod('POST')) {
+            $values = $request->get('parameter_form', null);
+            $parameter = $em->getRepository('AppBundle:Parameter')->find($values['id']);
+            $parameter->setIsActive(isset($values['isActive'])?1:0);
+            $em->persist($parameter);
+            $em->flush();
+            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
+            return $this->redirect($this->generateUrl('admin_parameter'));
+        }
+        //affichage de la page contenant les formulaires des parametres
+        if ($request->isMethod('GET')) {
+            $params = $em->getRepository('AppBundle:Parameter')->findAll();
+            $paramsFormsTab = array();
+            foreach ($params as $param) {
+                $form = $this->createForm(ParameterForm::class, $param);
+                $paramsFormsTab[] = $this->renderView('AppBundle:forms:parameterForm.html.twig', array(
+                    'form' => $form->createView(),
+                    'param' => $param,
+                ));
+            }
+            return $this->render('AppBundle:pages/admin:parameterPage.html.twig', array(
+                'paramsFormsTab' => $paramsFormsTab,
+            ));
+        }
+    }
 }

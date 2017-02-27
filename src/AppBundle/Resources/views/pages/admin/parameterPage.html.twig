@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - oooooooooooooooo
+    {{ parent() }} - {{ 'app.admin.search.parameter' | trans | capitalize }}
 {% endblock %}
 
 {% block body %}
@@ -12,12 +12,12 @@
                     <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
                 </li>
                 <li class="active">
-                    oooooooooooooooo
+                    {{ 'app.admin.search.parameter' | trans | capitalize }}
                 </li>
             </ol>
         </div>
     </div>
-    <h1>oooooooooooooooo</h1>
+    <h1>{{ 'app.admin.search.parameter' | trans | capitalize }}</h1>
     {% for paramForm in paramsFormsTab %}
         {{ paramForm | raw }}
     {% endfor %}

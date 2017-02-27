@@ -34,12 +34,11 @@ class ArticleController extends Controller
      */
     public function showAction(Article $article)
     {
+        $em = $this->getDoctrine()->getManager();
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
+            'isActiveComments' => $em->getRepository('AppBundle:Parameter')->findOneByKey('comments')->getIsActive(),
             //getPath : permet de récupérer tous les parents de la catégorie de l'article
-            'categories' => $this->getDoctrine()
-                ->getManager()
-                ->getRepository('AppBundle:Category')
-                ->getPath($article->getCategory()),
+            'categories' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
             'commentForm' => $this->createForm(ArticleCommentForm::class)->createView(),
             'article' => $article,
         ));

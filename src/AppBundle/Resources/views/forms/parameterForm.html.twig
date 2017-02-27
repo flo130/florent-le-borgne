@@ -1,9 +1,16 @@
 {{ form_start(form, { 
     'attr': {
         'role' : 'form',
-        'id' : 'param_form'
+        'id' : 'param_form' ~ param.id
     },
     'action' : path('admin_parameter')
 }) }}
-    {{ form_row(form.isActive, { 'label': param.title, 'attr': { 'onchange': 'this.form.submit();' }}) }}
+    {{ form_row(form.isActive, { 
+        'label': param.title,
+        'attr': {
+            'onchange' : 'this.form.submit();'
+        }
+    }) }}
+    <p class="help-block">{{ param.description }}</p>
+    {{ form_row(form.id, { 'value' : param.id }) }}
 {{ form_end(form) }}

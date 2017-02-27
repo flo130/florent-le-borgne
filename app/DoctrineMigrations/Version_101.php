@@ -39,6 +39,7 @@ class Version_101 extends AbstractMigration implements ContainerAwareInterface
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('CREATE TABLE parameter (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, is_active TINYINT(1) NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE parameter ADD `key` VARCHAR(255) NOT NULL');
     }
 
     /**
@@ -62,21 +63,25 @@ class Version_101 extends AbstractMigration implements ContainerAwareInterface
 
         $carouselParam = new Parameter();
         $carouselParam->setTitle('Carousel');
+        $carouselParam->setKey('carousel');
         $carouselParam->setDescription("Active l'affichage du carousel");
         $carouselParam->setIsActive(true);
 
         $loginParam = new Parameter();
         $loginParam->setTitle('Login');
+        $loginParam->setKey('login');
         $loginParam->setDescription("Active l'option de login");
         $loginParam->setIsActive(true);
 
         $registerParam = new Parameter();
         $registerParam->setTitle('Register');
+        $registerParam->setKey('register');
         $registerParam->setDescription("Active l'option de création de compte");
         $registerParam->setIsActive(true);
 
         $commentsParam = new Parameter();
         $commentsParam->setTitle('Comments');
+        $commentsParam->setKey('comments');
         $commentsParam->setDescription("Active l'option de création de commentaire");
         $commentsParam->setIsActive(true);
 

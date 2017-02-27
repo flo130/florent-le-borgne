@@ -13,6 +13,8 @@ app:
         plain_password_repeate: repeate password
         captcha: captcha
         passwd_not_match: Les deux mots de passe ne sont pas les mêmes.
+        enable: activer
+        disable: désactiver
     article:
         create: créer un article
         search: rechercher un article

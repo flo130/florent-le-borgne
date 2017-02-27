@@ -36,45 +36,49 @@
             {% include 'AppBundle:blocs:articleDetail.html.twig' with { 'article' : article } %}
         </div>
     </section>
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>{{ 'app.comment' | trans | capitalize }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
-            <div id="comments">
-                {% if article.articleComments|length < 1 %}
-                    {{ 'app.no_data.comment' | trans | capitalize }}
-                {% endif %}
-                {# Pas besoin de charger le bloc des commentaires ici, car il sera chargé en ajax via le script react inclus plus bas #}
-                {# include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comments' : article.articleComments } #}
-            </div>
-            {% if is_granted('ROLE_MEMBRE') %}
-                <div class="well">
-                    <h4>{{ 'app.leave_a' | trans | capitalize }} {{ 'app.comment' | trans | capitalize }}</h4>
-                    {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
-                        'form' : commentForm,
-                        'article' : article
-                    } %}
+    {% if isActiveComments %}
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>{{ 'app.comment' | trans | capitalize }}{% if article.articleComments|length > 1 %}s{% endif %}</h4>
+                <div id="comments">
+                    {% if article.articleComments|length < 1 %}
+                        {{ 'app.no_data.comment' | trans | capitalize }}
+                    {% endif %}
+                    {# Pas besoin de charger le bloc des commentaires ici, car il sera chargé en ajax via le script react inclus plus bas #}
+                    {# include 'AppBundle:blocs:articleCommentForArticle.html.twig' with { 'comments' : article.articleComments } #}
                 </div>
-            {% endif %}
+                {% if is_granted('ROLE_MEMBRE') %}
+                    <div class="well">
+                        <h4>{{ 'app.leave_a' | trans | capitalize }} {{ 'app.comment' | trans | capitalize }}</h4>
+                        {% include 'AppBundle:forms:articleCommentForm.html.twig' with { 
+                            'form' : commentForm,
+                            'article' : article
+                        } %}
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {% javascripts
-        '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js'
-        '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js'
-        '//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <script type="text/babel" src="{{ asset('/bundles/app/js/articleComment.react.js') }}"></script>
-    <script type="text/babel">
+{% if isActiveComments %}
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts
+            '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js'
+            '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js'
+            '//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script type="text/babel" src="{{ asset('/bundles/app/js/articleComment.react.js') }}"></script>
+        <script type="text/babel">
         var commentUrl = '{{ path('get_article_comment', { 'id' : article.id }) }}';
         ReactDOM.render(
             <CommentSection url={commentUrl} />,
             document.getElementById('comments')
         );
     </script>
-{% endblock %}
+    {% endblock %}
+{% endif %}

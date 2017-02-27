@@ -13,6 +13,8 @@ app:
         plain_password_repeate: repeate password
         captcha: captcha
         passwd_not_match: The password fields must match.
+        enable: enable
+        disable: disable
     article:
         create: create an article
         search: search an article
