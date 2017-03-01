@@ -30,7 +30,7 @@
     {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'slug' : article.user.slug }) }}">{{ article.user.name }}</a>
 </p>
 <p>
-    <span class="glyphicon glyphicon-time"></span> {{ 'app.posted' | trans | capitalize }} {{ article.publishedAt | ago }}
+    <span class="glyphicon glyphicon-time"></span> {{ 'app.posted' | trans | capitalize }} {{ article.createdAt | ago }}
     <br>
     <span class="glyphicon glyphicon-edit"></span> {{ 'app.last_edit' | trans | capitalize }} {{ article.updatedAt | ago }}
 </p>

@@ -33,8 +33,10 @@ class UserController extends Controller
      */
     public function loginAction(Request $request)
     {
-        //il faut que l'utilisateur soit annonyme
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        //il faut que l'utilisateur soit annonyme et que l'option de login soit activée
+        $em = $this->getDoctrine()->getManager();
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')
+            || !$em->getRepository('AppBundle:Parameter')->findOneByKey('login')->getIsActive()) {
             return $this->redirectToRoute('homepage');
         }
 
@@ -103,8 +105,10 @@ class UserController extends Controller
      */
     public function registerAction(Request $request)
     {
-        //il faut que l'utilisateur soit annonyme
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        //il faut que l'utilisateur soit annonyme et que l'option de register soit active
+        $em = $this->getDoctrine()->getManager();
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')
+            || !$em->getRepository('AppBundle:Parameter')->findOneByKey('register')->getIsActive()) {
             return $this->redirectToRoute('homepage');
         }
         $form = $this->createForm(RegistrationForm::class);
