@@ -6,7 +6,7 @@
     <div class="form-group{% if form_errors(form.image) %} has-error{% endif %}">
         {{ form_label(form.image) }}
         <div class="fileinput fileinput-new" data-provides="fileinput">
-            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+            <div class="fileinput-preview thumbnail" data-trigger="fileinput">
                 {% if form.vars.value is not empty and form.vars.value.image is not empty %}
                     <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.image) }}">
                 {% endif %}
