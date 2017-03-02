@@ -39,7 +39,7 @@ class Category
      * Gedmo\Slug permet de créer facilement des URLs SEO-Friendly.
      * Ici on met updatable à false, cela indiquera que le slug ne sera jamais mis à jour une fois créé, même si "title" est changé.
      * cf. stof_doctrine_extensions dans config.yml
-     * @Gedmo\Slug(fields={"title"}, updatable=false)
+     * @Gedmo\Slug(fields={"title"}, updatable=true)
      *
      * @ORM\Column(length=255, unique=true)
      */
