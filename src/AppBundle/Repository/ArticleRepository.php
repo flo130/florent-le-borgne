@@ -208,6 +208,23 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles publiés, liés à un path de catégories, triés par date de publication.
+     * Un path de catégories est une arborescence de categories
+     *
+     * @param int $idCategory
+     *
+     * @return Article[]
+     */
+    public function findPublishedByCategoryPathOrderByPublishedDate($categoryPath)
+    {
+    	$categories = array();
+    	foreach ($categoryPath as $category) {
+    		$categories = array_merge($categories, $this->findPublishedByCategoryOrderByPublishedDate($category->getId()));
+        }
+        return $categories;
+    }
+    
+    /**
      * Retourne tous les articles liés à un utilisateur
      * 
      * @param int $idUser

@@ -85,7 +85,7 @@ class ArticleController extends Controller
                 }
             },
         );
-        //récipère les catégories sous forme d'arbre en appliquant les options ci-dessus
+        //récupère les catégories sous forme d'arbre en appliquant les options ci-dessus
         $allCategoriesTree = $em->getRepository('AppBundle:Category')->childrenHierarchy(
             null,
             false,
@@ -94,7 +94,9 @@ class ArticleController extends Controller
         return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
             'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
             'currentCategory' => $category,
-            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoryOrderByPublishedDate($category->getId()),
+            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoryPathOrderByPublishedDate(
+                $em->getRepository('AppBundle:Category')->getPath($category)
+            ),
             'allCategoriesTree' => $allCategoriesTree,
             'searchForm' => $this->createForm(SearchForm::class)->createView(),
         ));
