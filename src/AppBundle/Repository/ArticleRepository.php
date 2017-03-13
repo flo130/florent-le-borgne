@@ -2,6 +2,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -209,18 +210,22 @@ class ArticleRepository extends EntityRepository
 
     /**
      * Retourne tous les articles publiés, liés à un path de catégories, triés par date de publication.
-     * Un path de catégories est une arborescence de categories
      *
-     * @param int $idCategory
+     * @param array $childrenCategory
+     * @param Category $category
      *
      * @return Article[]
      */
-    public function findPublishedByCategoryPathOrderByPublishedDate($categoryPath)
+    public function findPublishedByCategoriesOrderByPublishedDate($childrenCategory, Category $category)
     {
-    	$categories = array();
-    	foreach ($categoryPath as $category) {
-    		$categories = array_merge($categories, $this->findPublishedByCategoryOrderByPublishedDate($category->getId()));
+        $categories = array();
+        //on récupère les éléments des catégories enfants
+        foreach ($childrenCategory as $childCategory) {
+            //on les ajoute dans un tableau qui sera retourné
+            $categories = array_merge($categories, $this->findPublishedByCategoryOrderByPublishedDate($childCategory->getId()));
         }
+        //on rajoute aussi les éléments de la catégorie en cours
+        $categories = array_merge($categories, $this->findPublishedByCategoryOrderByPublishedDate($category->getId()));
         return $categories;
     }
     
