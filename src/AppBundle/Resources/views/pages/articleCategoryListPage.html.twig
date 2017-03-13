@@ -32,7 +32,7 @@
     </div>
     <div class="row">
         <section class="col-md-8">
-            <h1>{{ 'app.articles' | trans | capitalize }} - {{ currentCategory.title | capitalize }}</h1>
+            <h1>{{ 'app.articles' | trans | capitalize }} - {{ currentCategory.title | capitalize }} <span class="badge">{{ articles | length }}</span></h1>
             {% for article in articles %}
                 <div class="row">
                     <div class="col-md-12">
