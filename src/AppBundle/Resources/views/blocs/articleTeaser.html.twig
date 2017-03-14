@@ -10,6 +10,9 @@
 </h2>
 {# si l'utilisateur peut éditer ou supprimer l'article, on lui affiche le lien vers la page #}
 <div class="pull-right">
+    {% if article.status != 1 %}
+        <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'app.draft' | trans | capitalize }}"></span>
+    {% endif %}
     {% if is_granted('edit', article) %}
         <a class="btn btn-default" href="{{ path('article_edit', { 'slug' : article.slug }) }}" role="button" data-toggle="tooltip" data-placement="top" title="{{ 'app.edit' | trans | capitalize }}">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
