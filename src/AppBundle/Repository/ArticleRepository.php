@@ -123,6 +123,26 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne une requete paginée des articles publiés, triés par date de publication
+     *
+     * @param int $page
+     * @param int $maxResults
+     *
+     * @return Paginator
+     */
+    public function findAllPublishedWithPaginatorOrderByUpdatedDateDesc($page=1, $maxResults=10)
+    {
+        $query = $this->createQueryBuilder('article')
+            ->setFirstResult(($page - 1) * $maxResults)
+            ->setMaxResults($maxResults)
+            ->andWhere('article.status = :published')
+            ->setParameter('published', Article::PUBLISHED_STATUS)
+            ->orderBy('article.updatedAt', 'DESC');
+        $paginator = new Paginator($query);
+        return $paginator;
+    }
+
+    /**
      * Retourne la liste des articles en brouillon, triés par date de creation
      * 
      * @return Article[]
