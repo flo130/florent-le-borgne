@@ -91,13 +91,13 @@ class ArticleRepository extends EntityRepository
     public function findPublishedByCategoriesOrderByUpdatedDateDesc($childrenCategory, Category $category)
     {
         $categories = array();
+        //on rajoute aussi les éléments de la catégorie en cours
+        $categories = array_merge($categories, $this->findPublishedByCategoryOrderByUpdatedDateDesc($category->getId()));
         //on récupère les éléments des catégories enfants
         foreach ($childrenCategory as $childCategory) {
             //on les ajoute dans un tableau qui sera retourné
             $categories = array_merge($categories, $this->findPublishedByCategoryOrderByUpdatedDateDesc($childCategory->getId()));
         }
-        //on rajoute aussi les éléments de la catégorie en cours
-        $categories = array_merge($categories, $this->findPublishedByCategoryOrderByUpdatedDateDesc($category->getId()));
         return $categories;
     }
     
