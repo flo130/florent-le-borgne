@@ -6,6 +6,7 @@ app:
     update_success: update success
     delete_success: delete success
     create_success: create success
+    create_error: create error
     action: action
     title: title
     status: status
@@ -87,6 +88,7 @@ app:
             user: users
             category: categories
             comment: comments
+        add_category: add a root category
         return_admin_account: exit impersonation
         change_role: change role
         first_login: first login

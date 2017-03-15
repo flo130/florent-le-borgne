@@ -6,6 +6,7 @@ app:
     update_success: mis à jour avec succès
     delete_success: supprimer avec succès
     create_success: créé avec succès
+    create_error: erreur lors de la création
     action: action
     title: titre
     status: status
@@ -85,6 +86,7 @@ app:
             user: utilisateurs
             category: categories
             comment: commentaires
+        add_category: ajouter une catégorie racine
         return_admin_account: quitter ce compte
         change_role: changer le rôle
         first_login: premier login

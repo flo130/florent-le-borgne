@@ -113,8 +113,8 @@ function manageMenuTreeJs() {
     })
     .on('create_node.jstree', function (e, data) {
         $.post(URL_CATEGORY_CREATE, {
-            'parentId' : data.parent,
-            'title' : 'title'
+            'category_form[parent]' : data.parent,
+            'category_form[title]' : 'title'
         }).done(function(response) {
             //modifie l'id du nouveau noeud par l'id créé en base
             data.instance.set_id(data.node, response.id);

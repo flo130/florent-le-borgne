@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Article;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleCommentRepository")
@@ -40,6 +41,8 @@ class ArticleComment
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 

@@ -26,4 +26,21 @@
     <div class="jstree">
         {{ articleCategories | raw }}
     </div>
+    <br>
+    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#category-form">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ 'app.admin.add_category' | trans | capitalize }}"></span>
+    </a>
+    <div class="modal fade" id="category-form" tabindex="-1" role="dialog" aria-labelledby="category-form-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="category-form-label">{{ 'app.admin.add_category' | trans | capitalize }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% include 'AppBundle:forms:categoryForm.html.twig' with { 'form' : form } %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

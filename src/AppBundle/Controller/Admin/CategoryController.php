@@ -45,6 +45,7 @@ class CategoryController extends Controller
                      'childClose' => '</li>',
                      'nodeDecorator' => function($node) use (&$controller) { return $node['title']; },
                 )),
+            'form' => $this->createForm(CategoryForm::class)->createView(),
         ));
     }
 
@@ -157,27 +158,30 @@ class CategoryController extends Controller
      *
      * @Route("/create", name="admin_category_create"))
      *
-     * @Method({"GET", "POST"})
+     * @Method({"POST"})
      */
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('AppBundle:Category');
-        $parentCategory = $repo->find($request->get('parentId', null));
-        $category = new Category();
-        $category->setTitle($request->get('title', ''));
-        if ($parentCategory) {
-            $category->setParent($parentCategory);
+        $form = $this->createForm(CategoryForm::class);
+        $form->handleRequest($request);
+        $category = $form->getData();
+        $validation = $form->isValid();
+        if ($validation) {
+            $em->persist($category);
+            $em->flush();
         }
-        $em->persist($category);
-        $em->flush();
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'status' => true,
                 'id' => $category->getId(),
             ));
         } else {
-            $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
+            if ($validation) {
+                $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
+            } else {
+                $this->addFlash('error', ucfirst(strtolower($this->get('translator')->trans('app.create_error'))));
+            }
             return $this->redirect($this->generateUrl('admin_category'));
         }
     }

@@ -69,7 +69,6 @@ class ArticleCommentController extends Controller
         $articleComment = $form->getData();
         if ($form->isValid()) {
             $articleComment->setUser($this->getUser());
-            $articleComment->setCreatedAt(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($articleComment);
             $em->flush();

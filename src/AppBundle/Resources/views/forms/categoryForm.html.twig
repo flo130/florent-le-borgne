@@ -1,0 +1,14 @@
+{#
+    params : 
+        - form : CategoryForm object
+#}
+{{ form_start(form, { 
+    'attr': {
+        'role' : 'form'
+    },
+    'action' : path('admin_category_create')
+}) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.parent) }}
+    <button class="btn btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
+{{ form_end(form) }}

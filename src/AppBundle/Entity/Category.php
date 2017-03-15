@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Categorie
@@ -30,6 +31,8 @@ class Category
      * @Gedmo\Versioned
      * 
      * @ORM\Column(length=64)
+     * 
+     * @Assert\NotBlank()
      */
     private $title;
 
