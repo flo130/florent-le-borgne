@@ -90,7 +90,7 @@ class HomeController extends Controller
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'content' => $this->renderView('AppBundle:blocs:articleTeaserList.html.twig', array(
-                    'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByPublishedDate($page, self::NB_ARTICLES_PER_PAGE),
+                    'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByUpdatedDateDesc($page, self::NB_ARTICLES_PER_PAGE),
                     'printArticleImage' => true,
                 )),
                 'pagination' => $this->renderView('AppBundle:blocs:pagination.html.twig', array(
@@ -103,7 +103,7 @@ class HomeController extends Controller
                 'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByUpdatedDateDesc($page, self::NB_ARTICLES_PER_PAGE),
                 'articlesPagination' => $pagination,
                 'categoriesTree' => $htmlTree,
-                'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDate(self::NB_ARTICLES_IN_CAROUSEL),
+                'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDateDesc(self::NB_ARTICLES_IN_CAROUSEL),
                 'searchForm' => $this->createForm(SearchForm::class)->createView(),
             ));
         }

@@ -94,7 +94,7 @@ class ArticleController extends Controller
         return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
             'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
             'currentCategory' => $category,
-            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoriesOrderByPublishedDate(
+            'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoriesOrderByUpdatedDateDesc(
                 //ici, si on rajoute true à children($category, true), on n'a pas tous les enfants, juste les sous-catégories les plus proches
                 $em->getRepository('AppBundle:Category')->children($category),
                 $category

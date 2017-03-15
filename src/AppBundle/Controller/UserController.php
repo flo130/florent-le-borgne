@@ -200,7 +200,7 @@ class UserController extends Controller
         return $this->render('AppBundle:pages:userAccountPage.html.twig', array(
             'user' => $user,
             'userForm' => $form->createView(),
-            'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUser($user->getId()),
+            'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUserOrderByUpdatedDateDesc($user->getId()),
             'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
         ));
     }

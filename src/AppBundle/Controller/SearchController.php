@@ -40,7 +40,7 @@ class SearchController extends Controller
 				//recherche les articles
 				$data = $form->getData();
 				$em = $this->getDoctrine()->getManager();
-				$results = $em->getRepository('AppBundle:Article')->searchPublished($data['search']);
+				$results = $em->getRepository('AppBundle:Article')->searchPublishedOrderByUpdatedDateDesc($data['search']);
 			}
 		}
 		return $this->render('AppBundle:pages:searchPage.html.twig', array(
