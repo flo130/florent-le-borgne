@@ -57,7 +57,7 @@
                 <h4>{{ 'app.categories' | trans | capitalize }}</h4>
                 <div class="list-group-tree">
                     <div class="list-group list-group-root well">
-                        {{ allCategoriesTree | raw }}
+                        {{ render(controller('AppBundle:Category:tree')) }}
                     </div>
                 </div>
             </section>

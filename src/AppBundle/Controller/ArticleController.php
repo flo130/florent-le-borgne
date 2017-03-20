@@ -35,11 +35,15 @@ class ArticleController extends Controller
     public function showAction(Article $article)
     {
         $em = $this->getDoctrine()->getManager();
+        //récupère dans la conf si on doit afficher la partie commentaire
+        $activeComments = $em->getRepository('AppBundle:Parameter')->findOneByKey('comments')->getIsActive();
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
-            'isActiveComments' => $em->getRepository('AppBundle:Parameter')->findOneByKey('comments')->getIsActive(),
+            'isActiveComments' => $activeComments,
             //getPath : permet de récupérer tous les parents de la catégorie de l'article
             'categories' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
-            'commentForm' => $this->createForm(ArticleCommentForm::class)->createView(),
+            //formulaire de création de commentaire (seulement si l'option est active)
+            'commentForm' => $activeComments ? $this->createForm(ArticleCommentForm::class)->createView() : null,
+            //article dont on veut afficher le détail
             'article' => $article,
         ));
     }
@@ -58,48 +62,18 @@ class ArticleController extends Controller
     public function byCategoryAction(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-        //configure le "Tree" des catégories
-        $parent = 0;
-        $options = array(
-            'decorate' => true,
-            'rootOpen' => function($tree) use (&$parent) {
-                if (count($tree) && ($tree[0]['lvl'] != 0)) {
-                    return '<div class="list-group collapse" id="item-' . $parent . '">';
-                }
-            },
-            'rootClose' => function($child) {
-                if (count($child) && ($child[0]['lvl'] != 0)) {
-                    return '</div>';
-                }
-            },
-            'childOpen' => '',
-            'childClose' => '',
-            'nodeDecorator' => function($node) use (&$parent) {
-                //cherche les élements qui ont des enfants pour leur appliquer un comportement particulier
-                $nbChilds = count($node['__children']);
-                if ($nbChilds > 0) {
-                    $parent = $node['id'];
-                    return '<a href="#item-' . $parent . '" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>' . ucfirst($node['title']) . '<span class="badge">' . $nbChilds . '</span></a>';
-                } else {
-                    return '<a href="' . $this->generateUrl('article_by_category', array('slug' => $node['slug'])) . '" class="list-group-item">' . ucfirst($node['title']) . '</a>';
-                }
-            },
-        );
-        //récupère les catégories sous forme d'arbre en appliquant les options ci-dessus
-        $allCategoriesTree = $em->getRepository('AppBundle:Category')->childrenHierarchy(
-            null,
-            false,
-            $options
-        );
         return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
+            //arbre de catégories de l'article
             'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
+            //categorie courante de l'article
             'currentCategory' => $category,
+            //article appartenants à la catégorie recherchée
             'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoriesOrderByUpdatedDateDesc(
                 //ici, si on rajoute true à children($category, true), on n'a pas tous les enfants, juste les sous-catégories les plus proches
                 $em->getRepository('AppBundle:Category')->children($category),
                 $category
              ),
-            'allCategoriesTree' => $allCategoriesTree,
+            //formulaire de recherche
             'searchForm' => $this->createForm(SearchForm::class)->createView(),
         ));
     }
