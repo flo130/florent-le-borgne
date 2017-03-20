@@ -119,6 +119,44 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
+     * Retourne tous les articles brouillons liés à un utilisateur trié par date de mise à jour
+     *
+     * @param int $idUser
+     *
+     * @return Article[]
+     */
+    public function findDraftByUserOrderByUpdatedDateDesc($idUser)
+    {
+        return $this->createQueryBuilder('article')
+            ->andWhere('article.user = :idUser')
+            ->andWhere('article.status = :published')
+            ->setParameter('idUser', $idUser)
+            ->setParameter('published', Article::DRAFT_STATUS)
+            ->orderBy('article.updatedAt', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * Retourne tous les articles publiés liés à un utilisateur trié par date de mise à jour
+     *
+     * @param int $idUser
+     *
+     * @return Article[]
+     */
+    public function findPublishedByUserOrderByUpdatedDateDesc($idUser)
+    {
+        return $this->createQueryBuilder('article')
+            ->andWhere('article.user = :idUser')
+            ->andWhere('article.status = :published')
+            ->setParameter('idUser', $idUser)
+            ->setParameter('published', Article::PUBLISHED_STATUS)
+            ->orderBy('article.updatedAt', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Recherche tous les articles en fonction d'un terme donné
      *
      * @param string $term

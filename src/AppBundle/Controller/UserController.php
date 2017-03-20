@@ -201,6 +201,8 @@ class UserController extends Controller
             'user' => $user,
             'userForm' => $form->createView(),
             'userArticles' => $em->getRepository('AppBundle:Article')->findAllByUserOrderByUpdatedDateDesc($user->getId()),
+            'userDraftArticles' => $em->getRepository('AppBundle:Article')->findDraftByUserOrderByUpdatedDateDesc($user->getId()),
+            'userPublishedArticles' => $em->getRepository('AppBundle:Article')->findPublishedByUserOrderByUpdatedDateDesc($user->getId()),
             'userComments' => $em->getRepository('AppBundle:ArticleComment')->findByUserIdOrderByCreatedDate($user->getId()),
         ));
     }

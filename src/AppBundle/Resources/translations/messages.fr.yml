@@ -56,6 +56,9 @@ app:
         already_have_account: j'ai déjà un compte
         member_since: membre depuis
         welcome: bienvenue
+        all: tous
+        draft: brouillons
+        published: publiés
     home: accueil
     form: 
         image: image

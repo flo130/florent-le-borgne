@@ -73,21 +73,52 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="articles">
                     <h2>{{ 'app.articles' | trans | capitalize }}</h2>
-                    {% for userArticle in userArticles %}
-                        <div class="row">
-                            <div class="col-md-12">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#all" aria-controls="online" role="tab" data-toggle="tab">{{ 'app.user.all' | trans | capitalize }} <span class="badge">{{ userArticles | length }}</span></a></li>
+                        <li role="presentation"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">{{ 'app.user.published' | trans | capitalize }} <span class="badge">{{ userPublishedArticles | length }}</span></a></li>
+                        <li role="presentation"><a href="#draft" aria-controls="draft" role="tab" data-toggle="tab">{{ 'app.user.draft' | trans | capitalize }} <span class="badge">{{ userDraftArticles | length }}</span></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="all">
+                            {% for userArticle in userArticles %}
                                 {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
                                     'article' : userArticle,
                                     'printArticleImage' : false
                                 } %}
                                 {% if not loop.last %}<hr>{% endif %}
-                            </div>
+                            {% else %}
+                                <br>
+                                {{ 'app.no_data.article' | trans | capitalize }}
+                                <hr>
+                            {% endfor %}
                         </div>
-                    {% else %}
-                        <br>
-                        {{ 'app.no_data.article' | trans | capitalize }}
-                        <hr>
-                    {% endfor %}
+                        <div role="tabpanel" class="tab-pane" id="online">
+                            {% for userPublishedArticle in userPublishedArticles %}
+                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
+                                    'article' : userPublishedArticle,
+                                    'printArticleImage' : false
+                                } %}
+                                {% if not loop.last %}<hr>{% endif %}
+                            {% else %}
+                                <br>
+                                {{ 'app.no_data.article' | trans | capitalize }}
+                                <hr>
+                            {% endfor %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="draft">
+                            {% for userDraftArticle in userDraftArticles %}
+                                {% include 'AppBundle:blocs:articleTeaser.html.twig' with {
+                                    'article' : userDraftArticle,
+                                    'printArticleImage' : false
+                                } %}
+                                {% if not loop.last %}<hr>{% endif %}
+                            {% else %}
+                                <br>
+                                {{ 'app.no_data.article' | trans | capitalize }}
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="comments">
                     <h2>{{ 'app.comments' | trans | capitalize }}</h2>

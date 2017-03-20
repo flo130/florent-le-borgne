@@ -58,6 +58,9 @@ app:
         already_have_account: I already have an account
         member_since: member since
         welcome: welcome
+        all: all
+        draft: draft
+        published: published
     home: home
     form: 
         image: image
