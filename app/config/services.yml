@@ -107,3 +107,24 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+
+
+
+
+    app.workflow:
+        class: AppBundle\Workflow\Workflow
+
+    app.step1:
+        class: AppBundle\Workflow\Step1
+        tags:
+            - { name: app.step }
+    app.step2:
+        class: AppBundle\Workflow\Step2
+        tags:
+            - { name: app.step }
+    app.step3:
+        class: AppBundle\Workflow\Step3
+        tags:
+            - { name: app.step }
+
