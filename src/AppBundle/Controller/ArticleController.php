@@ -73,8 +73,6 @@ class ArticleController extends Controller
                 $em->getRepository('AppBundle:Category')->children($category),
                 $category
              ),
-            //formulaire de recherche
-            'searchForm' => $this->createForm(SearchForm::class)->createView(),
         ));
     }
 

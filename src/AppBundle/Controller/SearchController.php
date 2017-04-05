@@ -44,8 +44,24 @@ class SearchController extends Controller
 			}
 		}
 		return $this->render('AppBundle:pages:searchPage.html.twig', array(
-			'searchForm' => $form->createView(),
 			'searchResults' => $results,
+		));
+	}
+
+	/**
+	 * Retourne le HTML du formulaire de recherche.
+	 * Cette action n'a pas de route, elle n'est donc pas visible depuis l'extérieur, elle 
+	 * sert juste a être appelée dans les templates
+	 *
+	 * @param Request $request
+	 *
+	 * @return Response
+	 */
+	public function getFormAction(Request $request)
+	{
+		$form = $this->createForm(SearchForm::class);
+		return $this->render('AppBundle:forms:searchForm.html.twig', array(
+			'form' => $form->createView(),
 		));
 	}
 }

@@ -30,15 +30,10 @@
                 </ul>
             </li>
         {% endif %}
-        <li{% if route == 'search' %} class="active"{% endif %}>
-            <a{% if route != 'search' %} href="{{ path('search') }}"{% endif %}>{{ 'app.article.search' | trans | capitalize }}</a>
-        </li>
-        {% if is_granted('ROLE_MEMBRE') %}
-            <li{% if route == 'article_create' %} class="active"{% endif %}>
-                <a{% if route != 'article_create' %} href="{{ path('article_create') }}"{% endif %}>{{ 'app.article.create' | trans | capitalize }}</a>
-            </li>
-        {% endif %}
     </ul>
+    <div class="navbar-form navbar-left">
+        {{ render(controller('AppBundle:Search:getForm')) }}
+    </div>
     <ul class="nav navmenu-nav">
         {% if is_granted('ROLE_MEMBRE') %}
             <li{% if route == 'user_account' %} class="active"{% endif %}>

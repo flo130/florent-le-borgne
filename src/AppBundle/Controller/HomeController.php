@@ -62,7 +62,6 @@ class HomeController extends Controller
                 'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByUpdatedDateDesc($page, self::NB_ARTICLES_PER_PAGE),
                 'articlesPagination' => $pagination,
                 'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDateDesc(self::NB_ARTICLES_IN_CAROUSEL),
-                'searchForm' => $this->createForm(SearchForm::class)->createView(),
             ));
         }
     }

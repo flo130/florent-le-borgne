@@ -7,7 +7,6 @@
             - pages_count : int
             - page_name : string (nom de la route à générer)
             - ajax_callback : boolean (doit-on utiliser la pagination en ajax ?)
-        - searchForm : SearchForm object
         - categoriesTree : array of ArticleCategories
 #}
 {% extends '::base.html.twig' %}
@@ -44,10 +43,6 @@
             </nav>
         </section>
         <div class="col-md-4">
-            <section class="well">
-                <h4>{{ 'app.search' | trans | capitalize }}</h4>
-                {% include 'AppBundle:forms:searchForm.html.twig' with { 'form' : searchForm } %}
-            </section>
             <section class="well">
                 <h4>{{ 'app.categories' | trans | capitalize }}</h4>
                 <div class="list-group-tree">
