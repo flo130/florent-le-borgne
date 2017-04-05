@@ -35,3 +35,9 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+doctrine:
+    orm:
+        metadata_cache_driver: apc
+        query_cache_driver: apc
+        result_cache_driver: apc
