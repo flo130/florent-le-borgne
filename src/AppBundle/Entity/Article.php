@@ -53,7 +53,7 @@ class Article
      * @ORM\Column(type="string")
      * 
      * @Assert\NotBlank(groups={"Create"})
-     * @Assert\Image()
+     * Assert\Image()
      */
     private $image;
 
@@ -246,7 +246,8 @@ class Article
     /**
      * @return string
      */
-    public function getSlug() {
+    public function getSlug()
+    {
         return $this->slug;
     }
 
@@ -341,7 +342,8 @@ class Article
     /**
      * @param string $slug
      */
-    public function setSlug($slug) {
+    public function setSlug($slug)
+    {
         $this->slug = $slug;
     }
 }

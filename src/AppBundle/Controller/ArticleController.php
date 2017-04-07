@@ -79,16 +79,6 @@ class ArticleController extends Controller
     /**
      * Page d'édition d'un article
      * 
-     * @todo : trouver un moyen de faire mieux pour ne pas uploader une valeur vide si pas d'image
-     * Au lieu de 
-     *     $image = $article->getImage()
-     *     [...]
-     *     if (!$article->getImage()) {
-     *         $article->setImage($image);
-     *     }
-     * Essayer avec :
-     *     $article->setImage(new File($this->getParameter('uploads').'/'.$article->getImage()))
-     * 
      * @Route("/edit/{slug}", name="article_edit"))
      * 
      * @Method({"GET", "POST"})
@@ -104,16 +94,12 @@ class ArticleController extends Controller
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('edit', $article);
         $em = $this->getDoctrine()->getManager();
-        $image = $article->getImage();
         $form = $this->createForm(ArticleEditForm::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $isValid = $form->isValid();
             if ($isValid) {
                 $article = $form->getData();
-                if (!$article->getImage()) {
-                    $article->setImage($image);
-                }
                 $em->persist($article);
                 $em->flush();
                 $this->get('logger')->info('Article modification', array('title' => $article->getTitle()));
@@ -173,8 +159,6 @@ class ArticleController extends Controller
                 $article = $form->getData();
                 //renseigne le user
                 $article->setUser($this->getUser());
-                //upload le fichier et le renseigne dans l'entity
-                $article->setImage($this->get('app.file_uploader')->upload($article->getImage()));
                 //maj de l'article en base
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);

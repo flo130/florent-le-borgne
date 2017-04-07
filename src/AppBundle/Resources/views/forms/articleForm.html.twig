@@ -5,10 +5,21 @@
 {{ form_start(form) }}
     <div class="form-group{% if form_errors(form.image) %} has-error{% endif %}">
         {{ form_label(form.image) }}
+        {{ form_errors(form.image) }}
+        <a class="btn btn-default btn-file">
+            {{ 'app.select' | trans | capitalize }}
+            {{ form_widget(form.image) }}
+        </a>
+    </div>
+
+
+{#
+    <div class="form-group{% if form_errors(form.image) %} has-error{% endif %}">
+        {{ form_label(form.image) }}
         <div class="fileinput fileinput-new" data-provides="fileinput">
             <div class="fileinput-preview thumbnail" data-trigger="fileinput">
                 {% if form.vars.value is not empty and form.vars.value.image is not empty %}
-                    <img class="lazy" data-src="{{ asset('uploads/' ~ form.vars.value.image) }}">
+                    <img class="lazy" data-src="{{ asset(form.vars.value.image) }}">
                 {% endif %}
             </div>
             <div>
@@ -22,6 +33,9 @@
         </div>
         {{ form_errors(form.image) }}
     </div>
+#}
+
+
     {{ form_row(form.title) }}
     {{ form_row(form.summary) }}
     {{ form_row(form.article) }}

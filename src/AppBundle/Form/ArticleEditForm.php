@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Article;
 use AppBundle\Repository\CategoryRepository;
+use FM\ElfinderBundle\Form\Type\ElFinderType;
 
 class ArticleEditForm extends AbstractType
 {
@@ -22,10 +23,9 @@ class ArticleEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', FileType::class, array(
-                //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
-                'data_class' => null,
-                'required' => false,
+            ->add('image', ElFinderType::class, array(
+                'instance' => 'form',
+                'enable' => true,
                 'label' => 'app.form.image',
             ))
             ->add('title', TextareaType::class, array(
@@ -68,9 +68,9 @@ class ArticleEditForm extends AbstractType
             'validation_groups' => array(
                 'Default',
             ),
-            'attr' => array(
-                'class' => 'submit-ajax',
-            ),
+//             'attr' => array(
+//                 'class' => 'submit-ajax',
+//             ),
         ));
     }
 }

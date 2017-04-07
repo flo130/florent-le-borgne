@@ -35,7 +35,7 @@
     <span class="glyphicon glyphicon-edit"></span> {{ 'app.last_edit' | trans | capitalize }} {{ article.updatedAt | ago }}
 </p>
 {% if printArticleImage == true %}
-    <img class="img-thumbnail img-responsive lazy" data-src="{{ asset('uploads/' ~ article.image) }}" alt="{{ article.title }}" width="100%">
+    <img class="img-thumbnail img-responsive lazy" data-src="{{ asset(article.image) }}" alt="{{ article.title }}" width="100%">
 {% endif %}
 <p>
     {{ article.summary }}

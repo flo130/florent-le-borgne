@@ -144,20 +144,34 @@ ivory_ck_editor:
 #https://github.com/helios-ag/FMElfinderBundle
 fm_elfinder:
     instances:
+        #instance pour une utilisation avec ckeditor
         ckeditor:
             locale: "%locale%"
             editor: ckeditor
             fullscreen: false
             include_assets: true
             connector:
-                debug: false
                 roots:
                     uploads:
                         driver: LocalFileSystem
                         path: uploads
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
-                        upload_max_size: 5M
+                        upload_max_size: 2M
+        #instance pour une utilisation avec le FormBuilder de Symfony
+        form:
+            locale: %locale%
+            editor: form
+            fullscreen: false
+            include_assets: true
+            connector:
+                roots:
+                    uploads:
+                        driver: LocalFileSystem
+                        path: uploads
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+                        upload_deny: ['all']
+                        upload_max_size: 2M
 
 # Bundle Recaptcha (pour les captcha Google)
 ewz_recaptcha:
