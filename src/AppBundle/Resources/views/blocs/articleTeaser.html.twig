@@ -23,7 +23,7 @@
 </div>
 <p class="lead">
     {% if article.user.avatar %}
-        <img class="img-thumbnail img-responsive lazy" data-src="{{ asset('uploads/' ~ article.user.avatar) }}" alt="{{ article.user.name }}" width="80px">
+        <img class="img-thumbnail img-responsive lazy" data-src="{{ asset(article.user.avatar) }}" alt="{{ article.user.name }}" width="80px">
     {% else %}
         <img class="img-thumbnail img-responsive lazy" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ article.user.name }}" width="80px">
     {% endif %}

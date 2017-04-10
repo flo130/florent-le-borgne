@@ -9,9 +9,25 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use FM\ElfinderBundle\Form\Type\ElFinderType;
 
 class UserForm extends AbstractType
 {
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+
+    /**
+     * @param TokenStorage $tokenStorage
+     */
+    public function __construct(TokenStorage $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     /**
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::buildForm()
@@ -29,11 +45,11 @@ class UserForm extends AbstractType
                 'label' => 'app.form.plain_password',
                 'required' => false,
             ))
-            ->add('avatar', FileType::class, array(
+            ->add('avatar', ElFinderType::class, array(
+                'instance' => 'form',
+                'homeFolder' => (string)$this->tokenStorage->getToken()->getUser()->getId(),
+                'enable' => true,
                 'label' => 'app.form.avatar',
-                //obligatoire pour passer un type File et pouvoir gérer l'upload via Symfony
-                'data_class' => null,
-                'required' => false,
             ))
         ;
     }

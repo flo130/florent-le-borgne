@@ -136,19 +136,16 @@ ivory_ck_editor:
             extraPlugins: 'pbckcode'
             pbckcode: { highlighter : 'HIGHLIGHT', tab_size : '4', theme : 'github',  modes :  [['Text', 'text'],['HTML', 'html'], ['CSS', 'css'], ['PHP', 'php'], ['JS', 'javascript'], ['YAML', 'yaml'], ['JSON', 'json'], ['SQL', 'sql'], ['Bash', 'bash']], js : "https://cdn.jsdelivr.net//ace/1.1.4/noconflict/" }
             language: "%locale%"
-            filebrowserBrowseRoute: elfinder
-            filebrowserBrowseRouteParameters:
-                instance: ckeditor
 
 # FMElfinderBundle
 #https://github.com/helios-ag/FMElfinderBundle
 fm_elfinder:
     instances:
         #instance pour une utilisation avec ckeditor
-        ckeditor:
+        ckeditorArticle:
             locale: "%locale%"
             editor: ckeditor
-            fullscreen: false
+            fullscreen: true
             include_assets: true
             connector:
                 roots:
@@ -158,11 +155,11 @@ fm_elfinder:
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 2M
-        #instance pour une utilisation avec le FormBuilder de Symfony
+        #instance pour une utilisation avec le FormBuilder de Symfony (form peut etre n'importe quelle string)
         form:
             locale: %locale%
             editor: form
-            fullscreen: false
+            fullscreen: true
             include_assets: true
             connector:
                 roots:

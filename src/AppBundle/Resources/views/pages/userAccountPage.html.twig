@@ -33,7 +33,7 @@
         <div class="col-md-3">
             <div class="thumbnail">
                 {% if user.avatar %}
-                    <img class="lazy img-responsive" data-src="{{ asset('uploads/' ~ user.avatar) }}" alt="{{ user.name }}" width="200px">
+                    <img class="lazy img-responsive" data-src="{{ asset(user.avatar) }}" alt="{{ user.name }}" width="200px">
                 {% else %}
                     <img class="lazy img-responsive" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ user.name }}" width="200px">
                 {% endif %}

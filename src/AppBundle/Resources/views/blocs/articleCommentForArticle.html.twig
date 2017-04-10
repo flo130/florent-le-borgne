@@ -6,7 +6,7 @@
     <div class="media">
         <a class="pull-left" href="{{ path('user_account', { 'slug' : comment.user.slug }) }}">
             {% if comment.user.avatar %}
-                <img class="media-object lazy" data-src="{{ asset('uploads/' ~ comment.user.avatar) }}" alt="{{ comment.user.name }}" width="80px">
+                <img class="media-object lazy" data-src="{{ asset(comment.user.avatar) }}" alt="{{ comment.user.name }}" width="80px">
             {% else %}
                 <img class="media-object lazy" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ comment.user.name }}" width="80px">
             {% endif %}

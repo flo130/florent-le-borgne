@@ -13,9 +13,24 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Article;
 use AppBundle\Repository\CategoryRepository;
 use FM\ElfinderBundle\Form\Type\ElFinderType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class ArticleCreateForm extends AbstractType
 {
+    /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+
+    /**
+     * @param TokenStorage $tokenStorage
+     */
+    public function __construct(TokenStorage $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     /**
      * {@inheritDoc}
      * @see \Symfony\Component\Form\AbstractType::buildForm()
@@ -25,6 +40,7 @@ class ArticleCreateForm extends AbstractType
         $builder
             ->add('image', ElFinderType::class, array(
                 'instance' => 'form',
+                'homeFolder' => (string)$this->tokenStorage->getToken()->getUser()->getId(),
                 'enable' => true,
                 'label' => 'app.form.image',
             ))
@@ -35,9 +51,16 @@ class ArticleCreateForm extends AbstractType
                 'label' => 'app.form.summary',
             ))
             ->add('article', CKEditorType::class, array(
-                //voir dans config.yml la conf de CKEditor nommée "article_config" : c'est config du CKEditor
+                //voir dans config.yml la conf de CKEditor nommée "article_config" : c'est le nom de la config du CKEditor
                 'config_name' => 'article_config',
                 'label' => 'app.form.article',
+                'config' => array(
+                    'filebrowserBrowseRoute' => 'elfinder',
+                    'filebrowserBrowseRouteParameters' => array(
+                        'instance' => 'ckeditorArticle',
+                        'homeFolder' => $this->tokenStorage->getToken()->getUser()->getId(),
+                    ),
+                ),
             ))
             ->add('category', EntityType::class, array(
                 'label' => 'app.form.article_category',

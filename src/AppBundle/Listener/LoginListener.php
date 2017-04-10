@@ -8,23 +8,16 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 class LoginListener
 {
     /** 
-     * @var \Symfony\Component\Security\Core\TokenStorage
-     */
-    private $tokenStorage;
-
-    /** 
      * @var \Doctrine\ORM\EntityManager
      */
     private $em;
 
 
     /**
-     * @param TokenStorage $tokenStorage
      * @param Doctrine $doctrine
      */
-    public function __construct(TokenStorage $tokenStorage, Doctrine $doctrine)
+    public function __construct(Doctrine $doctrine)
     {
-        $this->tokenStorage = $tokenStorage;
         $this->em = $doctrine->getManager();
     }
 

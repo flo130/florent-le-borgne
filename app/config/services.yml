@@ -30,17 +30,18 @@ services:
     # Ecoute une requete doctrine et met à jour certaines données d'un utilisateur
     app.doctrine.user_listener:
         class: AppBundle\Listener\UserListener
-        arguments: ['@app.file_uploader']
+        arguments: ['@app.file_uploader', '%kernel.root_dir%']
         autowire: true
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
     # Ecoute un login utilisateur pour faire des choses juste apres 
     # (va chercher a appeler la method "onSecurityInteractiveLogin" dans le listener)
     app.listener.login_listener:
         class: AppBundle\Listener\LoginListener
-        arguments: ['@security.token_storage', '@doctrine']
+        arguments: ['@doctrine']
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
 
@@ -68,7 +69,6 @@ services:
         arguments: ['%uploads_dir%']
 
     # Ici on déclare les formulaires pour lesquels il faut passer doctrine (pour le dataTransformer).
-    # Les autres se gerent tout seul
     app.form.article_comment:
         class: AppBundle\Form\ArticleCommentForm
         arguments: ['@doctrine']
@@ -77,6 +77,23 @@ services:
     app.form.category:
         class: AppBundle\Form\CategoryForm
         arguments: ['@doctrine']
+        tags:
+            - { name: form.type }
+
+    # Ici on déclare les formulaires pour lesquels il faut passer l'utilisateur.
+    app.form.article_create:
+        class: AppBundle\Form\ArticleCreateForm
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: form.type }
+    app.form.article_edit:
+        class: AppBundle\Form\ArticleEditForm
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: form.type }
+    app.form.user_edit:
+        class: AppBundle\Form\UserForm
+        arguments: ['@security.token_storage']
         tags:
             - { name: form.type }
 
