@@ -301,11 +301,13 @@ function hideMessage()
  * 
  * @return void
  */ 
-function scrollTo(target)
+function scrollToItem(target)
 {
-    $('html, body').animate({
-        scrollTop: target.offset().top
-    }, TIMEOUT_TO_SCROLL_TO);
+    if (target) {
+        $('html, body').animate({
+            scrollTop: target.offset().top
+        }, TIMEOUT_TO_SCROLL_TO);
+    }
 }
 
 /**
@@ -400,7 +402,7 @@ function manageAjaxPagination()
             //s'il y a des images dans le nouveau contenu, il faut relancer le lazy load
             manageImageLazyLoad();
             //scroll vers le haut pour voir les nouvelles données
-            scrollTo($('#content'));
+            scrollToItem($('#content'));
         }).fail(function () {
             showErrorMessage('An error occurred');
         });
