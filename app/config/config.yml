@@ -157,7 +157,7 @@ fm_elfinder:
                         upload_max_size: 2M
         #instance pour une utilisation avec le FormBuilder de Symfony (form peut etre n'importe quelle string)
         form:
-            locale: %locale%
+            locale: "%locale%"
             editor: form
             fullscreen: true
             include_assets: true
