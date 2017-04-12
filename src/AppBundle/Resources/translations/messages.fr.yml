@@ -34,6 +34,8 @@ app:
     name: nom
     email: email
     role: rôle
+    log: historique
+    revert: revenir
     no_data:
         category: aucune categorie trouvée
         article: aucun article trouvé

@@ -94,6 +94,7 @@ class ArticleController extends Controller
         /** @see AppBundle\Security\ArticleVoter */
         $this->denyAccessUnlessGranted('edit', $article);
         $em = $this->getDoctrine()->getManager();
+        $logRepo = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
         $form = $this->createForm(ArticleEditForm::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -131,8 +132,38 @@ class ArticleController extends Controller
                 'article' => $article,
                 'articleForm' => $form->createView(),
                 'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
+                'articleLogs' => $logRepo->getLogEntries($article),
             ));
         }
+    }
+
+    /**
+     * Page d'édition d'un article
+     * 
+     * @Route("/rollback/{id}/{version}", name="article_rollback"))
+     * 
+     * @Method({"GET"})
+     * 
+     * @param Request $request
+     * @param Article $article
+     * @param int $version
+     * 
+     * @return Response
+     */
+    public function rollBackAction(Request $request, Article $article, $version)
+    {
+        //vérifie qu'un utilisateur a le droit d'éditer l'article
+        /** @see AppBundle\Security\ArticleVoter */
+        $this->denyAccessUnlessGranted('edit', $article);
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
+        $articleLog = $em->find('AppBundle\Entity\Article', $article->getId());
+        $repo->revert($articleLog, $version);
+        $em->persist($articleLog);
+        $em->flush();
+        return $this->redirect($this->generateUrl('article_show', array(
+            'slug' => $article->getSlug(),
+        )));
     }
 
     /**

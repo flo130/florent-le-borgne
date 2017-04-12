@@ -36,6 +36,8 @@ app:
     name: name
     email: email
     role: role
+    log: log
+    revert: revenir
     no_data:
         category: no category found
         article: no article found
