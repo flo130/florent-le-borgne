@@ -53,9 +53,9 @@
             {% for article in articleLogs %}
                 <span class="glyphicon glyphicon-time"></span> {{ article.loggedAt | date("F jS \\a\\t g:ia") }}
                 <ul>
-                    {% if article.data.title is defined %}<li>{{ 'app.form.title' | trans | capitalize }} : {{ article.data.title }}</li>{% endif %}
-                    {% if article.data.summary is defined %}<li>{{ 'app.form.summary' | trans | capitalize }} : {{ article.data.summary }}</li>{% endif %}
-                    {% if article.data.article is defined %}<li>{{ 'app.form.article' | trans | capitalize }} : {{ article.data.article | raw }}</li>{% endif %}
+                    {% if article.data.title is defined %}<li><strong>{{ 'app.form.title' | trans | capitalize }}</strong> : {{ article.data.title }}</li>{% endif %}
+                    {% if article.data.summary is defined %}<li><strong>{{ 'app.form.summary' | trans | capitalize }}</strong> : {{ article.data.summary }}</li>{% endif %}
+                    {% if article.data.article is defined %}<li><strong>{{ 'app.form.article' | trans | capitalize }}</strong> : {{ article.data.article | raw }}</li>{% endif %}
                 </ul>
                 <a href="{{ path('article_rollback', { 'id' : article.objectId, 'version' : article.version }) }}" class="btn btn-default">{{ 'app.revert' | trans | capitalize }}</a>
                 <hr>
