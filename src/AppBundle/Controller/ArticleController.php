@@ -138,7 +138,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Page d'édition d'un article
+     * Retour à une version d'un article
      * 
      * @Route("/rollback/{id}/{version}", name="article_rollback"))
      * 
