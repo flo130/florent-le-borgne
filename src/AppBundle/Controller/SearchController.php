@@ -33,17 +33,21 @@ class SearchController extends Controller
 		$form = $this->createForm(SearchForm::class);
 		$form->handleRequest($request);
 		$results = null;
+		$term = null;
 		if ($form->isSubmitted()) {
-			$isValid = $form->isValid();
-			if ($isValid) {
-				//recherche les articles
-				$data = $form->getData();
-				$em = $this->getDoctrine()->getManager();
-				$results = $em->getRepository('AppBundle:Article')->searchPublishedOrderByUpdatedDateDesc($data['search']);
+			if ($form->isValid()) {
+				/** @var AppBundle\Entity\Search **/
+				$search = $form->getData();
+				$term = $search->getTerm();
+				$results = $this->getDoctrine()
+					->getManager()
+					->getRepository('AppBundle:Article')
+					->searchPublishedOrderByUpdatedDateDesc($term);
 			}
 		}
 		return $this->render('AppBundle:pages:searchPage.html.twig', array(
 			'searchResults' => $results,
+			'term' => $term,
 		));
 	}
 
@@ -58,9 +62,8 @@ class SearchController extends Controller
 	 */
 	public function getFormAction(Request $request)
 	{
-		$form = $this->createForm(SearchForm::class);
 		return $this->render('AppBundle:forms:searchForm.html.twig', array(
-			'form' => $form->createView(),
+			'form' => $this->createForm(SearchForm::class)->createView(),
 		));
 	}
 }

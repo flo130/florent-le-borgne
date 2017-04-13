@@ -27,7 +27,7 @@
     </div>
     <section class="row">
         <div class="col-md-12">
-            {% if searchResults|length > 0 %}{{ searchResults|length }} {{ 'app.result' | trans }}{% if searchResults|length > 1 %}s{% endif %}{% endif %}
+            {% if term is not null %}<strong>{{ term }}</strong> : {% endif %}{% if searchResults|length > 0 %}{{ searchResults|length }} {{ 'app.result' | trans }}{% if searchResults|length > 1 %}s{% endif %}{% endif %}
         </div>
     </section>
     {% include 'AppBundle:blocs:articleTeaserList.html.twig' with { 

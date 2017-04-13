@@ -56,6 +56,9 @@
                         <li role="presentation">
                             <a href="#comments" aria-controls=comments role="tab" data-toggle="tab">{{ 'app.comments' | trans | capitalize }} <span class="badge">{{ userComments | length }}</span></a>
                         </li>
+                        <li role="presentation">
+                            <a href="{{ path('user_logout') }}">{{ 'app.user.logout' | trans | capitalize }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
