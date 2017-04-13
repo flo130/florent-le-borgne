@@ -68,7 +68,6 @@ class ArticleCommentController extends Controller
         $form->handleRequest($request);
         $articleComment = $form->getData();
         if ($form->isValid()) {
-            $articleComment->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($articleComment);
             $em->flush();

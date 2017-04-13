@@ -31,6 +31,8 @@ class Article
     /**
      * @var User
      * 
+     * @Gedmo\Blameable(on="create")
+     * 
      * @ORM\ManyToOne(targetEntity="User", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */

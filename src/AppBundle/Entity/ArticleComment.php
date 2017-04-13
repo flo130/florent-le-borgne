@@ -21,12 +21,18 @@ class ArticleComment
     private $id;
 
     /**
+     * @var User
+     * 
+     * @Gedmo\Blameable(on="create")
+     * 
      * @ORM\ManyToOne(targetEntity="User", inversedBy="articleComments")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 
     /**
+     * @var Article
+     * 
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="articleComments")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */

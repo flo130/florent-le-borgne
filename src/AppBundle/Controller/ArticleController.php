@@ -95,6 +95,7 @@ class ArticleController extends Controller
         $this->denyAccessUnlessGranted('edit', $article);
         $em = $this->getDoctrine()->getManager();
         $logRepo = $em->getRepository('Gedmo\Loggable\Entity\LogEntry');
+
         $form = $this->createForm(ArticleEditForm::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -103,6 +104,7 @@ class ArticleController extends Controller
                 $article = $form->getData();
                 $em->persist($article);
                 $em->flush();
+
                 $this->get('logger')->info('Article modification', array('title' => $article->getTitle()));
                 $this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
                 $redirectUrl = $this->generateUrl('article_show', array(
@@ -188,9 +190,6 @@ class ArticleController extends Controller
             if ($isValid) {
                 //binding des données du form
                 $article = $form->getData();
-                //renseigne le user
-                $article->setUser($this->getUser());
-                //maj de l'article en base
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();

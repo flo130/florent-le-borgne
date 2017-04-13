@@ -91,6 +91,7 @@ stof_doctrine_extensions:
             tree: true
             timestampable: true
             loggable: true
+            blameable: true
 
 # Swiftmailer Configuration
 swiftmailer:
