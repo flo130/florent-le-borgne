@@ -4,7 +4,8 @@
 set -e
 
 #récupération des sources 
-#git clone https://github.com/flo130/florent-le-borgne
+git clone https://github.com/flo130/florent-le-borgne.git
+cd florent-le-borgne
 
 #recuperation de composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
