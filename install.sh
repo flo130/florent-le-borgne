@@ -15,7 +15,7 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
 #installation des dÃ©pendances du projet
-composer install --no-dev --optimize-autoloader
+php composer.phar install --no-dev --optimize-autoloader
 
 #suppression du fichier Composer
 rm composer.phar
