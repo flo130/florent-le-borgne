@@ -29,7 +29,7 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 php bin/symfony_requirements
 
 #vÃ©rifie si les basic de la sÃ©curitÃ© sont ok
-php bin/console security:check
+#php bin/console security:check
 
 #crÃ©ation de la base de donnÃ©es
 php bin/console doctrine:database:create
