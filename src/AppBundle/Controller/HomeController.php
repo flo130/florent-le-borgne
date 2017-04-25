@@ -58,7 +58,7 @@ class HomeController extends Controller
             ));
         } else {
             return $this->render('AppBundle:pages:homePage.html.twig', array(
-                'isActiveCarousel' => $em->getRepository('AppBundle:Parameter')->findOneByKey('carousel')->getIsActive(),
+                'isActiveCarousel' => $em->getRepository('AppBundle:Parameter')->findOneByParamKey('carousel')->getIsActive(),
                 'articles' => $em->getRepository('AppBundle:Article')->findAllPublishedWithPaginatorOrderByUpdatedDateDesc($page, self::NB_ARTICLES_PER_PAGE),
                 'articlesPagination' => $pagination,
                 'lastArticles' =>  $em->getRepository('AppBundle:Article')->findXPublishedOrderByPublishedDateDesc(self::NB_ARTICLES_IN_CAROUSEL),
