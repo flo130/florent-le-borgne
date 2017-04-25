@@ -12,7 +12,7 @@ use AppBundle\Entity\Category;
 /**
  * Script d'installation de la BDD en version 1.0.0
  */
-class Version_100 extends AbstractMigration implements ContainerAwareInterface
+class Version100 extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * Container Symfony

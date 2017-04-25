@@ -11,7 +11,7 @@ use AppBundle\Entity\Parameter;
 /**
  * Script d'installation de la BDD en version 1.0.1
  */
-class Version_101 extends AbstractMigration implements ContainerAwareInterface
+class Version101 extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * Container Symfony
