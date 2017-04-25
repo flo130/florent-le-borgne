@@ -49,7 +49,7 @@ class Version101 extends AbstractMigration implements ContainerAwareInterface
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         $this->addSql('DROP TABLE parameter');
     }
-    
+
     /**
      * Exécuté après la création de la base :
      *
