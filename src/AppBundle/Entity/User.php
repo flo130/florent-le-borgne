@@ -156,6 +156,9 @@ class User implements UserInterface, \Serializable
     {
         $this->articleComments = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->firstLogin = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**

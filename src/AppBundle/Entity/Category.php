@@ -122,6 +122,12 @@ class Category
     private $updatedAt;
 
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
     /**
      * Utile juste pour le redu d'une select 
      * 

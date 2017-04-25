@@ -147,6 +147,9 @@ class Article
     public function __construct()
     {
         $this->articleComments = new ArrayCollection();
+        $this->publishedAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
