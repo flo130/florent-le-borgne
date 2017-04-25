@@ -40,7 +40,7 @@ class Parameter
 	 *
 	 * @ORM\Column(type="string")
 	 */
-	private $key;
+	private $paramKey;
 
 	/**
 	 * @var boolean
@@ -106,14 +106,14 @@ class Parameter
 	/**
 	 * @return string
 	 */
-	public function getKey()
+	public function getParamKey()
 	{
-		return $this->key;
+		return $this->paramKey;
 	}
 
-	public function setKey($key)
+	public function setParamKey($paramKey)
 	{
-		$this->key = $key;
+		$this->paramKey = $paramKey;
 	}
 
 	/**
