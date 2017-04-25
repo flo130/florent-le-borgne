@@ -7,27 +7,10 @@ set -e
 git fetch origin master
 git reset --hard origin/master
 
-#recuperation de composer
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-
-#installation des dépendances du projet
-php composer.phar update
-
-#suppression du fichier Composer
-rm composer.phar
-
 #changement des droits sur les répertoires de cache et de logs
 HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-
-#vérifie si tout est ok pour faire tourner Symfony
-php bin/symfony_requirements
-
-#vérifie si les basic de la sécurité sont ok
-php bin/console security:check
 
 #installation du nouveau schéma
 php bin/console doctrine:migrations:migrate --no-interaction
