@@ -3,23 +3,31 @@
 #quitte ce script si une erreur arrive
 set -e
 
+export SYMFONY_ENV=dev
+
 #update des sources
 git fetch origin master
 git reset --hard origin/master
 
-#changement des droits sur les répertoires de cache et de logs
-HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+#recuperation de composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
 
-#installation du nouveau schéma
+#installation des dÃ©pendances du projet
+php composer.phar install
+
+#suppression du fichier Composer
+rm composer.phar
+
+#installation du nouveau schÃ©ma
 php bin/console doctrine:migrations:migrate --no-interaction
 
 #installation des assets
-php bin/console assets:install --env=prod --no-debug
+php bin/console assets:install --env=dev --no-debug
 
 #compilation des assets
-php bin/console assetic:dump --env=prod --no-debug
+php bin/console assetic:dump --env=dev --no-debug
 
 #nettoyage du cache
-php bin/console cache:clear --env=prod --no-debug
+php bin/console cache:clear --env=dev --no-debug
