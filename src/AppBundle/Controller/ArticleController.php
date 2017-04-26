@@ -36,7 +36,7 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //récupère dans la conf si on doit afficher la partie commentaire
-        $activeComments = $em->getRepository('AppBundle:Parameter')->findOneByKey('comments')->getIsActive();
+        $activeComments = $em->getRepository('AppBundle:Parameter')->findOneByParamKey('comments')->getIsActive();
         return $this->render('AppBundle:pages:articlePage.html.twig', array(
             'isActiveComments' => $activeComments,
             //getPath : permet de récupérer tous les parents de la catégorie de l'article
