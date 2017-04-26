@@ -28,9 +28,6 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 #verifie si tout est ok pour faire tourner Symfony
 php bin/symfony_requirements
 
-#verifie si les basic de la securite sont ok
-#php bin/console security:check
-
 #creation de la base de donnees
 php bin/console doctrine:database:create
 
@@ -45,3 +42,6 @@ php bin/console assetic:dump --env=prod --no-debug
 
 #nettoyage du cache
 php bin/console cache:clear --env=prod --no-debug
+
+#passage des tests unitaires
+php vendor/bin/phpunit -c phpunit.xml.dist
