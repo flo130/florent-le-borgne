@@ -14,13 +14,13 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
-#installation des dÃ©pendances du projet
-php composer.phar install
+#installation des dependances du projet
+php composer.phar update
 
 #suppression du fichier Composer
 rm composer.phar
 
-#installation du nouveau schÃ©ma
+#installation du nouveau schema
 php bin/console doctrine:migrations:migrate --no-interaction
 
 #installation des assets

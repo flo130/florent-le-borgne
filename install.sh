@@ -5,7 +5,7 @@ set -e
 
 export SYMFONY_ENV=prod
 
-#rÃ©cupÃ©ration des sources 
+#recuperation des sources 
 git clone https://github.com/flo130/florent-le-borgne.git
 cd florent-le-borgne
 
@@ -14,27 +14,27 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
-#installation des dÃ©pendances du projet
+#installation des dependances du projet
 php composer.phar install --no-dev --optimize-autoloader
 
 #suppression du fichier Composer
 rm composer.phar
 
-#changement des droits sur les rÃ©pertoires de cache et de logs
+#changement des droits sur les repertoires de cache et de logs
 HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
 
-#vÃ©rifie si tout est ok pour faire tourner Symfony
+#verifie si tout est ok pour faire tourner Symfony
 php bin/symfony_requirements
 
-#vÃ©rifie si les basic de la sÃ©curitÃ© sont ok
+#verifie si les basic de la securite sont ok
 #php bin/console security:check
 
-#crÃ©ation de la base de donnÃ©es
+#creation de la base de donnees
 php bin/console doctrine:database:create
 
-#installation du nouveau schÃ©ma
+#installation du nouveau schema
 php bin/console doctrine:migrations:migrate --no-interaction
 
 #installation des assets
