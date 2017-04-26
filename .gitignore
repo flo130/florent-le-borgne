@@ -52,3 +52,8 @@
 
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
+
+# PDT-specific (PHP Development Tools)
+/.buildpath
+/.project
+/.settings/
