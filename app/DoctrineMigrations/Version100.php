@@ -89,10 +89,6 @@ class Version100 extends AbstractMigration implements ContainerAwareInterface
     {
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
 
-        //création d'une catégorie "root"
-        $rootCategory = new Category();
-        $rootCategory->setTitle('root');
-
         //création de l'utilisateur admin
         $adminUser = new User();
         $adminUser->setEmail('admin@admin.com');
@@ -106,7 +102,6 @@ class Version100 extends AbstractMigration implements ContainerAwareInterface
         $testUser->setRoles(array(User::ROLE_MEMBRE));
 
         //enregistrement des connées en base
-        $entityManager->persist($rootCategory);
         $entityManager->persist($adminUser);
         $entityManager->persist($testUser);
         $entityManager->flush();
@@ -114,6 +109,5 @@ class Version100 extends AbstractMigration implements ContainerAwareInterface
         //affiche qqu messages
         $this->warnIf(true, 'The administrator user has been added with "admin@admin.com / password" => change this password !');
         $this->warnIf(true, 'A test user has been added with "test@test.com / password"');
-        $this->warnIf(true, 'A root category has been added => rename/change it');
     }
 }
