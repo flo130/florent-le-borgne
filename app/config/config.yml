@@ -85,7 +85,7 @@ doctrine:
 
 # Ici on active les modules fournis par DoctrineExtensionsBundle (Sluggable, Translatable, Timestampable, Loggable, Tree and Sortable)
 stof_doctrine_extensions:
-    default_locale: fr_FR
+    default_locale: fr
     orm:
         default:
             sluggable: true
