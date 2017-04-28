@@ -65,9 +65,8 @@ class Version102 extends AbstractMigration implements ContainerAwareInterface
             $newArticle = clone $article;
             $newArticle->setId(null);
             $newArticle->setTranslatableLocale('fr');
-            $entityManager->persist($newArticle);
-            $entityManager->flush();
             $entityManager->remove($article);
+            $entityManager->persist($newArticle);
             $entityManager->flush();
         }
     }
