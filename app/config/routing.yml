@@ -6,6 +6,11 @@ root:
         path: /%locale%/
         permanent: true
 
+#le sitemap est définit ici car sinon il sera redirigé avec le préfixe de langue
+sitemap:
+    path: /sitemap.xml
+    defaults: { _controller: AppBundle:Sitemap:sitemap, _format: 'xml' }
+
 #les routes du bundles "app" seront indiquées via des annotations et comporteront toutes la locale utilisée
 app:
     resource: "@AppBundle/Controller/"
