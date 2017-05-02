@@ -8,6 +8,10 @@
     {{ parent() }} - {{ 'app.user.login' | trans | capitalize }}
 {% endblock %}
 
+{% block ogDescription %}
+    {{ parent() }} - {{ 'app.user.login' | trans | capitalize }}
+{% endblock %}
+
 {% block body %}
     <h2 class="text-center">{{ 'app.user.login' | trans | capitalize }}</h2>
     <section class="row">

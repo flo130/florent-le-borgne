@@ -8,6 +8,10 @@
         <meta http-equiv="content-language" content="{{ app.request.getLocale() }}">
         <meta name="description" content="{% block description %}{{ appname }}{% endblock %}">
         <meta name="keywords" content="blog;php;symfony;web;javascript;css">
+        <meta property="og:title" content="{% block ogDescription %}{{ appname }}{% endblock %}">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+        <meta property="og:image" content="{% block ogImage %}{{ app.request.schemeAndHttpHost ~ asset('bundles/app/images/favicon/apple-touch-icon.png') }}{% endblock %}">
         <title>{% block title %}{{ appname }}{% endblock %}</title>
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('bundles/app/images/favicon/apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" href="{{ asset('bundles/app/images/favicon/favicon-32x32.png') }}" sizes="32x32">

@@ -15,6 +15,10 @@
     {{ parent() }} - {{ user.name }} {{ 'app.user.account' | trans | capitalize }}
 {% endblock %}
 
+{% block ogDescription %}
+    {{ parent() }} - {{ user.name }} {{ 'app.user.account' | trans | capitalize }}
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">

@@ -19,6 +19,10 @@
     {{ parent() }} - {{ 'app.home' | trans | capitalize }}
 {% endblock %}
 
+{% block ogDescription %}
+    {{ parent() }} - {{ 'app.home' | trans | capitalize }}
+{% endblock %}
+
 {% block banner %}
     {% if isActiveCarousel %}
         <div class="row">
