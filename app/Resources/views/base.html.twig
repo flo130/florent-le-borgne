@@ -35,7 +35,7 @@
                 '//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css'
                 '@css_app'
             %}
-                <link rel="stylesheet" href="{{ asset_url }}">
+                <link rel="stylesheet" href="{{ absolute_url(asset_url) }}">
             {% endstylesheets %}
         {% endblock %}
         <script type="text/javascript">
@@ -95,15 +95,15 @@
                 '//gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'
                 '@js_app'
             %}
-                <script src="{{ asset_url }}"></script>
+                <script src="{{ absolute_url(asset_url) }}"></script>
             {% endjavascripts %}
 
             {# affichage des messages #}
             {% for msg in app.session.flashBag.get('success') %}
-                <script type="text/javascript">showSuccessMessage('{{ msg|e('js')  }}');</script>
+                <script type="text/javascript">showSuccessMessage('{{ msg|e('js') }}');</script>
             {% endfor %}
             {% for msg in app.session.flashBag.get('error') %}
-                <script type="text/javascript">showErrorMessage('{{ msg|e('js')  }}');</script>
+                <script type="text/javascript">showErrorMessage('{{ msg|e('js') }}');</script>
             {% endfor %}
         {% endblock %}
     </body>
