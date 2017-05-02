@@ -26,9 +26,9 @@
 </div>
 <p class="lead">
     {% if article.user.avatar %}
-        <img class="img-thumbnail img-responsive lazy" data-src="{{ asset(article.user.avatar) }}" alt="{{ article.user.name }}" width="80px">
+        <img class="img-thumbnail img-responsive lazy" data-src="{{ absolute_url(asset(article.user.avatar)) }}" alt="{{ article.user.name }}" width="80px">
     {% else %}
-        <img class="img-thumbnail img-responsive lazy" data-src="{{ asset('bundles/app/images/defaultAvatar.png') }}" alt="{{ article.user.name }}" width="80px">
+        <img class="img-thumbnail img-responsive lazy" data-src="{{ absolute_url(asset('bundles/app/images/defaultAvatar.png')) }}" alt="{{ article.user.name }}" width="80px">
     {% endif %}
     {{ 'app.by' | trans | capitalize }} <a href="{{ path('user_account', { 'slug' : article.user.slug }) }}">{{ article.user.name }}</a>
 </p>
@@ -38,7 +38,7 @@
     <span class="glyphicon glyphicon-edit"></span> {{ 'app.last_edit' | trans | capitalize }} {{ article.updatedAt | ago }}
 </p>
 {% if printArticleImage == true %}
-    <img class="img-thumbnail img-responsive lazy" data-src="{{ asset(article.image) }}" alt="{{ article.title }}" width="100%">
+    <img class="img-thumbnail img-responsive lazy" data-src="{{ absolute_url(asset(article.image)) }}" alt="{{ article.title }}" width="100%">
 {% endif %}
 <p>
     {{ article.summary }}

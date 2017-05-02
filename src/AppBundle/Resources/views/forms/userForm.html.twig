@@ -17,7 +17,7 @@
         <div class="fileinput fileinput-new" data-provides="fileinput">
             <div class="fileinput-preview thumbnail" data-trigger="fileinput">
                 {% if form.vars.value is not empty and form.vars.value.avatar is not empty %}
-                    <img class="lazy" data-src="{{ asset(form.vars.value.avatar) }}" style="height:150px;">
+                    <img class="lazy" data-src="{{ absolute_url(asset(form.vars.value.avatar)) }}" style="height:150px;">
                 {% endif %}
             </div>
             <div>

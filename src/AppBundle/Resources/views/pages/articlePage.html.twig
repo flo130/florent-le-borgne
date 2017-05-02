@@ -74,9 +74,9 @@
             '//cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js'
             '//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js'
         %}
-            <script src="{{ asset_url }}"></script>
+            <script src="{{ absolute_url(asset_url) }}"></script>
         {% endjavascripts %}
-        <script type="text/babel" src="{{ asset('/bundles/app/js/articleComment.react.js') }}"></script>
+        <script type="text/babel" src="{{ absolute_url(asset('/bundles/app/js/articleComment.react.js')) }}"></script>
         <script type="text/babel">
         var commentUrl = '{{ path('get_article_comment', { 'id' : article.id }) }}';
         ReactDOM.render(
