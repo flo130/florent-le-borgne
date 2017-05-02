@@ -3,7 +3,7 @@
         'role' : 'form',
         'id' : 'param_form' ~ param.id
     },
-    'action' : path('admin_parameter')
+    'action' : url('admin_parameter')
 }) }}
     {{ form_row(form.isActive, { 
         'label': param.title,

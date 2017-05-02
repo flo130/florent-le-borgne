@@ -7,10 +7,10 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                    <a href="{{ url('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_user') }}">{{ 'app.admin.search.user' | trans | capitalize }}</a>
+                    <a href="{{ url('admin_user') }}">{{ 'app.admin.search.user' | trans | capitalize }}</a>
                 </li>
                 <li class="active">
                     {{ 'app.admin.change_role' | trans | capitalize }} - {{ user.name }}

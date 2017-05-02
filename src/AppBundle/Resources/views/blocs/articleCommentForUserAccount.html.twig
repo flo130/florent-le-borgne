@@ -11,7 +11,7 @@
             {{ comment.articleComment }}
         </div>
         <div class="panel-footer">
-            {{ 'app.article' | trans | capitalize }} : <a href="{{ path('article_show', { 'slug' : comment.article.slug }) }}">{{ comment.article.title }}</a>
+            {{ 'app.article' | trans | capitalize }} : <a href="{{ url('article_show', { 'slug' : comment.article.slug }) }}">{{ comment.article.title }}</a>
         </div>
     </div>
 {% else %}

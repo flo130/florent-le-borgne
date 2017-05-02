@@ -10,6 +10,6 @@
     <button class="btn btn-block btn-primary" type="submit">{{ 'app.user.register' | trans | capitalize }}</button>
     <br>
     <p class="text-center">
-        <a href="{{ path('user_login') }}">{{ 'app.user.already_have_account' | trans | capitalize }}</a>
+        <a href="{{ url('user_login') }}">{{ 'app.user.already_have_account' | trans | capitalize }}</a>
     </p>
 {{ form_end(form) }}

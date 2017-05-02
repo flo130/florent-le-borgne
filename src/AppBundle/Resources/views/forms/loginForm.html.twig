@@ -13,6 +13,6 @@
     <button class="btn btn-block btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
     <br>
     <p class="text-center">
-        <a class="text-center" href="{{ path('user_register') }}">{{ 'app.user.no_account' | trans | capitalize }}</a>
+        <a class="text-center" href="{{ url('user_register') }}">{{ 'app.user.no_account' | trans | capitalize }}</a>
     </p>
 {{ form_end(form) }}

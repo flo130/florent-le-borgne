@@ -7,7 +7,7 @@
         'role' : 'form',
         'id' : 'article_comment_form'
     },
-    'action' : path('create_article_comment')
+    'action' : url('create_article_comment')
 }) }}
     {{ form_row(form.articleComment) }}
     {{ form_row(form.article, { 'value' : article.id }) }}

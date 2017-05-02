@@ -4,7 +4,7 @@
 #}
 {% for comment in comments %}
     <div class="media">
-        <a class="pull-left" href="{{ path('user_account', { 'slug' : comment.user.slug }) }}">
+        <a class="pull-left" href="{{ url('user_account', { 'slug' : comment.user.slug }) }}">
             {% if comment.user.avatar %}
                 <img class="media-object lazy" data-src="{{ absolute_url(asset(comment.user.avatar)) }}" alt="{{ comment.user.name }}" width="80px">
             {% else %}
@@ -13,7 +13,7 @@
         </a>
         <div class="media-body">
             <h4 class="media-heading">
-                <a href="{{ path('user_account', { 'slug' : comment.user.slug }) }}">
+                <a href="{{ url('user_account', { 'slug' : comment.user.slug }) }}">
                     {{ comment.user.name }}
                 </a>
                 <small>{{ comment.createdAt | date("F jS \\a\\t g:ia") }}</small>

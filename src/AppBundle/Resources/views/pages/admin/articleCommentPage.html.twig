@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
+                    <a href="{{ url('admin_index') }}">{{ 'app.admin.index' | trans | capitalize }}</a>
                 </li>
                 <li class="active">
                     {{ 'app.admin.search.comment' | trans | capitalize }}
@@ -36,11 +36,11 @@
                     {% for articleComment in articleComments %}
                         <tr>
                             <td>{{ articleComment.id }}</td>
-                            <td><a href="{{ path('user_account', { 'slug' : articleComment.user.slug }) }}">{{ articleComment.user.name }}</a></td>
-                            <td><a href="{{ path('article_show', { 'slug' : articleComment.article.slug }) }}">{{ articleComment.article.title }}</a></td>
+                            <td><a href="{{ url('user_account', { 'slug' : articleComment.user.slug }) }}">{{ articleComment.user.name }}</a></td>
+                            <td><a href="{{ url('article_show', { 'slug' : articleComment.article.slug }) }}">{{ articleComment.article.title }}</a></td>
                             <td>{{ articleComment.articleComment }}</td>
                             <td>
-                                <a class="print-confirm" href="{{ path('admin_comment_delete', { 'id' : articleComment.id }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
+                                <a class="print-confirm" href="{{ url('admin_comment_delete', { 'id' : articleComment.id }) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.delete' | trans | capitalize }}">
                                     <span class="glyphicon glyphicon-remove danger" aria-hidden="true"></span>
                                 </a>
                             </td>

@@ -22,13 +22,13 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ path('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
+                    <a href="{{ url('homepage') }}">{{ 'app.home' | trans | capitalize }}</a>
                 </li>
                 {% for category in categoriesTree %}
                     {%  if loop.last %}
                         <li class="active">{{ category.title | capitalize }}</li>
                     {% else %}
-                        <li><a href="{{ path('article_by_category', { 'slug' : category.slug }) }}">{{ category.title | capitalize }}</a></li>
+                        <li><a href="{{ url('article_by_category', { 'slug' : category.slug }) }}">{{ category.title | capitalize }}</a></li>
                     {% endif %}
                 {% endfor %}
             </ol>
