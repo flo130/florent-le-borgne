@@ -17,6 +17,10 @@
     {{ parent() }} - {{ article.title }}
 {% endblock %}
 
+{% block ogImage %}
+    {{ absolute_url(asset(article.image)) }}
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">
