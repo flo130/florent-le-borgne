@@ -58,17 +58,13 @@ class Version102 extends AbstractMigration implements ContainerAwareInterface
      */
     public function postUp(Schema $schema)
     {
-        //tous les articles exitants sont en français, mais pas déclarés dans la table de Translatable, il faut les migrer
-        $entityManager = $this->container->get('doctrine.orm.entity_manager');
-        $articles = $entityManager->getRepository('AppBundle:Article')->findAll();
+        //tous les articles exitants sont en français, mais pas déclarés dans la table de Translatable, il leur créer une translation
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $articles = $em->getRepository('AppBundle:Article')->findAll();
         foreach ($articles as $article) {
-            $newArticle = clone $article;
-            $newArticle->setId(null);
-            $newArticle->setTranslatableLocale('fr');
-            $entityManager->remove($article);
-            $entityManager->flush();
-            $entityManager->persist($newArticle);
-            $entityManager->flush();
+            $article->setTranslatableLocale('fr');
+            $em->persist($article);
+            $em->flush();
         }
     }
 }

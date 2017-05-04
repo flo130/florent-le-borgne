@@ -38,13 +38,13 @@ class ArticleController extends Controller
 		//récupère dans la conf si on doit afficher la partie commentaire
 		$activeComments = $em->getRepository('AppBundle:Parameter')->findOneByParamKey('comments')->getIsActive();
 		return $this->render('AppBundle:pages:articlePage.html.twig', array(
-				'isActiveComments' => $activeComments,
-				//getPath : permet de récupérer tous les parents de la catégorie de l'article
-				'categories' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
-				//formulaire de création de commentaire (seulement si l'option est active)
-				'commentForm' => $activeComments ? $this->createForm(ArticleCommentForm::class)->createView() : null,
-				//article dont on veut afficher le détail
-				'article' => $article,
+			'isActiveComments' => $activeComments,
+			//getPath : permet de récupérer tous les parents de la catégorie de l'article
+			'categories' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
+			//formulaire de création de commentaire (seulement si l'option est active)
+			'commentForm' => $activeComments ? $this->createForm(ArticleCommentForm::class)->createView() : null,
+			//article dont on veut afficher le détail
+			'article' => $article,
 		));
 	}
 
@@ -63,16 +63,16 @@ class ArticleController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		return $this->render('AppBundle:pages:articleCategoryListPage.html.twig', array(
-				//arbre de catégories de l'article
-				'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
-				//categorie courante de l'article
-				'currentCategory' => $category,
-				//article appartenants à la catégorie recherchée
-				'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoriesOrderByUpdatedDateDesc(
-						//ici, si on rajoute true à children($category, true), on n'a pas tous les enfants, juste les sous-catégories les plus proches
-						$em->getRepository('AppBundle:Category')->children($category),
-						$category
-						),
+			//arbre de catégories de l'article
+			'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($category),
+			//categorie courante de l'article
+			'currentCategory' => $category,
+			//article appartenants à la catégorie recherchée
+			'articles' => $em->getRepository('AppBundle:Article')->findPublishedByCategoriesOrderByUpdatedDateDesc(
+				//ici, si on rajoute true à children($category, true), on n'a pas tous les enfants, juste les sous-catégories les plus proches
+				$em->getRepository('AppBundle:Category')->children($category),
+				$category
+			),
 		));
 	}
 
@@ -109,7 +109,7 @@ class ArticleController extends Controller
 				$this->get('logger')->info('Article modification', array('title' => $article->getTitle()));
 				$this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.update_success'))));
 				$redirectUrl = $this->generateUrl('article_show', array(
-						'slug' => $article->getSlug(),
+					'slug' => $article->getSlug(),
 				), UrlGeneratorInterface::ABSOLUTE_URL);
 				if (!$request->isXmlHttpRequest()) {
 					return $this->redirect($redirectUrl);
@@ -120,22 +120,22 @@ class ArticleController extends Controller
 		if ($request->isXmlHttpRequest()) {
 			if ($isValid) {
 				return new JsonResponse(array(
-						'redirect' => $redirectUrl,
+					'redirect' => $redirectUrl,
 				), 200);
 			} else {
 				return new JsonResponse(array(
-						'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
-						'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
-								'form' => $form->createView(),
-						)),
+					'message' => $isValid ? ucfirst(strtolower($this->get('translator')->trans('app.update_success'))) : '',
+					'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+						'form' => $form->createView(),
+					)),
 				), 400);
 			}
 		} else {
 			return $this->render('AppBundle:pages:articleEditPage.html.twig', array(
-					'article' => $article,
-					'articleForm' => $form->createView(),
-					'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
-					'articleLogs' => $logRepo->getLogEntries($article),
+				'article' => $article,
+				'articleForm' => $form->createView(),
+				'categoriesTree' => $em->getRepository('AppBundle:Category')->getPath($article->getCategory()),
+				'articleLogs' => $logRepo->getLogEntries($article),
 			));
 		}
 	}
@@ -165,7 +165,7 @@ class ArticleController extends Controller
 		$em->persist($articleLog);
 		$em->flush();
 		return $this->redirect($this->generateUrl('article_show', array(
-				'slug' => $article->getSlug(),
+			'slug' => $article->getSlug(),
 		)));
 	}
 
@@ -199,7 +199,7 @@ class ArticleController extends Controller
 				//ajoute un flash message, contruit l'URL de redirection, et redirige si on est pas en ajax
 				$this->addFlash('success', ucfirst(strtolower($this->get('translator')->trans('app.create_success'))));
 				$redirectUrl = $this->generateUrl('article_show', array(
-						'slug' => $article->getSlug(),
+					'slug' => $article->getSlug(),
 				), UrlGeneratorInterface::ABSOLUTE_URL);
 				if (!$request->isXmlHttpRequest()) {
 					return $this->redirect($redirectUrl);
@@ -210,18 +210,18 @@ class ArticleController extends Controller
 		if ($request->isXmlHttpRequest()) {
 			if ($isValid) {
 				return new JsonResponse(array(
-						'redirect' => $redirectUrl,
+					'redirect' => $redirectUrl,
 				), 200);
 			} else {
 				return new JsonResponse(array(
-						'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
-								'form' => $form->createView(),
-						)),
+					'form' => $this->renderView('AppBundle:forms:articleForm.html.twig', array(
+						'form' => $form->createView(),
+					)),
 				), 400);
 			}
 		} else {
 			return $this->render('AppBundle:pages:articleCreatePage.html.twig', array(
-					'articleForm' => $form->createView(),
+				'articleForm' => $form->createView(),
 			));
 		}
 	}

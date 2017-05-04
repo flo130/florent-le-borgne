@@ -69,7 +69,7 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true:
         #ici on déclare les entity externes à utiliser (php bin/console doctrine:mapping:info)
-        #translatable et loggable on besoin de se créer des tables...
+        #translatable et loggable on besoin de créer leur propres tables
         mappings:
             loggable:
                 type: annotation
@@ -80,12 +80,15 @@ doctrine:
                 type: annotation
                 alias: Gedmo
                 prefix: Gedmo\Translatable\Entity
-                # make sure vendor library location is correct
                 dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
 
-# Ici on active les modules fournis par DoctrineExtensionsBundle (Sluggable, Translatable, Timestampable, Loggable, Tree and Sortable)
+# Ici on active les modules fournis par DoctrineExtensionsBundle
 stof_doctrine_extensions:
-    default_locale: fr
+    default_locale: "%locale%"
+    #s'il n'y a pas de langue spécifié : on utilise la "default_locale"
+    translation_fallback: true
+    #on dit à "translatable" de persister quand même la locale par défaut
+    persist_default_translation: true
     orm:
         default:
             sluggable: true
@@ -93,6 +96,7 @@ stof_doctrine_extensions:
             timestampable: true
             loggable: true
             blameable: true
+            translatable: true
 
 # Swiftmailer Configuration
 swiftmailer:

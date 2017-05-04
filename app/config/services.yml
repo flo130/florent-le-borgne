@@ -109,14 +109,10 @@ services:
         calls:
             - [ setContainer, [ "@service_container" ] ]
         tags:
-            # translatable sets locale after router processing
-            #- { name: kernel.event_listener, event: kernel.request, method: onLateKernelRequest, priority: -10 }
             # loggable hooks user username if one is in security context
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            # translatable sets locale such as default application locale before command execute
-            #- { name: kernel.event_listener, event: console.command, method: onConsoleCommand, priority: -10 }
 
-    # Ici on défini le listener Loggable
+    # Ici on défini le listener Loggable et de Translatable
     # cf : https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/symfony2.md
     gedmo.listener.loggable:
         class: Gedmo\Loggable\LoggableListener
@@ -124,10 +120,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
-
-
-
-
 
     app.workflow:
         class: AppBundle\Workflow\Workflow
