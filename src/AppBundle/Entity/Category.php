@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
-class Category
+class Category implements Translatable
 {
     /**
      * @var int
@@ -29,6 +30,7 @@ class Category
      * @var string
      * 
      * @Gedmo\Versioned
+     * @Gedmo\Translatable
      * 
      * @ORM\Column(length=64)
      * 
@@ -121,6 +123,11 @@ class Category
      */
     private $updatedAt;
 
+    /**
+     * @Gedmo\Locale
+     */
+    private $locale;
+
 
     public function __construct()
     {
@@ -129,22 +136,33 @@ class Category
     }
 
     /**
+     * @param string $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * Utile juste pour le redu d'une select 
      * 
      * @return string
      */
-    public function getIndentedTitle() {
+    public function getIndentedTitle()
+    {
         return str_repeat('----', $this->lvl) . ' ' . $this->title;
     }
 
     /**
      * @return number
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
@@ -156,42 +174,48 @@ class Category
         return $this->title;
     }
 
-    public function setSlug($slug) {
+    public function setSlug($slug)
+    {
         $this->slug = $slug;
     }
 
     /**
      * @return string
      */
-    public function getSlug() {
+    public function getSlug()
+    {
         return $this->slug;
     }
 
     /**
      * @return number
      */
-    public function getRoot() {
+    public function getRoot()
+    {
         return $this->root;
     }
 
     /**
      * @return number
      */
-    public function getLvl() {
+    public function getLvl()
+    {
         return $this->lvl;
     }
 
     /**
      * @param Category $parent
      */
-    public function setParent(Category $parent = null) {
+    public function setParent(Category $parent = null)
+    {
         $this->parent = $parent;
     }
 
     /**
      * @return Category
      */
-    public function getParent() {
+    public function getParent()
+    {
         return $this->parent;
     }
 

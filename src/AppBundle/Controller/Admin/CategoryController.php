@@ -66,6 +66,7 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('AppBundle:Category')->find($request->get('id', null));
         $category->setTitle($request->get('title', ''));
+        $category->setTranslatableLocale($request->getLocale());
         $em->persist($category);
         $em->flush();
         $this->get('logger')->info('Category modification', array(
@@ -168,6 +169,7 @@ class CategoryController extends Controller
         $category = $form->getData();
         $validation = $form->isValid();
         if ($validation) {
+            $category->setTranslatableLocale($request->getLocale());
             $em->persist($category);
             $em->flush();
         }
