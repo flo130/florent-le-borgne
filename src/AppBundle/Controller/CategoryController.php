@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Cette class gere les categories
@@ -23,7 +24,7 @@ class CategoryController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function treeAction()
+	public function treeAction(Request $request)
 	{
 		//génère un arbre des catégories
 		//on construit les options :
@@ -35,6 +36,7 @@ class CategoryController extends Controller
 		//configure le "Tree" des catégories
 		$parent = 0;
 		$options = array(
+			'locale' => $request->getLocale(),
 			'decorate' => true,
 			'rootOpen' => function($tree) use (&$parent) {
 				if (count($tree) && ($tree[0]['lvl'] != 0)) {

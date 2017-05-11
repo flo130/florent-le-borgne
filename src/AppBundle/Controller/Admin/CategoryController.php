@@ -36,6 +36,7 @@ class CategoryController extends Controller
                 ->getManager()
                 ->getRepository('AppBundle:Category')
                 ->childrenHierarchy(null, false, array(
+                    'locale' => $request->getLocale(),
                     'decorate' => true,
                     'rootOpen' => '<ul>',
                     'rootClose' => '</ul>',
