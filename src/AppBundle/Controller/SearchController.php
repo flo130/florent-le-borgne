@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\SearchForm;
+use AppBundle\Entity\Search;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Cette class gère la partie recherche du site
@@ -24,7 +26,6 @@ class SearchController extends Controller
 	 * @Method({"GET", "POST"})
 	 *
 	 * @param Request $request
-	 * @param string $term
 	 *
 	 * @return Response
 	 */
@@ -38,15 +39,36 @@ class SearchController extends Controller
 			if ($form->isValid()) {
 				/** @var AppBundle\Entity\Search **/
 				$search = $form->getData();
-				$term = $search->getTerm();
-				$results = $this->getDoctrine()
-					->getManager()
-					->getRepository('AppBundle:Article')
-					->searchPublishedOrderByUpdatedDateDesc($term);
+				return $this->redirect($this->generateUrl('search_with_term', array(
+					'term' => urlencode($search->getTerm()),
+				), UrlGeneratorInterface::ABSOLUTE_URL));
 			}
 		}
 		return $this->render('AppBundle:pages:searchPage.html.twig', array(
-			'searchResults' => $results,
+			'searchResults' => null,
+			'term' => $term,
+		));
+	}
+
+	/**
+	 * Permet d'afficher la page de recherche avec un terme dans l'URL
+	 *
+	 * @Route("/{term}", name="search_with_term"))
+	 *
+	 * @Method({"GET"})
+	 *
+	 * @param Request $request
+	 * @param string $term
+	 *
+	 * @return Response
+	 */
+	public function searchWithTermAction(Request $request, $term)
+	{
+		return $this->render('AppBundle:pages:searchPage.html.twig', array(
+			'searchResults' => $this->getDoctrine()
+				->getManager()
+				->getRepository('AppBundle:Article')
+				->searchPublishedOrderByUpdatedDateDesc(urldecode($term), $request->getLocale()),
 			'term' => $term,
 		));
 	}

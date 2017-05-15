@@ -5,6 +5,7 @@ use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\Query;
 
 class ArticleRepository extends EntityRepository
 {
@@ -163,21 +164,31 @@ class ArticleRepository extends EntityRepository
      *
      * @return Article[]
      */
-    public function searchPublishedOrderByUpdatedDateDesc($term)
+    public function searchPublishedOrderByUpdatedDateDesc($term, $locale)
     {
-        return $this->createQueryBuilder('article')
+        $query = $this->createQueryBuilder('a')
             //cherche via des like dans le titre, le résumer et l'article
-            ->orwhere('article.title LIKE :term')
-            ->orWhere('article.summary LIKE :term')
-            ->orWhere('article.article LIKE :term')
+            ->orwhere('a.title LIKE :term')
+            ->orWhere('a.summary LIKE :term')
+            ->orWhere('a.article LIKE :term')
             //il faut que l'article soit publié...
-            ->andWhere('article.status = :published')
+            ->andWhere('a.status = :published')
             //on ordonne par date de mise à jour 
-            ->orderBy('article.updatedAt', 'DESC')
+            ->orderBy('a.updatedAt', 'DESC')
             //on set les paramètres
             ->setParameter('term', '%' . $term . '%')
             ->setParameter('published', Article::PUBLISHED_STATUS)
-            ->getQuery()
-            ->execute();
+            ->getQuery();
+        //gestion de la locale
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+        $query->setHint(
+            \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE,
+            $locale
+        );
+        $query->setHint(Query::HINT_REFRESH, true);
+        return $query->execute();
     }
 }
