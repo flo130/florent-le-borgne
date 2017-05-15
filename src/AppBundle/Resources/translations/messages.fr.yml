@@ -36,6 +36,7 @@ app:
     role: rôle
     log: historique
     revert: revenir
+    data_will_be_lost: les données non-sauvegardées seront perdues
     no_data:
         category: aucune categorie trouvée
         article: aucun article trouvé
@@ -82,7 +83,6 @@ app:
         role_admin: administrateur
         captcha: captcha
         passwd_not_match: Les deux mots de passe ne sont pas les mêmes.
-        data_will_be_lost: les données non-sauvegardées seront perdues
     admin: 
         index: index
         admin: admin
