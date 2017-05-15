@@ -41,7 +41,7 @@
     {{ parent() }}
     <script type="text/javascript">
         window.onbeforeunload = function() {
-            return '';
+            return '{{ 'app.data_will_be_lost' | trans | capitalize }}';
         }
     </script>
 {% endblock %}

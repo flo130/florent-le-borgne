@@ -82,6 +82,7 @@ app:
         role_admin: administrateur
         captcha: captcha
         passwd_not_match: Les deux mots de passe ne sont pas les mêmes.
+        data_will_be_lost: les données non-sauvegardées seront perdues
     admin: 
         index: index
         admin: admin

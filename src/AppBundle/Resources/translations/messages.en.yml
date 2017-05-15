@@ -84,6 +84,7 @@ app:
         role_admin: administrator
         captcha: captcha
         passwd_not_match: The password fields must match.
+        data_will_be_lost: unsaved data will be lost
     admin:
         index: index
         admin: admin
