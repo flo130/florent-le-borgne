@@ -36,3 +36,12 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.onbeforeunload = function() {
+            return '';
+        }
+    </script>
+{% endblock %}
