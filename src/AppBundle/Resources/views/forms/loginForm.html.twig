@@ -10,9 +10,8 @@
     {% endif %}
     {{ form_row(form._username) }}
     {{ form_row(form._password) }}
-    <button class="btn btn-block btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
-    <br>
-    <p class="text-center">
+    <p class="pull-right">
         <a class="text-center" href="{{ url('user_register') }}">{{ 'app.user.no_account' | trans | capitalize }}</a>
     </p>
+    <button class="btn btn-block btn-primary" type="submit">{{ 'app.submit' | trans | capitalize }}</button>
 {{ form_end(form) }}

@@ -7,9 +7,8 @@
     {{ form_row(form.plainPassword.first, { 'label' : 'Password' }) }}
     {{ form_row(form.plainPassword.second, { 'label' : 'Repeat Password' }) }}
     {{ form_row(form.recaptcha) }}
-    <button class="btn btn-block btn-primary" type="submit">{{ 'app.user.register' | trans | capitalize }}</button>
-    <br>
-    <p class="text-center">
+    <p class="pull-right">
         <a href="{{ url('user_login') }}">{{ 'app.user.already_have_account' | trans | capitalize }}</a>
     </p>
+    <button class="btn btn-block btn-primary" type="submit">{{ 'app.user.register' | trans | capitalize }}</button>
 {{ form_end(form) }}

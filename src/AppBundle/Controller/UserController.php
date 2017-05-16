@@ -111,6 +111,7 @@ class UserController extends Controller
             || !$em->getRepository('AppBundle:Parameter')->findOneByParamKey('register')->getIsActive()) {
             return $this->redirectToRoute('homepage');
         }
+        $isValid = false;
         $form = $this->createForm(RegistrationForm::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -153,6 +154,7 @@ class UserController extends Controller
         } else {
             return $this->render('AppBundle:pages:userRegisterPage.html.twig', array(
                 'form' => $form->createView(),
+                'error' => $isValid,
             ));
         }
     }
