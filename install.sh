@@ -18,7 +18,7 @@ php -r "unlink('composer-setup.php');"
 php composer.phar install --no-dev --optimize-autoloader
 
 #suppression du fichier Composer
-rm composer.phar
+php -r "unlink('composer.phar');"
 
 #changement des droits sur les repertoires de cache et de logs
 HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`

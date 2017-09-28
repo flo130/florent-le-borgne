@@ -18,7 +18,7 @@ php -r "unlink('composer-setup.php');"
 php composer.phar update
 
 #suppression du fichier Composer
-rm composer.phar
+php -r "unlink('composer.phar');"
 
 #verifie si tout est ok pour faire tourner Symfony
 php bin/symfony_requirements
